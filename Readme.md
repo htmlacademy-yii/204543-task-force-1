@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Natalia Sevostyanova](https://up.htmlacademy.ru/yii/1/user/204543).
-* Наставник: `Кексобот`.
+* Наставник: `Алексей Петров`.
 
 ---
 
