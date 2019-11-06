@@ -56,7 +56,7 @@ class TaskStatus
     
       public function getActions()
       {
-        $actions = [self::const ACTION_ORDER, self::const ACTION_CANCEL,self::const ACTION_DO, self::const ACTION_PAY];
+        $actions = [self::ACTION_ORDER, self::ACTION_CANCEL,self::ACTION_DO, self::ACTION_PAY];
         return $action; 
       }
     /**
@@ -65,10 +65,9 @@ class TaskStatus
     //
       public function getStatuses()
       {
-        $statuses = [self::const STATUS_NEW, self::const STATUS_CANCEL, self::const STATUS_INPROCESS,
-          self::const STATUS_FINISH, self::const STATUS_PAID
-        ];  
-          return $statuses; 
+        $statuses = [self::STATUS_NEW, self::STATUS_CANCEL, self::STATUS_INPROCESS,
+          self::STATUS_FINISH, self::STATUS_PAID];  
+          return self::$statuses; 
       }  
       //получаем активный статус
       public function getActiveStatus()
@@ -77,7 +76,7 @@ class TaskStatus
            * Исходное состояние - нет статуса
            */
           $active_status == Null;
-          $active_status = ($action => self::$actions['ACTION_ORDER']?
+          $active_status = ($action = self::$actions['ACTION_ORDER'])?
                  self::$statuses['STATUS_NEW'] : $active_status; 
           /**
            * Активный статус - новое задание
