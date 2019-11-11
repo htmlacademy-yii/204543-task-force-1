@@ -1,11 +1,10 @@
 <?php
     /**
-      * Файл для тестирования работы класса
+      * File for testing if Class works right way
       */
     /*
-     * функция загрузки Class TaskStatus - example from php.net
+     * loading function for Class TaskStatus
      */
-
 
     use YiiTaskForce\Strategy\TaskStatusOne;
 
