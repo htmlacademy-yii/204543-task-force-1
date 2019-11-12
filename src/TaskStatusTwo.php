@@ -1,14 +1,13 @@
 <?php
     /**
-      * File for testing if Class works right way
-      */
-    /*
-     * loading function for Class TaskStatusOne
-     */
-    //use YiiTaskForce\TaskStatusOne;
+    *
+    * Класс для определения активного статуса задания
+    * @author <sevostyanova@gmail.com>
+    */
+
     namespace YiiTaskForce;
 
-    class TaskStatusOne
+    class TaskStatusTwo
     {
     // роли пользователей
      public const CLIENT = 'client';
@@ -60,36 +59,23 @@
             ];
             return $this->statuses = $statuses;
         }
-    /*public function __construct ()
+    public function getMapActionStatus ()
         {
-
-        }*/
+            $mapActionStatus = [
+                self::ACTION_ORDER => self::STATUS_NEW,
+                self::ACTION_CANCEL => self::STATUS_CANCEL,
+                self::ACTION_PAY => self::STATUS_INPROCESS,
+                self::ACTION_DO => self::STATUS_FINISH,
+                self::ACTION_FINISH => self::STATUS_PAID
+            ];
+            return $this->mapActionStatus = $mapActionStatus;
+        }
 
     public function getActiveStatus(string $action)
         { //получаем активный статус
-            switch ($actions) {
-                case ACTION_CANCEL:
-                    $this->activeStatus == self::statuses[2];
-                    break;
-                case ACTION_DO:
-                    $this->activeStatus == self::statuses[3];
-                case ACTION_FINISH:
-                    $this->activeStatus == self::statuses[4];
-                case ACTION_PAY:
-                    $this->activeStatus == self::statuses[5];
+
+            $activeStatus = (array_key_exists($action, array $mapActionStatus)) ? self::mapActionStatus[$action] : "";
             }
-                return $this->activeStatus = $activeStatus;
+               return $this->activeStatus = $activeStatus;
         }
-    }
-
-    $strategy = new TaskStatusOne();
-
-    //настройки
-    assert_options(ASSERT_ACTIVE, 1);
-    assert_options(ASSERT_WARNING, 0);
-
-    assert($strategy->getActiveStatus(TaskStatusOne::ACTION_ORDER) == TaskStatus::STATUS_NEW, 'problem with order action');
-    assert($strategy->getActiveStatus(TaskStatusOne::ACTION_CANCEL) == TaskStatus::STATUS_CANCEL, 'problem with cancel action');
-    assert($strategy->getActiveStatus(TaskStatusOne::ACTION_DO) == TaskStatus::STATUS_INPROCESS, 'problem with do action');
-    assert($strategy->getActiveStatus(TaskStatusOne::ACTION_FINISH) == TaskStatus::STATUS_FINISH, 'problem with finish action');
-    assert($strategy->getActiveStatus(TaskStatusOne::ACTION_PAY) == TaskStatus::STATUS_FINISH, 'problem with pay action');
+}

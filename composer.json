@@ -10,8 +10,11 @@
     ],
     "require": {},
     "autoload": {
+        "classmap": [
+        "src/TaskStatusOne.php"
+         ],
         "psr-4": {
-            "YiiTaskForce\\": "scr/"
+            "YiiTaskForce\\": "src/"
         }
     }
 }
