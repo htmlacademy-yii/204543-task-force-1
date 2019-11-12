@@ -36,20 +36,20 @@
     // Методы класса TaskStatus
 
     public function getActions ()
-        {
+        { //получение массива действий
             $actions = [
                 1 => self::ACTION_ORDER,
                 2 => self::ACTION_CANCEL,
-                3 => self::ACTION_PAY,
-                4 => self::ACTION_DO,
-                5 => self::ACTION_FINISH
+                3 => self::ACTION_DO,
+                4 => self::ACTION_FINISH,
+                5 => self::ACTION_PAY
             ];
-            return $this->actions = $actions;
+            return $this->actions;
         }
 
-    //Получение массива статусов задания
-    public function getStatuses()
-        {
+
+    public function getStatuses ()
+        { //получение массива статусов задания
             $statuses = [
                 1 => self::STATUS_NEW,
                 2 => self::STATUS_CANCEL,
@@ -57,22 +57,16 @@
                 4 => self::STATUS_FINISH,
                 5 => self::STATUS_PAID
             ];
-            return $this->statuses = $statuses;
+            return $this->statuses;
         }
 
-    public function getActiveStatus(string $action)
-        { //получаем активный статус
-            switch ($actions) {
-                case ACTION_CANCEL:
-                    $this->activeStatus == self::statuses[2];
-                    break;
-                case ACTION_DO:
-                    $this->activeStatus == self::statuses[3];
-                case ACTION_FINISH:
-                    $this->activeStatus == self::statuses[4];
-                case ACTION_PAY:
-                    $this->activeStatus == self::statuses[5];
-            }
-                return $this->activeStatus = $activeStatus;
+    public function getActiveStatus (string $actions)
+        { // определяем активный статус
+            $activeStatus = ($statuses == self::STATUS_NEW && $actions == self::ACTION_CANCEL) ? self::statuses[2] : self::statuses[1];
+            $activeStatus = ($statuses == self::STATUS_NEW && $actions == self::ACTION_DO) ? self::statuses[3] : self::statuses[1];
+            $activeStatus = ($statuses == self::STATUS_INPROCESS && $actions == self::ACTION_FINISH) ? self::statuses[4] : self::statuses[3];
+            $activeStatus = ($statuses == self::STATUS_FINISH && $actions == self::ACTION_PAY) ? self::statuses[5] : self::statuses[4];
+
+              return $this->activeStatus;
         }
-}
+    }

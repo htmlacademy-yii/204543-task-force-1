@@ -44,11 +44,11 @@
                 4 => self::ACTION_DO,
                 5 => self::ACTION_FINISH
             ];
-            return $this->actions = $actions;
+            return $this->actions;
         }
 
     //Получение массива статусов задания
-    public function getStatuses()
+    public function getStatuses ()
         {
             $statuses = [
                 1 => self::STATUS_NEW,
@@ -57,10 +57,10 @@
                 4 => self::STATUS_FINISH,
                 5 => self::STATUS_PAID
             ];
-            return $this->statuses = $statuses;
+            return $this->statuses;
         }
     public function getMapActionStatus ()
-        {
+        { // получаем массив карты соответствий "действие-статус"
             $mapActionStatus = [
                 self::ACTION_ORDER => self::STATUS_NEW,
                 self::ACTION_CANCEL => self::STATUS_CANCEL,
@@ -68,14 +68,16 @@
                 self::ACTION_DO => self::STATUS_FINISH,
                 self::ACTION_FINISH => self::STATUS_PAID
             ];
-            return $this->mapActionStatus = $mapActionStatus;
+            return $this->mapActionStatus;
         }
 
-    public function getActiveStatus(string $action)
+    public function getActiveStatus (string $actions)
         { //получаем активный статус
 
-            $activeStatus = (array_key_exists($action, array $mapActionStatus)) ? self::mapActionStatus[$action] : "";
+            $key = self::actions;
+            if (array_key_exists($key, self::mapActionStatus)) {
+                $activeStatus = self::mapActionStatus[$key];
             }
-               return $this->activeStatus = $activeStatus;
+            return $this->activeStatus;
         }
-}
+    }
