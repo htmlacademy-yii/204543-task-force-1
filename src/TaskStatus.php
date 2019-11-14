@@ -15,7 +15,7 @@
 
     // статусы задания
         public const STATUS_NEW = 'new';
-        public const STATUS_CANСEL = 'cancel';
+        public const STATUS_CANCEL = 'cancel';
         public const STATUS_INPROCESS = 'inprogress';
         public const STATUS_FINISH = 'finished';
         public const STATUS_PAID = 'paid';
@@ -34,26 +34,26 @@
         public $activeStatus = 'new'; // активный статус заказа
 
         private $actions = [
-                        1 => ACTION_ORDER,
-                        2 => ACTION_CANCEL,
-                        3 => ACTION_DO,
-                        4 => ACTION_FINISH,
-                        5 => ACTION_PAY
+                        1 => self::ACTION_ORDER,
+                        2 => self::ACTION_CANCEL,
+                        3 => self::ACTION_DO,
+                        4 => self::ACTION_FINISH,
+                        5 => self::ACTION_PAY
                         ];
 
         private  $statuses = [
-                        1 => STATUS_NEW,
-                        2 => STATUS_CANCEL,
-                        3 => STATUS_INPROCESS,
-                        4 => STATUS_FINISH,
-                        5 => STATUS_PAID
+                        1 => self::STATUS_NEW,
+                        2 => self::STATUS_CANCEL,
+                        3 => self::STATUS_INPROCESS,
+                        4 => self::STATUS_FINISH,
+                        5 => self::STATUS_PAID
                         ];
         public const ACTION_STATUS = [
-                        ACTION_ORDER => STATUS_NEW,
-                        ACTION_CANCEL => STATUS_CANCEL,
-                        ACTION_PAY => STATUS_INPROCESS,
-                        ACTION_DO => STATUS_FINISH,
-                        ACTION_FINISH =>STATUS_PAID
+                        self::ACTION_ORDER => self::STATUS_NEW,
+                        self::ACTION_CANCEL => self::STATUS_CANCEL,
+                        self::ACTION_PAY => self::STATUS_INPROCESS,
+                        self::ACTION_DO => self::STATUS_FINISH,
+                        self::ACTION_FINISH => self::STATUS_PAID
                         ];
     // методы класса TaskStatus
 
@@ -69,7 +69,7 @@
 
         public function getActiveStatus (string $actions)
         { // определяем активный статус
-            $key = self::ACTION_DO;
+            $key = self::$actions;
             if (array_key_exists($key, self::ACTION_STATUS)) {
                 $activeStatus = self::ACTION_STATUS[$key];
             }
