@@ -69,7 +69,7 @@
 
         public function getActiveStatus (string $actions)
         { // определяем активный статус
-            $key = self::$actions;
+            $key = $this->actions;
             if (array_key_exists($key, self::ACTION_STATUS)) {
                 $activeStatus = self::ACTION_STATUS[$key];
             }
