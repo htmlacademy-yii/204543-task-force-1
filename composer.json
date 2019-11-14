@@ -8,10 +8,17 @@
             "email": "sevostyanova@gmail.com"
         }
     ],
+
+    "settings":
+    {
+      "xdebug": {
+        "url": "http://localhost.YiiTaskForce/",
+      }
+    },
     "require": {},
     "autoload": {
         "classmap": [
-        "src/TaskStatusOne.php"
+        "src/TaskStatus.php"
          ],
         "psr-4": {
             "YiiTaskForce\\": "src/"
