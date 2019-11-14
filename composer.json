@@ -9,12 +9,6 @@
         }
     ],
 
-    "settings":
-    {
-      "xdebug": {
-        "url": "http://localhost.YiiTaskForce/",
-      }
-    },
     "require": {},
     "autoload": {
         "classmap": [
