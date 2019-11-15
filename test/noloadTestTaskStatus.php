@@ -12,6 +12,10 @@
     //настройки
     assert_options(ASSERT_ACTIVE, 1);
     assert_options(ASSERT_WARNING, 0);
+    assert_options(ASSERT_CALLBACK, function () {
+        echo '<hr />';
+        echo func_get_arg(3);
+    });
 
     assert($strategy->getActiveStatus(TaskStatus::ACTION_ORDER) == TaskStatus::STATUS_NEW, 'problem with order action');
     assert($strategy->getActiveStatus(TaskStatus::ACTION_CANCEL) == TaskStatus::STATUS_CANCEL, 'problem with cancel action');

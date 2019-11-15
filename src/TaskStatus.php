@@ -67,21 +67,10 @@
             return self::statuses;
         }
 
-     /* public function getActiveStatus (string $act)
-        { // определяем активный статус
-            $act = $actions[index];
-            if (array_key_exists($act, self::ACTION_STATUS)) {
-                $activeStatus = self::ACTION_STATUS[$key];
-            }
-              return $this->activeStatus;
-        } */
-
         public function getActiveStatus (string $act)
         { // определяем активный статус
-            $act = $actions[index];
+            $act = $this->getActions();
             switch ($act) {
-                case self::ACTION_NEW:
-                    return self::STATUS_NEW;
                 case self::ACTION_CANCEL:
                     return self::STATUS_CANCEL;
                 case self::ACTION_DO:
