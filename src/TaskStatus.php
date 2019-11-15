@@ -59,17 +59,16 @@
 
         public function getActions ()
         { //получение массива действий
-            return self::actions;
+            return self::$actions;
         }
 
         public function getStatuses ()
         { //получение массива статусов задания
-            return self::statuses;
+            return self::$statuses;
         }
 
         public function getActiveStatus (string $act)
         { // определяем активный статус
-            $act = $this->getActions();
             switch ($act) {
                 case self::ACTION_CANCEL:
                     return self::STATUS_CANCEL;
