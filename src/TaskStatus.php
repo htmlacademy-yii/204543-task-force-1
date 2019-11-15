@@ -51,9 +51,9 @@
         public const ACTION_STATUS = [
                         self::ACTION_ORDER => self::STATUS_NEW,
                         self::ACTION_CANCEL => self::STATUS_CANCEL,
-                        self::ACTION_PAY => self::STATUS_INPROCESS,
+                        self::ACTION_FINISH => self::STATUS_INPROCESS,
                         self::ACTION_DO => self::STATUS_FINISH,
-                        self::ACTION_FINISH => self::STATUS_PAID
+                        self::ACTION_PAY => self::STATUS_PAID
                         ];
     // методы класса TaskStatus
 
