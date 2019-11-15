@@ -33,7 +33,7 @@
         public $taskFinishDate = ""; //дата окончания работы по заказу
         public $activeStatus = 'new'; // активный статус заказа
 
-        private $actions = [
+        private static $actions = [
                         1 => self::ACTION_ORDER,
                         2 => self::ACTION_CANCEL,
                         3 => self::ACTION_DO,
@@ -41,7 +41,7 @@
                         5 => self::ACTION_PAY
                         ];
 
-        private  $statuses = [
+        private static $statuses = [
                         1 => self::STATUS_NEW,
                         2 => self::STATUS_CANCEL,
                         3 => self::STATUS_INPROCESS,
@@ -59,19 +59,37 @@
 
         public function getActions ()
         { //получение массива действий
-            return $this->actions;
+            return self::actions;
         }
 
         public function getStatuses ()
         { //получение массива статусов задания
-            return $this->statuses;
+            return self::statuses;
         }
 
-        public function getActiveStatus (string $actions)
+     /* public function getActiveStatus (string $act)
         { // определяем активный статус
-            $key = $this->actions;
-            if (array_key_exists($key, self::ACTION_STATUS)) {
+            $act = $actions[index];
+            if (array_key_exists($act, self::ACTION_STATUS)) {
                 $activeStatus = self::ACTION_STATUS[$key];
+            }
+              return $this->activeStatus;
+        } */
+
+        public function getActiveStatus (string $act)
+        { // определяем активный статус
+            $act = $actions[index];
+            switch ($act) {
+                case self::ACTION_NEW:
+                    return self::STATUS_NEW;
+                case self::ACTION_CANCEL:
+                    return self::STATUS_CANCEL;
+                case self::ACTION_DO:
+                    return self::STATUS_INPROCESS;
+                case self::ACTION_FINISH:
+                    return self::STATUS_FINISH;
+                case self::ACTION_PAY:
+                    return self::STATUS_PAID;
             }
               return $this->activeStatus;
         }
