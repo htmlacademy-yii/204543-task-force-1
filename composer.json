@@ -1,0 +1,21 @@
+{
+    "name": "htmlacademy/taskforce",
+    "description": "Учебный проект TaskForce",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Natalia Sevostyanova",
+            "email": "sevostyanova@gmail.com"
+        }
+    ],
+
+    "require": {},
+    "autoload": {
+        "classmap": [
+        "src/TaskStatus.php"
+         ],
+        "psr-4": {
+            "YiiTaskForce\\": "src/"
+        }
+    }
+}
