@@ -5,7 +5,7 @@
     /*
      * loading function for Class TaskStatus
      */
-    use YiiTaskForce\TaskStatus;
+    use YiiTaskForce\Strategy\TaskStatus;
 
     $strategy = new TaskStatus();
 
