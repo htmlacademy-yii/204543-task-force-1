@@ -11,9 +11,7 @@
 
     "require": {},
     "autoload": {
-        "classmap": [
-        "src/TaskStatus.php"
-         ],
+
         "psr-4": {
             "YiiTaskForce\\": "src/"
         }

@@ -5,7 +5,7 @@
     * @author <sevostyanova@gmail.com>
     */
 
-    namespace YiiTaskForce;
+    namespace YiiTaskForce\Strategy;
 
     class TaskStatus
     {
