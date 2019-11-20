@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 20 2019 г., 14:39
+-- Время создания: Ноя 20 2019 г., 21:33
 -- Версия сервера: 5.7.16-log
 -- Версия PHP: 7.1.0
 
@@ -117,15 +117,18 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `user_avatar` varchar(200) NOT NULL,
   `about_user` varchar(450) NOT NULL,
+  `birthday` date NOT NULL,
   `category_id` int(11) NOT NULL,
   `town_id` int(11) NOT NULL,
   `location` varchar(255) NOT NULL,
-  `phone` tinyint(16) NOT NULL,
+  `phone` varchar(120) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `social_media` varchar(120) DEFAULT NULL,
+  `Skype` varchar(120) DEFAULT NULL,
+  `other_messenger` varchar(120) DEFAULT NULL,
   `rate_stars` decimal(2,1) NOT NULL,
   `reviews_number` int(11) NOT NULL,
   `orders_number` int(11) NOT NULL,
+  `views_number` int(11) NOT NULL,
   `available_now` tinyint(1) NOT NULL DEFAULT '0',
   `myworks_pictures` varchar(200) NOT NULL,
   `last_visit` datetime NOT NULL
