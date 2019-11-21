@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 20 2019 г., 21:33
+-- Время создания: Ноя 21 2019 г., 18:56
 -- Версия сервера: 5.7.16-log
 -- Версия PHP: 7.1.0
 
@@ -23,52 +23,94 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `categories`
+-- Структура таблицы `Category`
 --
 
-CREATE TABLE `categories` (
-  `id_cats` int(11) NOT NULL,
-  `category_name` varchar(120) NOT NULL
+CREATE TABLE `Category` (
+  `id` int(11) NOT NULL COMMENT 'id категории',
+  `category_name` varchar(120) NOT NULL COMMENT 'название категории'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `chats`
+-- Структура таблицы `Chat`
 --
 
-CREATE TABLE `chats` (
-  `id_chat` int(11) NOT NULL,
-  `auther_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `task_id` int(11) NOT NULL,
-  `chat_time` datetime NOT NULL
+CREATE TABLE `Chat` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'id пользователя',
+  `task_id` int(11) NOT NULL COMMENT 'id задания',
+  `created_at` datetime NOT NULL COMMENT 'время создания поста в чате',
+  `message` varchar(255) NOT NULL COMMENT 'содержание поста в чате'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `responds`
+-- Структура таблицы `Contact`
 --
 
-CREATE TABLE `responds` (
-  `id_respond` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `execute_budjet` int(11) NOT NULL,
-  `comment` varchar(255) NOT NULL
+CREATE TABLE `Contact` (
+  `user_id` int(11) NOT NULL COMMENT 'id исполнителя',
+  `phone` varchar(120) NOT NULL COMMENT 'номер телефона пользователя',
+  `email` varchar(120) NOT NULL COMMENT 'email пользователя',
+  `skype` varchar(120) NOT NULL COMMENT 'skype пользователя',
+  `other_messenger` int(11) NOT NULL COMMENT 'другой мессенжер'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `reviews`
+-- Структура таблицы `FileDownload`
 --
 
-CREATE TABLE `reviews` (
-  `id_review` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `review_content` varchar(450) NOT NULL
+CREATE TABLE `FileDownload` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'id пользователя, кто размещает файлы',
+  `file_url` varchar(255) NOT NULL COMMENT 'url размещения загруженного файла'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Location`
+--
+
+CREATE TABLE `Location` (
+  `id` int(11) NOT NULL,
+  `name` varchar(120) NOT NULL COMMENT 'название города',
+  `latitude` decimal(5,2) NOT NULL COMMENT 'широта города (географ.)',
+  `longitude` decimal(5,2) NOT NULL COMMENT 'долгота города (географ.)'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Respond`
+--
+
+CREATE TABLE `Respond` (
+  `id` int(11) NOT NULL COMMENT 'id отклика',
+  `user_id` int(11) NOT NULL COMMENT 'id  исполнителя',
+  `execute_budjet` int(11) NOT NULL COMMENT 'бюджет/стоимость работ',
+  `comment` varchar(255) NOT NULL COMMENT 'текст  отклика на задание',
+  `create_at` datetime NOT NULL COMMENT 'время создания отклика на задание'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Review`
+--
+
+CREATE TABLE `Review` (
+  `id` int(11) NOT NULL COMMENT 'id отзыва',
+  `user_id` int(11) NOT NULL COMMENT 'id заказчика',
+  `task_id` int(11) NOT NULL COMMENT 'id задания',
+  `review_content` varchar(450) NOT NULL COMMENT 'содержание отзыва',
+  `rate_stars` int(11) NOT NULL COMMENT 'оценка выполнения задания 1-5 звёзд',
+  `create_at` datetime NOT NULL COMMENT 'время создания отзыва'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -78,182 +120,227 @@ CREATE TABLE `reviews` (
 --
 
 CREATE TABLE `Task` (
-  `id_task` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `executor_id` int(11) NOT NULL,
-  `town_id` int(11) NOT NULL,
-  `task_title` varchar(200) NOT NULL,
-  `description` varchar(450) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `download_files` varchar(200) NOT NULL,
-  `budget` int(11) NOT NULL,
-  `end_date` datetime NOT NULL,
-  `task_status` varchar(120) NOT NULL,
-  `rating` int(11) NOT NULL
+  `id` int(11) NOT NULL COMMENT 'id задания',
+  `author_id` int(11) NOT NULL COMMENT 'id заказчика',
+  `executor_id` int(11) NOT NULL COMMENT 'id  исполнителя',
+  `town_id` int(11) NOT NULL COMMENT 'код города',
+  `title` varchar(200) NOT NULL COMMENT 'название задания',
+  `description` varchar(450) NOT NULL COMMENT 'описание задания',
+  `category_id` int(11) NOT NULL COMMENT 'категория работ',
+  `budget` int(11) NOT NULL COMMENT 'бюджет/стоимость работ',
+  `end_date` date NOT NULL COMMENT 'дата окончания работ',
+  `task_status` varchar(120) NOT NULL COMMENT 'статус задания'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `towns`
+-- Структура таблицы `User`
 --
 
-CREATE TABLE `towns` (
-  `code_town` int(11) NOT NULL,
-  `town_name` varchar(120) NOT NULL
+CREATE TABLE `User` (
+  `id` int(11) NOT NULL COMMENT 'id пользователя',
+  `full_name` varchar(200) NOT NULL COMMENT 'имя и фамилия пользователя',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'дата и время создания аккаунта',
+  `role` varchar(100) NOT NULL COMMENT 'роль: заказчик или исполнитель',
+  `password` varchar(100) NOT NULL COMMENT 'пароль к аккаунту',
+  `avatar` varchar(200) NOT NULL COMMENT 'аватарка пользователя',
+  `about_user` varchar(450) NOT NULL COMMENT 'рассказ исполнителя о себе',
+  `birthday` date NOT NULL COMMENT 'дата рождения',
+  `town_id` int(11) NOT NULL COMMENT 'код города',
+  `available_now` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'доступность исполнителя',
+  `last_visit` datetime NOT NULL COMMENT 'время последнего посещения сайта исполнителем'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `users`
+-- Структура таблицы `UserEvent`
 --
 
-CREATE TABLE `users` (
-  `id_user` int(11) NOT NULL,
-  `full_name` varchar(200) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `role` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `user_avatar` varchar(200) NOT NULL,
-  `about_user` varchar(450) NOT NULL,
-  `birthday` date NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `town_id` int(11) NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `phone` varchar(120) NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `Skype` varchar(120) DEFAULT NULL,
-  `other_messenger` varchar(120) DEFAULT NULL,
-  `rate_stars` decimal(2,1) NOT NULL,
-  `reviews_number` int(11) NOT NULL,
-  `orders_number` int(11) NOT NULL,
-  `views_number` int(11) NOT NULL,
-  `available_now` tinyint(1) NOT NULL DEFAULT '0',
-  `myworks_pictures` varchar(200) NOT NULL,
-  `last_visit` datetime NOT NULL
+CREATE TABLE `UserEvent` (
+  `user_id` int(11) NOT NULL COMMENT 'id  исполнителя',
+  `views_number` int(11) NOT NULL COMMENT 'кол-во просмотров аккаунта исполнителя',
+  `orders_number` int(11) NOT NULL COMMENT 'кол-во выполненных заказов ',
+  `reviews_number` int(11) NOT NULL COMMENT 'кол-во отзывов у исполнителя'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_categories`
+--
+
+CREATE TABLE `user_categories` (
+  `user_id` int(11) NOT NULL COMMENT 'id пользователя',
+  `category_id` int(11) NOT NULL COMMENT 'id категории'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='таблица связи';
 
 --
 -- Индексы сохранённых таблиц
 --
 
 --
--- Индексы таблицы `categories`
+-- Индексы таблицы `Category`
 --
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id_cats`);
+ALTER TABLE `Category`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `chats`
+-- Индексы таблицы `Chat`
 --
-ALTER TABLE `chats`
-  ADD PRIMARY KEY (`id_chat`),
-  ADD KEY `auther_id` (`auther_id`),
+ALTER TABLE `Chat`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `task_id` (`task_id`);
 
 --
--- Индексы таблицы `responds`
+-- Индексы таблицы `Contact`
 --
-ALTER TABLE `responds`
-  ADD PRIMARY KEY (`id_respond`),
+ALTER TABLE `Contact`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Индексы таблицы `reviews`
+-- Индексы таблицы `FileDownload`
 --
-ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`id_review`),
-  ADD KEY `author_id` (`author_id`),
+ALTER TABLE `FileDownload`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Индексы таблицы `Location`
+--
+ALTER TABLE `Location`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `Respond`
+--
+ALTER TABLE `Respond`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Индексы таблицы `Review`
+--
+ALTER TABLE `Review`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `task_id` (`task_id`);
 
 --
 -- Индексы таблицы `Task`
 --
 ALTER TABLE `Task`
-  ADD PRIMARY KEY (`id_task`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `category_id` (`category_id`),
   ADD KEY `author_id` (`author_id`),
+  ADD KEY `town_id` (`town_id`),
+  ADD KEY `executor_id` (`executor_id`);
+
+--
+-- Индексы таблицы `User`
+--
+ALTER TABLE `User`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `town_id` (`town_id`);
 
 --
--- Индексы таблицы `towns`
+-- Индексы таблицы `UserEvent`
 --
-ALTER TABLE `towns`
-  ADD PRIMARY KEY (`code_town`);
+ALTER TABLE `UserEvent`
+  ADD KEY `user_id` (`user_id`);
 
 --
--- Индексы таблицы `users`
+-- Индексы таблицы `user_categories`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id_user`),
-  ADD KEY `category_id` (`category_id`),
-  ADD KEY `town_id` (`town_id`);
+ALTER TABLE `user_categories`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `category_id` (`category_id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT для таблицы `responds`
+-- AUTO_INCREMENT для таблицы `Chat`
 --
-ALTER TABLE `responds`
-  MODIFY `id_respond` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Chat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT для таблицы `reviews`
+-- AUTO_INCREMENT для таблицы `FileDownload`
 --
-ALTER TABLE `reviews`
-  MODIFY `id_review` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `FileDownload`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `Respond`
+--
+ALTER TABLE `Respond`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id отклика';
+--
+-- AUTO_INCREMENT для таблицы `Review`
+--
+ALTER TABLE `Review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id отзыва';
 --
 -- AUTO_INCREMENT для таблицы `Task`
 --
 ALTER TABLE `Task`
-  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id задания';
 --
--- AUTO_INCREMENT для таблицы `users`
+-- AUTO_INCREMENT для таблицы `User`
 --
-ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `User`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id пользователя';
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
--- Ограничения внешнего ключа таблицы `chats`
+-- Ограничения внешнего ключа таблицы `Chat`
 --
-ALTER TABLE `chats`
-  ADD CONSTRAINT `chats_ibfk_1` FOREIGN KEY (`auther_id`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `chats_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `chats_ibfk_3` FOREIGN KEY (`task_id`) REFERENCES `Task` (`id_task`);
+ALTER TABLE `Chat`
+  ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `Task` (`id`) ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `responds`
+-- Ограничения внешнего ключа таблицы `Contact`
 --
-ALTER TABLE `responds`
-  ADD CONSTRAINT `responds_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE;
+ALTER TABLE `Contact`
+  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `reviews`
+-- Ограничения внешнего ключа таблицы `FileDownload`
 --
-ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE;
+ALTER TABLE `FileDownload`
+  ADD CONSTRAINT `filedownload_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `Respond`
+--
+ALTER TABLE `Respond`
+  ADD CONSTRAINT `respond_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `Review`
+--
+ALTER TABLE `Review`
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `Task` (`id`) ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `Task`
 --
 ALTER TABLE `Task`
-  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id_cats`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`town_id`) REFERENCES `towns` (`code_town`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`executor_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`town_id`) REFERENCES `Location` (`id`) ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `users`
+-- Ограничения внешнего ключа таблицы `UserEvent`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id_cats`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`town_id`) REFERENCES `towns` (`code_town`) ON UPDATE CASCADE;
+ALTER TABLE `UserEvent`
+  ADD CONSTRAINT `userevent_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
