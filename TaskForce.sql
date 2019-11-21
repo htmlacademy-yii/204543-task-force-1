@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 21 2019 г., 18:56
+-- Время создания: Ноя 21 2019 г., 19:35
 -- Версия сервера: 5.7.16-log
 -- Версия PHP: 7.1.0
 
@@ -57,18 +57,6 @@ CREATE TABLE `Contact` (
   `email` varchar(120) NOT NULL COMMENT 'email пользователя',
   `skype` varchar(120) NOT NULL COMMENT 'skype пользователя',
   `other_messenger` int(11) NOT NULL COMMENT 'другой мессенжер'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `FileDownload`
---
-
-CREATE TABLE `FileDownload` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL COMMENT 'id пользователя, кто размещает файлы',
-  `file_url` varchar(255) NOT NULL COMMENT 'url размещения загруженного файла'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -147,22 +135,32 @@ CREATE TABLE `User` (
   `avatar` varchar(200) NOT NULL COMMENT 'аватарка пользователя',
   `about_user` varchar(450) NOT NULL COMMENT 'рассказ исполнителя о себе',
   `birthday` date NOT NULL COMMENT 'дата рождения',
-  `town_id` int(11) NOT NULL COMMENT 'код города',
-  `available_now` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'доступность исполнителя',
-  `last_visit` datetime NOT NULL COMMENT 'время последнего посещения сайта исполнителем'
+  `town_id` int(11) NOT NULL COMMENT 'код города'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `UserEvent`
+-- Структура таблицы `UserImage`
 --
 
-CREATE TABLE `UserEvent` (
+CREATE TABLE `UserImage` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'id пользователя, кто размещает файлы',
+  `file_url` varchar(255) NOT NULL COMMENT 'url размещения загруженного файла'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `UserStatistic`
+--
+
+CREATE TABLE `UserStatistic` (
   `user_id` int(11) NOT NULL COMMENT 'id  исполнителя',
   `views_number` int(11) NOT NULL COMMENT 'кол-во просмотров аккаунта исполнителя',
-  `orders_number` int(11) NOT NULL COMMENT 'кол-во выполненных заказов ',
-  `reviews_number` int(11) NOT NULL COMMENT 'кол-во отзывов у исполнителя'
+  `available_now` tinyint(1) DEFAULT '0' COMMENT 'свободен ли исполнитель',
+  `last_visit` datetime NOT NULL COMMENT 'время последнего посещения сайта'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -198,13 +196,6 @@ ALTER TABLE `Chat`
 -- Индексы таблицы `Contact`
 --
 ALTER TABLE `Contact`
-  ADD KEY `user_id` (`user_id`);
-
---
--- Индексы таблицы `FileDownload`
---
-ALTER TABLE `FileDownload`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -246,9 +237,16 @@ ALTER TABLE `User`
   ADD KEY `town_id` (`town_id`);
 
 --
--- Индексы таблицы `UserEvent`
+-- Индексы таблицы `UserImage`
 --
-ALTER TABLE `UserEvent`
+ALTER TABLE `UserImage`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Индексы таблицы `UserStatistic`
+--
+ALTER TABLE `UserStatistic`
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -266,11 +264,6 @@ ALTER TABLE `user_categories`
 -- AUTO_INCREMENT для таблицы `Chat`
 --
 ALTER TABLE `Chat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT для таблицы `FileDownload`
---
-ALTER TABLE `FileDownload`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `Respond`
@@ -293,6 +286,11 @@ ALTER TABLE `Task`
 ALTER TABLE `User`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id пользователя';
 --
+-- AUTO_INCREMENT для таблицы `UserImage`
+--
+ALTER TABLE `UserImage`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- Ограничения внешнего ключа сохраненных таблиц
 --
 
@@ -308,12 +306,6 @@ ALTER TABLE `Chat`
 --
 ALTER TABLE `Contact`
   ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`);
-
---
--- Ограничения внешнего ключа таблицы `FileDownload`
---
-ALTER TABLE `FileDownload`
-  ADD CONSTRAINT `filedownload_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `Respond`
@@ -337,10 +329,16 @@ ALTER TABLE `Task`
   ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`town_id`) REFERENCES `Location` (`id`) ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `UserEvent`
+-- Ограничения внешнего ключа таблицы `UserImage`
 --
-ALTER TABLE `UserEvent`
-  ADD CONSTRAINT `userevent_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
+ALTER TABLE `UserImage`
+  ADD CONSTRAINT `userimage_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `UserStatistic`
+--
+ALTER TABLE `UserStatistic`
+  ADD CONSTRAINT `userstatistic_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
