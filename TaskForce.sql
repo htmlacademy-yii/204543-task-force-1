@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 21 2019 г., 19:35
+-- Время создания: Ноя 22 2019 г., 16:54
 -- Версия сервера: 5.7.16-log
 -- Версия PHP: 7.1.0
 
@@ -141,11 +141,23 @@ CREATE TABLE `User` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `UserEvent`
+--
+
+CREATE TABLE `UserEvent` (
+  `id` int(11) NOT NULL COMMENT 'id типа события',
+  `name` varchar(120) NOT NULL COMMENT 'наименование события',
+  `icon` varchar(120) NOT NULL COMMENT 'url пиктограммы события'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `UserImage`
 --
 
 CREATE TABLE `UserImage` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL COMMENT 'id загруженного файла',
   `user_id` int(11) NOT NULL COMMENT 'id пользователя, кто размещает файлы',
   `file_url` varchar(255) NOT NULL COMMENT 'url размещения загруженного файла'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -237,6 +249,12 @@ ALTER TABLE `User`
   ADD KEY `town_id` (`town_id`);
 
 --
+-- Индексы таблицы `UserEvent`
+--
+ALTER TABLE `UserEvent`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `UserImage`
 --
 ALTER TABLE `UserImage`
@@ -286,10 +304,15 @@ ALTER TABLE `Task`
 ALTER TABLE `User`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id пользователя';
 --
+-- AUTO_INCREMENT для таблицы `UserEvent`
+--
+ALTER TABLE `UserEvent`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id типа события', AUTO_INCREMENT=9;
+--
 -- AUTO_INCREMENT для таблицы `UserImage`
 --
 ALTER TABLE `UserImage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id загруженного файла';
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -311,7 +334,7 @@ ALTER TABLE `Contact`
 -- Ограничения внешнего ключа таблицы `Respond`
 --
 ALTER TABLE `Respond`
-  ADD CONSTRAINT `respond_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `respond_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `Review`
@@ -339,6 +362,13 @@ ALTER TABLE `UserImage`
 --
 ALTER TABLE `UserStatistic`
   ADD CONSTRAINT `userstatistic_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `user_categories`
+--
+ALTER TABLE `user_categories`
+  ADD CONSTRAINT `user_categories_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_categories_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `Category` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
