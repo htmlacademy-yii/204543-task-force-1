@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 22 2019 г., 18:22
+-- Время создания: Ноя 22 2019 г., 19:02
 -- Версия сервера: 5.7.16-log
 -- Версия PHP: 7.1.0
 
@@ -111,7 +111,7 @@ CREATE TABLE `Task` (
   `id` int(11) NOT NULL COMMENT 'id задания',
   `author_id` int(11) NOT NULL COMMENT 'id заказчика',
   `executor_id` int(11) NOT NULL COMMENT 'id  исполнителя',
-  `town_id` int(11) NOT NULL COMMENT 'код города',
+  `location_id` int(11) NOT NULL COMMENT 'код города',
   `title` varchar(200) NOT NULL COMMENT 'название задания',
   `description` varchar(450) NOT NULL COMMENT 'описание задания',
   `category_id` int(11) NOT NULL COMMENT 'категория работ',
@@ -146,7 +146,7 @@ CREATE TABLE `User` (
   `avatar` varchar(200) NOT NULL COMMENT 'аватарка пользователя',
   `about_user` varchar(450) NOT NULL COMMENT 'рассказ исполнителя о себе',
   `birthday` date NOT NULL COMMENT 'дата рождения',
-  `town_id` int(11) NOT NULL COMMENT 'код города'
+  `location_id` int(11) NOT NULL COMMENT 'код города'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -159,7 +159,7 @@ CREATE TABLE `UserEvent` (
   `id` int(11) NOT NULL COMMENT 'id типа события',
   `user_id` int(11) NOT NULL COMMENT 'id  исполнителя',
   `name` varchar(120) NOT NULL COMMENT 'наименование события',
-  `icon` varchar(120) NOT NULL COMMENT 'url пиктограммы события'
+  `icon` varchar(120) NOT NULL COMMENT 'константа имени события'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -252,7 +252,7 @@ ALTER TABLE `Task`
   ADD PRIMARY KEY (`id`),
   ADD KEY `category_id` (`category_id`),
   ADD KEY `author_id` (`author_id`),
-  ADD KEY `town_id` (`town_id`),
+  ADD KEY `town_id` (`location_id`),
   ADD KEY `executor_id` (`executor_id`);
 
 --
@@ -266,7 +266,7 @@ ALTER TABLE `Town`
 --
 ALTER TABLE `User`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `town_id` (`town_id`);
+  ADD KEY `town_id` (`location_id`);
 
 --
 -- Индексы таблицы `UserEvent`
@@ -377,8 +377,14 @@ ALTER TABLE `Review`
 ALTER TABLE `Task`
   ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`executor_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`town_id`) REFERENCES `Location` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`location_id`) REFERENCES `Location` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `task_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `Category` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `User`
+--
+ALTER TABLE `User`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `Town` (`id`) ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `UserEvent`
