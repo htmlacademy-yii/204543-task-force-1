@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 22 2019 г., 16:54
+-- Время создания: Ноя 22 2019 г., 18:22
 -- Версия сервера: 5.7.16-log
 -- Версия PHP: 7.1.0
 
@@ -67,9 +67,9 @@ CREATE TABLE `Contact` (
 
 CREATE TABLE `Location` (
   `id` int(11) NOT NULL,
-  `name` varchar(120) NOT NULL COMMENT 'название города',
-  `latitude` decimal(5,2) NOT NULL COMMENT 'широта города (географ.)',
-  `longitude` decimal(5,2) NOT NULL COMMENT 'долгота города (географ.)'
+  `town_id` int(11) NOT NULL COMMENT 'код города',
+  `latitude` decimal(10,7) NOT NULL COMMENT 'широта города (географ.)',
+  `longitude` decimal(10,7) NOT NULL COMMENT 'долгота города (географ.)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -94,7 +94,7 @@ CREATE TABLE `Respond` (
 
 CREATE TABLE `Review` (
   `id` int(11) NOT NULL COMMENT 'id отзыва',
-  `user_id` int(11) NOT NULL COMMENT 'id заказчика',
+  `author_id` int(11) NOT NULL COMMENT 'id заказчика',
   `task_id` int(11) NOT NULL COMMENT 'id задания',
   `review_content` varchar(450) NOT NULL COMMENT 'содержание отзыва',
   `rate_stars` int(11) NOT NULL COMMENT 'оценка выполнения задания 1-5 звёзд',
@@ -123,6 +123,17 @@ CREATE TABLE `Task` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `Town`
+--
+
+CREATE TABLE `Town` (
+  `id` int(11) NOT NULL COMMENT 'код города',
+  `name` varchar(120) NOT NULL COMMENT 'название города'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Названия городов';
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `User`
 --
 
@@ -146,6 +157,7 @@ CREATE TABLE `User` (
 
 CREATE TABLE `UserEvent` (
   `id` int(11) NOT NULL COMMENT 'id типа события',
+  `user_id` int(11) NOT NULL COMMENT 'id  исполнителя',
   `name` varchar(120) NOT NULL COMMENT 'наименование события',
   `icon` varchar(120) NOT NULL COMMENT 'url пиктограммы события'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -208,13 +220,15 @@ ALTER TABLE `Chat`
 -- Индексы таблицы `Contact`
 --
 ALTER TABLE `Contact`
+  ADD PRIMARY KEY (`user_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
 -- Индексы таблицы `Location`
 --
 ALTER TABLE `Location`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `town_id` (`town_id`);
 
 --
 -- Индексы таблицы `Respond`
@@ -228,7 +242,7 @@ ALTER TABLE `Respond`
 --
 ALTER TABLE `Review`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
+  ADD KEY `user_id` (`author_id`),
   ADD KEY `task_id` (`task_id`);
 
 --
@@ -242,6 +256,12 @@ ALTER TABLE `Task`
   ADD KEY `executor_id` (`executor_id`);
 
 --
+-- Индексы таблицы `Town`
+--
+ALTER TABLE `Town`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `User`
 --
 ALTER TABLE `User`
@@ -252,7 +272,8 @@ ALTER TABLE `User`
 -- Индексы таблицы `UserEvent`
 --
 ALTER TABLE `UserEvent`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Индексы таблицы `UserImage`
@@ -265,6 +286,7 @@ ALTER TABLE `UserImage`
 -- Индексы таблицы `UserStatistic`
 --
 ALTER TABLE `UserStatistic`
+  ADD PRIMARY KEY (`user_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -331,6 +353,12 @@ ALTER TABLE `Contact`
   ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`);
 
 --
+-- Ограничения внешнего ключа таблицы `Location`
+--
+ALTER TABLE `Location`
+  ADD CONSTRAINT `location_ibfk_1` FOREIGN KEY (`town_id`) REFERENCES `Town` (`id`) ON UPDATE CASCADE;
+
+--
 -- Ограничения внешнего ключа таблицы `Respond`
 --
 ALTER TABLE `Respond`
@@ -340,7 +368,7 @@ ALTER TABLE `Respond`
 -- Ограничения внешнего ключа таблицы `Review`
 --
 ALTER TABLE `Review`
-  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `Task` (`id`) ON UPDATE CASCADE;
 
 --
@@ -349,7 +377,14 @@ ALTER TABLE `Review`
 ALTER TABLE `Task`
   ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`executor_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`town_id`) REFERENCES `Location` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`town_id`) REFERENCES `Location` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `task_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `Category` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `UserEvent`
+--
+ALTER TABLE `UserEvent`
+  ADD CONSTRAINT `userevent_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `UserImage`
