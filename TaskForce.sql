@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 22 2019 г., 19:02
+-- Время создания: Ноя 22 2019 г., 19:56
 -- Версия сервера: 5.7.16-log
 -- Версия PHP: 7.1.0
 
@@ -66,7 +66,7 @@ CREATE TABLE `Contact` (
 --
 
 CREATE TABLE `Location` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL COMMENT 'id записи локации',
   `town_id` int(11) NOT NULL COMMENT 'код города',
   `latitude` decimal(10,7) NOT NULL COMMENT 'широта города (географ.)',
   `longitude` decimal(10,7) NOT NULL COMMENT 'долгота города (географ.)'
@@ -384,7 +384,7 @@ ALTER TABLE `Task`
 -- Ограничения внешнего ключа таблицы `User`
 --
 ALTER TABLE `User`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `Town` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `Location` (`id`) ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `UserEvent`
