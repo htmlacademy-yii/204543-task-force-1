@@ -7,6 +7,14 @@
 
     namespace YiiTaskForce\Strategy;
 
+    use YiiTaskForce\Actions\Action;
+    use YiiTaskForce\Actions\ActionCancel;
+    use YiiTaskForce\Actions\ActionRespond;
+    use YiiTaskForce\Actions\ActionFinish;
+    use YiiTaskForce\Actions\ActionPay;
+    use YiiTaskForce\Actions\ActionRefuse;
+
+
     class TaskStatus
     {
     // роли пользователей
@@ -19,6 +27,7 @@
         public const STATUS_INPROCESS = 'inprogress';
         public const STATUS_FINISH = 'finished';
         public const STATUS_PAID = 'paid';
+        public const STATUS_FAILED = 'failed';
 
     // действия заказчика и исполнителя
         public const ACTION_ORDER = 'create';
@@ -46,7 +55,8 @@
                         2 => self::STATUS_CANCEL,
                         3 => self::STATUS_INPROCESS,
                         4 => self::STATUS_FINISH,
-                        5 => self::STATUS_PAID
+                        5 => self::STATUS_PAID,
+                        6 => self::STATUS_FAILED
                         ];
 
     // методы класса TaskStatus
@@ -64,15 +74,23 @@
         public function getActiveStatus (string $act)
         { // определяем активный статус
             switch ($act) {
-                case self::ACTION_CANCEL:
+
+                case ActionCancel::getClassName():
                     return self::STATUS_CANCEL;
-                case self::ACTION_DO:
+
+                case ActionRespond::getClassName():
                     return self::STATUS_INPROCESS;
-                case self::ACTION_FINISH:
+
+                case  ActionFinish::getClassName():
                     return self::STATUS_FINISH;
-                case self::ACTION_PAY:
+
+                case ActionPay::getClassName():
                     return self::STATUS_PAID;
+
+                case ActionRefuse::getClassName():
+                    return self::STATUS_FAILED;
             }
-              return $this->activeStatus;
+
+                return $this->activeStatus;
         }
     }

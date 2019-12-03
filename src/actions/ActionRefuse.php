@@ -22,7 +22,7 @@
 
         public static function checkUserAccess (int $userId, string $roleUser)
         {
-            if (!$roleUser) {
+            if ($userId ==2 || $roleUser == 'executor') {
                 echo 'Нет прав на отказ от приёмки задания!';
             }
                 return true;

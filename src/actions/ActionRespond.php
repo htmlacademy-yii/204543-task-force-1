@@ -22,7 +22,7 @@
 
         public static function checkUserAccess (int $userId, string $roleUser)
         {
-            if (!$roleUser) {
+            if ($userId ==1 || $roleUser == 'client') {
                 echo 'Нет прав откликнуться на задание!';
             }
                 return true;

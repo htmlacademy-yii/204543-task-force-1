@@ -44,7 +44,7 @@
 
         public static function checkUserAccess (int $userId, string $roleUser)
         {
-            if (!$roleUser) {
+            if ($userId ==2 || $roleUser == 'executor') {
                 echo 'Нет прав на отмену задания!';
             }
                 return true;
@@ -56,5 +56,7 @@
 
     /*$unit = new ActionCancel;
      echo ActionCancel::getClassName();
-     echo ActionCancel::getInnerName();*/
+     echo ActionCancel::getInnerName();
+
+     int $userId, */
 

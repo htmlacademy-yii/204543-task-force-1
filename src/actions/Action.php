@@ -1,6 +1,6 @@
 <?php
 
-    namespace YiiTaskForce\actions;
+    namespace YiiTaskForce\Actions;
 
         abstract class Action
         {
@@ -21,3 +21,5 @@
             abstract public static function getInnerName();
             abstract public static function checkUserAccess(int $userId, string $roleUser);
         }
+
+//
