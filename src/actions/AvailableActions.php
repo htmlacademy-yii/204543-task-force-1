@@ -104,18 +104,23 @@
 
         if ( ActionCancel::checkUserAccess( 1, 'client') && $getActiveStatus == STATUS_NEW) {
             $actionsList[1] = ActionCancel::getInnerName();
+            return $actionsList;
         }
         if ( ActionRespond::checkUserAccess( 2,'executor') && $getActiveStatus == STATUS_NEW) {
             $actionsList[2] = ActionRespond::getInnerName();
+            return $actionsList;
         }
         if ( ActionFinish::checkUserAccess( 2, 'executor') && $getActiveStatus == STATUS_INPROCESS) {
-            $actionsList = ActionFinish::getInnerName();
+            $actionsList[3] = ActionFinish::getInnerName();
+            return $actionsList;
         }
          if ( ActionPay::checkUserAccess( 1,'client') && $getActiveStatus == STATUS_FINISH) {
-            $actionsList = ActionPay::getInnerName();
+            $actionsList[4] = ActionPay::getInnerName();
+            return $actionsList;
         }
         if ( ActionRefuse::checkUserAccess( 1, 'client') && $getActiveStatus == STATUS_FINISH) {
-            $actionsList = 'to_refuse'; //ActionRefuse::getInnerName();
+            $actionsList[5] = ActionRefuse::getInnerName();
+            return $actionsList;
         }
         return $this->actionsList;
     }
@@ -125,8 +130,12 @@
 $unit = new AvailableActions;
 
 echo 'Список разрешенных действий'; "\n";
+var_dump($unit->$actionsList); "\n";
 var_dump($unit->getAvailableActions(1, 'client', STATUS_NEW)); "\n";
+var_dump($unit->getAvailableActions(2, 'executor', STATUS_NEW)); "\n";
+var_dump($unit->getAvailableActions(2, 'executor', STATUS_INPROCESS)); "\n";
 var_dump($unit->getAvailableActions(1, 'client', STATUS_FINISH)); "\n";
+var_dump($unit->actionsList[5]); "\n";
 
 echo 'Список статусов'; "\n";
 var_dump($unit->getStatuses()); "\n";
