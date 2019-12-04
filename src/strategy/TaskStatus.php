@@ -30,11 +30,11 @@
         public const STATUS_FAILED = 'failed';
 
     // действия заказчика и исполнителя
-        public const ACTION_ORDER = 'create';
-        public const ACTION_CANCEL = 'cancel';
-        public const ACTION_PAY = 'pay';
-        public const ACTION_DO ='respond';
-        public const ACTION_FINISH = 'job_is_done';
+        public const ACTION_CANCEL = ActionCancel::class;
+        public const ACTION_RESPOND = ActionRespond::class;
+        public const ACTION_FINISH = ActionFinish::class;
+        public const ACTION_PAY = ActionPay::class;
+        public const ACTION_REFUSE = ActionRefuse::class;
 
     // свойства класса TaskStatus
         public $clientId = 0; //id заказчика
@@ -43,12 +43,12 @@
         public $activeStatus = 'new'; // активный статус заказа
 
         private static $actions = [
-                        1 => self::ACTION_ORDER,
-                        2 => self::ACTION_CANCEL,
-                        3 => self::ACTION_DO,
-                        4 => self::ACTION_FINISH,
-                        5 => self::ACTION_PAY
-                        ];
+                        1 => self::ACTION_CANCEL,
+                        2 => self::ACTION_RESPOND,
+                        3 => self::ACTION_FINISH,
+                        4 => self::ACTION_PAY,
+                        5 => self::ACTION_REFUSE
+        ];
 
         private static $statuses = [
                         1 => self::STATUS_NEW,
@@ -57,7 +57,7 @@
                         4 => self::STATUS_FINISH,
                         5 => self::STATUS_PAID,
                         6 => self::STATUS_FAILED
-                        ];
+        ];
 
     // методы класса TaskStatus
 
@@ -75,22 +75,21 @@
         { // определяем активный статус
             switch ($act) {
 
-                case ActionCancel::getClassName():
+                case self::ACTION_CANCEL:
                     return self::STATUS_CANCEL;
 
-                case ActionRespond::getClassName():
+                case self::ACTION_RESPOND:
                     return self::STATUS_INPROCESS;
 
-                case  ActionFinish::getClassName():
+                case  self::ACTION_FINISH:
                     return self::STATUS_FINISH;
 
-                case ActionPay::getClassName():
+                case self::ACTION_PAY:
                     return self::STATUS_PAID;
 
-                case ActionRefuse::getClassName():
+                case self::ACTION_REFUSE:
                     return self::STATUS_FAILED;
             }
-
                 return $this->activeStatus;
         }
     }

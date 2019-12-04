@@ -6,14 +6,14 @@
      * loading function for Class TaskStatus
      */
     use YiiTaskForce\Strategy\TaskStatus;
-    use YiiTaskForce\actions\Action;
-    use YiiTaskForce\actions\ActionCancel;
-    use YiiTaskForce\actions\ActionRespond;
-    use YiiTaskForce\actions\ActionFinish;
-    use YiiTaskForce\actions\ActionPay;
-    use YiiTaskForce\actions\ActionRefuse;
-
-    $strategy = new TaskStatus();
+    /*
+    use YiiTaskForce\Actions\Action;
+    use YiiTaskForce\Actions\ActionCancel;
+    use YiiTaskForce\Actions\ActionRespond;
+    use YiiTaskForce\Actions\ActionFinish;
+    use YiiTaskForce\Actions\ActionPay;
+    use YiiTaskForce\Actions\ActionRefuse;
+    */
 
     //настройки assert()
     assert_options(ASSERT_ACTIVE, 1);
@@ -23,27 +23,12 @@
         echo func_get_arg(3);
     });
 
-    $strategy->act = ActionCancel::getClassName();
-    var_dump( $strategy->act);
+    $strategy = new TaskStatus();
 
-    var_dump($strategy->getActiveStatus(ActionRespond::getClassName()));
-    echo 'Статусы из TaskStatus::getActiveStatus()';
-
-    $allActions = [
-        ActionCancel::getClassName(),
-        ActionRespond::getClassName(),
-        ActionFinish::getClassName(),
-        ActionPay::getClassName(),
-        ActionRefuse::getClassName()
-    ];
-
-    foreach ($allActions as $allActions) {
-        var_dump ($strategy->getActiveStatus($allActions)); "\n";
-    }
-    /*
-    * assert'ы запустить не удалось...
-
-    assert ($strategy->getActiveStatus(ActionCancel::getClassName()) == TaskStatus::STATUS_NEW, 'problem with cancel action');
+    assert ($strategy->getActiveStatus(TaskStatus::ACTION_CANCEL) == TaskStatus::STATUS_NEW, 'problem with cancel action');
+    assert ($strategy->getActiveStatus(TaskStatus::ACTION_RESPOND) == TaskStatus::STATUS_INPROCESS, 'problem with respond action');
+    assert ($strategy->getActiveStatus(TaskStatus::ACTION_FINISH) == TaskStatus::STATUS_FINISH, 'problem with finish action');
+    assert ($strategy->getActiveStatus(TaskStatus::ACTION_PAY) == TaskStatus::STATUS_PAID, 'problem with pay action');
+    assert ($strategy->getActiveStatus(TaskStatus::ACTION_REFUSE) == TaskStatus::STATUS_FAILED, 'problem with cancel action');
 
     assert (false, 'test complete');
-    */
