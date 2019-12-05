@@ -18,10 +18,12 @@
 
     $strategy = new TaskStatus();
 
-    assert ($strategy->getActiveStatus(TaskStatus::ACTION_CANCEL) == TaskStatus::STATUS_FINISH, 'problem with cancel action');
+    assert ($strategy->getActiveStatus(TaskStatus::ACTION_CANCEL) == TaskStatus::STATUS_CANCEL, 'problem with cancel action');
     assert ($strategy->getActiveStatus(TaskStatus::ACTION_RESPOND) == TaskStatus::STATUS_INPROCESS, 'problem with respond action');
     assert ($strategy->getActiveStatus(TaskStatus::ACTION_FINISH) == TaskStatus::STATUS_FINISH, 'problem with finish action');
     assert ($strategy->getActiveStatus(TaskStatus::ACTION_PAY) == TaskStatus::STATUS_PAID, 'problem with pay action');
     assert ($strategy->getActiveStatus(TaskStatus::ACTION_REFUSE) == TaskStatus::STATUS_FAILED, 'problem with cancel action');
 
     assert (false, 'test complete');
+
+
