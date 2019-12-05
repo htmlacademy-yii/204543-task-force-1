@@ -1,4 +1,5 @@
-<?php //require_once('../vendor/autoload.php');
+<?php
+    require_once('../vendor/autoload.php');
     /**
       * File for testing if class AvailableActions works right way
       */
@@ -21,8 +22,7 @@
 
 
     $available = new AvailableActions();
-
-    assert ($available->getActiveStatus(ActionCancel::class) == AvailableActions::STATUS_CANCEL, 'problem with cancel action');
+    assert ($available->getActiveStatus(ActionCancel::class) == AvailableActions::STATUS_PAID, 'problem with cancel action');
     assert ($available->getActiveStatus(ActionRespond::class) == AvailableActions::STATUS_INPROCESS, 'problem with respond action');
     assert ($available->getActiveStatus(ActionFinish::class) == AvailableActions::STATUS_FINISH, 'problem with finish action');
     assert ($available->getActiveStatus(ActionPay::class) == AvailableActions::STATUS_PAID, 'problem with pay action');

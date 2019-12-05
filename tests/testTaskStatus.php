@@ -1,4 +1,5 @@
-<?php require_once('../vendor/autoload.php');
+<?php
+    require_once('../vendor/autoload.php');
     /**
       * File for testing if Class works right way
       */
