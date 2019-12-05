@@ -2,7 +2,6 @@
 
     namespace YiiTaskForce\Actions;
 
-
     // подключаем абстрактный класс для проверки класса ActionCancel
     /* abstract class Action
         {
@@ -28,9 +27,7 @@
     {
         public static function getClassName ()
         {
-            $className = get_class();
-
-            return $className;
+            return self::class;
         }
 
         public static function getInnerName ()
@@ -54,9 +51,9 @@
 
     // Проверка вывода имени и внутренного имени класса
 
-    /*$unit = new ActionCancel;
-     echo ActionCancel::getClassName();
-     echo ActionCancel::getInnerName();
-
-     int $userId, */
+    /*
+    $unit = new ActionCancel;
+        echo ActionCancel::getClassName();
+        echo ActionCancel::getInnerName();
+    */
 

@@ -2,13 +2,13 @@
 
     namespace YiiTaskForce\Actions;
 
+    require_once ('C:\OpenServer\domains\localhost\YiiTaskForce\vendor\autoload.php');
+
     class ActionRespond extends Action
     {
         public static function getClassName ()
         {
-            $className = get_class();
-
-            return $className;
+            return self::class;
         }
 
         public static function getInnerName ()
@@ -29,3 +29,7 @@
         }
 
     }
+
+    $unit = new ActionRespond;
+
+    var_dump($unit->getClassName());

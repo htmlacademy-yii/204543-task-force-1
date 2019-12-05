@@ -6,14 +6,6 @@
      * loading function for Class TaskStatus
      */
     use YiiTaskForce\Strategy\TaskStatus;
-    /*
-    use YiiTaskForce\Actions\Action;
-    use YiiTaskForce\Actions\ActionCancel;
-    use YiiTaskForce\Actions\ActionRespond;
-    use YiiTaskForce\Actions\ActionFinish;
-    use YiiTaskForce\Actions\ActionPay;
-    use YiiTaskForce\Actions\ActionRefuse;
-    */
 
     //настройки assert()
     assert_options(ASSERT_ACTIVE, 1);
@@ -25,7 +17,7 @@
 
     $strategy = new TaskStatus();
 
-    assert ($strategy->getActiveStatus(TaskStatus::ACTION_CANCEL) == TaskStatus::STATUS_NEW, 'problem with cancel action');
+    assert ($strategy->getActiveStatus(TaskStatus::ACTION_CANCEL) == TaskStatus::STATUS_FINISH, 'problem with cancel action');
     assert ($strategy->getActiveStatus(TaskStatus::ACTION_RESPOND) == TaskStatus::STATUS_INPROCESS, 'problem with respond action');
     assert ($strategy->getActiveStatus(TaskStatus::ACTION_FINISH) == TaskStatus::STATUS_FINISH, 'problem with finish action');
     assert ($strategy->getActiveStatus(TaskStatus::ACTION_PAY) == TaskStatus::STATUS_PAID, 'problem with pay action');

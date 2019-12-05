@@ -7,8 +7,8 @@
 
     namespace YiiTaskForce\Actions;
 
-    require_once ('C:\OpenServer\domains\localhost\YiiTaskForce\vendor\autoload.php');
-    //require_once ('..vendor/autoload.php');
+    //require_once ('C:\OpenServer\domains\localhost\YiiTaskForce\vendor\autoload.php');
+    //require_once __DIR__  . 'vendor/autoload.php';
 
     use YiiTaskForce\Actions\Action;
     use YiiTaskForce\Actions\ActionCancel;
@@ -30,6 +30,13 @@
         public const STATUS_FINISH = 'finished';
         public const STATUS_PAID = 'paid';
         public const STATUS_FAILED = 'failed';
+
+    // действия заказчика и исполнителя
+        public const ACTION_CANCEL = ActionCancel::class;
+        public const ACTION_RESPOND = ActionRespond::class;
+        public const ACTION_FINISH = ActionFinish::class;
+        public const ACTION_PAY = ActionPay::class;
+        public const ACTION_REFUSE = ActionRefuse::class;
 
     // свойства класса TaskStatus
         public $clientId = 0; //id заказчика
@@ -73,19 +80,19 @@
 
             switch ($act) {
 
-                case ActionCancel::getInnerName():
+                case ActionCancel::class:
                     return self::STATUS_CANCEL;
 
-                case ActionRespond::getInnerName():
+                case ActionRespond::class:
                     return self::STATUS_INPROCESS;
 
-                case  ActionFinish::getInnerName():
+                case ActionFinish::class:
                     return self::STATUS_FINISH;
 
-                case ActionPay::getInnerName():
+                case ActionPay::class:
                     return self::STATUS_PAID;
 
-                case ActionRefuse::getInnerName():
+                case ActionPay::class:
                     return self::STATUS_FAILED;
             }
 
@@ -96,8 +103,6 @@
       * $user == 1; если это заказчик
       * $user == 2; если это испонитель
       */
-
-
     public function getAvailableActions ( int $userId, string $roleUser, $getActiveStatus) {
 
         $actionsList  = [];
@@ -127,6 +132,9 @@
 
 }
 
+// проверки для $actionsList
+
+/*
 $unit = new AvailableActions;
 
 echo 'Список разрешенных действий'; "\n";
@@ -135,7 +143,6 @@ var_dump($unit->getAvailableActions(1, 'client', STATUS_NEW)); "\n";
 var_dump($unit->getAvailableActions(2, 'executor', STATUS_NEW)); "\n";
 var_dump($unit->getAvailableActions(2, 'executor', STATUS_INPROCESS)); "\n";
 var_dump($unit->getAvailableActions(1, 'client', STATUS_FINISH)); "\n";
-var_dump($unit->actionsList[5]); "\n";
 
 echo 'Список статусов'; "\n";
 var_dump($unit->getStatuses()); "\n";
@@ -145,4 +152,4 @@ var_dump($unit->getActions());
 $onething = new ActionPay;
 echo '$innerName';  "\n";
 var_dump($onething->getInnerName());
-//int $userId,
+*/

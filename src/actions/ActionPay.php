@@ -1,20 +1,17 @@
 <?php
 
-    namespace YiiTaskForce\actions;
+    namespace YiiTaskForce\Actions;
 
     class ActionPay extends Action
     {
             public static function getClassName ()
         {
-            $className = get_class();
-
-            return $className;
+            return self::ActionPay;
         }
 
         public static function getInnerName ()
         {
             $innerName = 'to_pay';
-
             return $innerName;
         }
 

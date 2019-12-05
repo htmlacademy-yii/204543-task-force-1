@@ -1,14 +1,12 @@
 <?php
 
-    namespace YiiTaskForce\actions;
+    namespace YiiTaskForce\Actions;
 
     class ActionFinish extends Action
     {
-          public static function getClassName ()
+        public static function getClassName ()
         {
-            $className = get_class();
-
-            return $className;
+            return self::class;
         }
 
         public static function getInnerName ()
