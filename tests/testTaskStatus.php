@@ -1,7 +1,9 @@
 <?php
-    require_once('../vendor/autoload.php');
+    require_once '../vendor/autoload.php';
+
     /**
-      * File for testing if Class works right way
+      * File
+       for testing if Class works right way
       */
     /*
      * loading function for Class TaskStatus

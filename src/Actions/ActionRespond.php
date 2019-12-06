@@ -22,14 +22,10 @@
 
         public static function checkUserAccess (int $userId, string $roleUser)
         {
-            if ($userId ==1 || $roleUser == 'client') {
+            if ($userId == 1 || $roleUser == 'client') {
                 echo 'Нет прав откликнуться на задание!';
             }
                 return true;
         }
 
     }
-
-    $unit = new ActionRespond;
-
-    var_dump($unit->getClassName());

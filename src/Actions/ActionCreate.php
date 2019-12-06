@@ -2,7 +2,7 @@
 
     namespace YiiTaskForce\Actions;
 
-    class ActionCancel extends Action
+    class ActionCreate extends Action
     {
         public static function getClassName ()
         {
@@ -11,7 +11,7 @@
 
         public static function getInnerName ()
         {
-            $innerName = 'to_cancel';
+            $innerName = 'to_create';
 
             return $innerName;
         }
@@ -20,8 +20,8 @@
 
         public static function checkUserAccess (int $userId, string $roleUser)
         {
-            if ($userId == 2 || $roleUser == 'executor') {
-                echo 'Нет прав на отмену задания!';
+            if ($userId ==2 || $roleUser == 'executor') {
+                echo 'Нет прав для создания задания!';
             }
                 return true;
         }
