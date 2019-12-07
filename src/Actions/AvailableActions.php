@@ -147,9 +147,6 @@ var_dump ($unit->getAvailableActions(1, 'client', 'STATUS_FINISH')); "\n";
 
 
 
-var_dump ($unit->getAvailableActions (2,'executor', 'STATUS_INPROCESS'));
-
-
 /*
       * примем для тестирования, что свойство $userId принимает след. значения
       * $user == 1; если это заказчик
