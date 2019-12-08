@@ -9,14 +9,6 @@
 
     require_once '../../vendor/autoload.php';
 
-    use YiiTaskForce\Actions\Action;
-    use YiiTaskForce\Actions\ActionCreate;
-    use YiiTaskForce\Actions\ActionCancel;
-    use YiiTaskForce\Actions\ActionRespond;
-    use YiiTaskForce\Actions\ActionFinish;
-    use YiiTaskForce\Actions\ActionPay;
-    use YiiTaskForce\Actions\ActionRefuse;
-
     class AvailableActions
        {
     // роли пользователей
@@ -103,46 +95,50 @@
               return $this->activeStatus;
         }
 
-    public $actionsList = [];
 
-    public function getAvailableActions ( int $userId, string $roleUser, $activeStatus) {
-    //public function getAvailableActions ($activeStatus) {
+    public  $actionsList = [];
 
+    public function getAvailableActions ( int $userId, string $roleUser, $activeStatus)
+    {
 
-       if ( ActionCancel::checkUserAccess( 1, 'client') && self::STATUS_NEW) {
-            $actionsList = [0 => ActionCancel::getInnerName()];
-
+        if ( ActionCancel::checkUserAccess( 1, 'client') &&  self::STATUS_NEW) {
+          $this->actionsList[] = ActionCancel::getInnerName();
         }
-        if ( ActionRespond::checkUserAccess( 2, 'executor') && self::STATUS_NEW) {
-            $actionsList = [1 => ActionRespond::getInnerName()];
 
+        if ( ActionRespond::checkUserAccess( 2, 'executor') && self::STATUS_NEW) {
+            $this->actionsList[] = ActionRespond::getInnerName();
         }
 
         if ( ActionFinish::checkUserAccess( 2, 'executor') && self::STATUS_INPROCESS) {
-            $actionsList = [2 => ActionFinish::getInnerName()];
-
+           $this->actionsList[] = ActionFinish::getInnerName();
         }
-         if ( ActionPay::checkUserAccess( 1,'client') && self::STATUS_FINISH) {
-            $actionsList = [3 =>ActionPay::getInnerName()];
 
+        if ( ActionPay::checkUserAccess( 1,'client') && self::STATUS_FINISH) {
+           $this->actionsList[] = ActionPay::getInnerName();
         }
+
         if ( ActionRefuse::checkUserAccess( 1, 'client') &&  self::STATUS_FINISH) {
-            $actionsList = [4 =>ActionRefuse::getInnerName()];
-
+            $this->actionsList[] = ActionRefuse::getInnerName();
         }
-            return $actionsList;
+         return $this->actionsList;
     }
 
 }
 
-// проверки для $actionsList
+// проверки для $actionsList;
 
 $unit = new AvailableActions;
 
 echo 'Список разрешенных действий'; "\n";
+
 var_dump ($unit->getAvailableActions (1, 'client', 'STATUS_NEW')); "\n";
+    unset($unit->actionsList);
+
 var_dump ($unit->getAvailableActions(2, 'executor', 'STATUS_NEW')); "\n";
+    unset($unit->actionsList);
+
 var_dump ($unit->getAvailableActions(2, 'executor', 'STATUS_INPROCESS')); "\n";
+    unset($unit->actionsList);
 var_dump ($unit->getAvailableActions(1, 'client', 'STATUS_FINISH')); "\n";
 
 
