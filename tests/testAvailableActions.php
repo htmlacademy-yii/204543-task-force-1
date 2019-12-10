@@ -39,29 +39,19 @@
       * $user == 2; если это исполнитель
      */
 
-
-    /*
-
-    */
-
+    echo 'Действия, доступные заказчику:';
     $unit = new AvailableActions;
     var_dump($unit->getAvailableActions (1, 'client', 'STATUS_NEW')) ;
 
+    echo 'Действия, доступные исполнителю:';
+    $unit = new AvailableActions;
+    var_dump($unit->getAvailableActions (2, 'executor', 'STATUS_NEW')) ;
 
     $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (1, 'client', 'STATUS_NEW') == 'to_cancel', 'problem with client actions for STATUS_NEW');
+    assert ($unit->getAvailableActions (1, 'client', 'STATUS_NEW') == ['to_cancel', 'to_pay', 'to_refuse'], 'problem with client actions ');
 
     $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (2, 'executor', 'STATUS_NEW') == 'to_respond', 'problem with executor actions for STATUS_NEW');
-
-    $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (2, 'executor', 'STATUS_INPROCESS') == 'to_finish', 'problem with  executor actions for STATUS_INPROCESS');
-
-    $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (1, 'client', 'STATUS_FINISH') == 'to_pay', 'problem with client actions for STATUS_FINISH');
-
-    $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (1, 'client', 'STATUS_FINISH') == 'to_refuse', 'problem with client actions for STATUS_FINISH');
+    assert ($unit->getAvailableActions (2, 'executor', 'STATUS_NEW') == ['to_respond', 'to_finish'], 'problem with executor actions');
 
     assert (false, 'test AvailableActions complete');
 

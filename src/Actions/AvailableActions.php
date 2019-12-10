@@ -99,24 +99,24 @@
     {
         $actionsList = [];
 
-        if ( ActionCancel::checkUserAccess( 1, 'client') &&  self::STATUS_NEW) {
+        if ( ActionCancel::checkUserAccess( $userId, $roleUser) &&  self::STATUS_NEW) {
           $actionsList[] = ActionCancel::getInnerName();
         }
 
-        if ( ActionRespond::checkUserAccess( 2, 'executor') && self::STATUS_NEW) {
+        if ( ActionRespond::checkUserAccess(  $userId, $roleUser) && self::STATUS_NEW) {
             $actionsList[] = ActionRespond::getInnerName();
         }
 
-        if ( ActionFinish::checkUserAccess( 2, 'executor') && self::STATUS_INPROCESS) {
+        if ( ActionFinish::checkUserAccess(  $userId, $roleUser) && self::STATUS_INPROCESS) {
            $actionsList[] = ActionFinish::getInnerName();
 
         }
 
-        if ( ActionPay::checkUserAccess( 1,'client') && self::STATUS_FINISH) {
+        if ( ActionPay::checkUserAccess(  $userId, $roleUser) && self::STATUS_FINISH) {
            $actionsList[] = ActionPay::getInnerName();
         }
 
-        if ( ActionRefuse::checkUserAccess( 1, 'client') &&  self::STATUS_FINISH) {
+        if ( ActionRefuse::checkUserAccess(  $userId, $roleUser) &&  self::STATUS_FINISH) {
             $actionsList[] = ActionRefuse::getInnerName();
         }
         return $actionsList;
