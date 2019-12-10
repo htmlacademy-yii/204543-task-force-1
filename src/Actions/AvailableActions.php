@@ -7,8 +7,6 @@
 
     namespace YiiTaskForce\Actions;
 
-    require_once '../../vendor/autoload.php';
-
     class AvailableActions
        {
     // роли пользователей
@@ -46,6 +44,7 @@
             4 => ActionRespond::class,
             5 => ActionFinish::class
         ];
+
     // массив статусов задания
         private static $statuses = [
             0 => self::STATUS_NEW,
@@ -57,13 +56,12 @@
         ];
 
     // методы класса TaskStatus
-
-        public function getActions ()
+        public function getActions () : array
         { //получение массива действий
             return self::$actions;
         }
 
-        public function getStatuses ()
+        public function getStatuses (): array
         { //получение массива статусов задания
             return self::$statuses;
         }
@@ -95,57 +93,34 @@
               return $this->activeStatus;
         }
 
-
-    public  $actionsList = [];
+    public $className;
 
     public function getAvailableActions ( int $userId, string $roleUser, $activeStatus)
     {
+        $actionsList = [];
 
         if ( ActionCancel::checkUserAccess( 1, 'client') &&  self::STATUS_NEW) {
-          $this->actionsList[] = ActionCancel::getInnerName();
+          $actionsList[] = ActionCancel::getInnerName();
         }
 
         if ( ActionRespond::checkUserAccess( 2, 'executor') && self::STATUS_NEW) {
-            $this->actionsList[] = ActionRespond::getInnerName();
+            $actionsList[] = ActionRespond::getInnerName();
         }
 
         if ( ActionFinish::checkUserAccess( 2, 'executor') && self::STATUS_INPROCESS) {
-           $this->actionsList[] = ActionFinish::getInnerName();
+           $actionsList[] = ActionFinish::getInnerName();
+
         }
 
         if ( ActionPay::checkUserAccess( 1,'client') && self::STATUS_FINISH) {
-           $this->actionsList[] = ActionPay::getInnerName();
+           $actionsList[] = ActionPay::getInnerName();
         }
 
         if ( ActionRefuse::checkUserAccess( 1, 'client') &&  self::STATUS_FINISH) {
-            $this->actionsList[] = ActionRefuse::getInnerName();
+            $actionsList[] = ActionRefuse::getInnerName();
         }
-         return $this->actionsList;
+        return $actionsList;
     }
 
 }
-
-// проверки для $actionsList;
-
-$unit = new AvailableActions;
-
-echo 'Список разрешенных действий'; "\n";
-
-var_dump ($unit->getAvailableActions (1, 'client', 'STATUS_NEW')); "\n";
-    unset($unit->actionsList);
-
-var_dump ($unit->getAvailableActions(2, 'executor', 'STATUS_NEW')); "\n";
-    unset($unit->actionsList);
-
-var_dump ($unit->getAvailableActions(2, 'executor', 'STATUS_INPROCESS')); "\n";
-    unset($unit->actionsList);
-var_dump ($unit->getAvailableActions(1, 'client', 'STATUS_FINISH')); "\n";
-
-
-
-/*
-      * примем для тестирования, что свойство $userId принимает след. значения
-      * $user == 1; если это заказчик
-      * $user == 2; если это исполнитель
-     */
 

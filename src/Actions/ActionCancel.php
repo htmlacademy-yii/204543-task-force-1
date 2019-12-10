@@ -18,21 +18,12 @@
 
         public $roleUser; // = получаем из результата запроса 'SELECT id_author FROM TABLE Task WHERE id_author = $userId';
 
-        public static function checkUserAccess (int $userId, string $roleUser)
+        public static function checkUserAccess (int $userId, string $roleUser) : bool
         {
             if ($userId == 2 || $roleUser == 'executor') {
-                echo 'Нет прав на отмену задания!';
+                return false;
+
             }
                 return true;
         }
     }
-
-
-    // Проверка вывода имени и внутренного имени класса
-
-    /*
-    $unit = new ActionCancel;
-        echo ActionCancel::getClassName();
-        echo ActionCancel::getInnerName();
-    */
-

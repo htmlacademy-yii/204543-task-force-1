@@ -20,10 +20,10 @@
 
         public $roleUser; // = получаем из результата запроса 'SELECT id_executor FROM TABLE Task WHERE id_author = $userId';
 
-        public static function checkUserAccess (int $userId, string $roleUser)
+        public static function checkUserAccess (int $userId, string $roleUser) : bool
         {
-            if ($userId == 1 || $roleUser == 'client') {
-                echo 'Нет прав откликнуться на задание!';
+            if ($userId == 1 || $roleUser == 'client')  {
+                return false;
             }
                 return true;
         }

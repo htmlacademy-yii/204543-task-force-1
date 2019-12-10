@@ -29,4 +29,46 @@
     assert ($available->getActiveStatus(ActionPay::class) == AvailableActions::STATUS_PAID, 'problem with pay action');
     assert ($available->getActiveStatus(ActionRefuse::class) == AvailableActions::STATUS_FAILED, 'problem with refuse action');
 
-    assert (false, 'test complete');
+    assert (false, 'test AvailableStatuses complete');
+
+
+    // проверки для $actionsList;
+    /*
+      * примем для тестирования, что свойство $userId принимает след. значения
+      * $user == 1; если это заказчик
+      * $user == 2; если это исполнитель
+     */
+
+
+    /*
+
+    */
+
+    $unit = new AvailableActions;
+    var_dump($unit->getAvailableActions (1, 'client', 'STATUS_NEW')) ;
+
+
+    $unit = new AvailableActions;
+    assert ($unit->getAvailableActions (1, 'client', 'STATUS_NEW') == 'to_cancel', 'problem with client actions for STATUS_NEW');
+
+    $unit = new AvailableActions;
+    assert ($unit->getAvailableActions (2, 'executor', 'STATUS_NEW') == 'to_respond', 'problem with executor actions for STATUS_NEW');
+
+    $unit = new AvailableActions;
+    assert ($unit->getAvailableActions (2, 'executor', 'STATUS_INPROCESS') == 'to_finish', 'problem with  executor actions for STATUS_INPROCESS');
+
+    $unit = new AvailableActions;
+    assert ($unit->getAvailableActions (1, 'client', 'STATUS_FINISH') == 'to_pay', 'problem with client actions for STATUS_FINISH');
+
+    $unit = new AvailableActions;
+    assert ($unit->getAvailableActions (1, 'client', 'STATUS_FINISH') == 'to_refuse', 'problem with client actions for STATUS_FINISH');
+
+    assert (false, 'test AvailableActions complete');
+
+/*
+// проверка классов действий
+    $actionclass = new ActionRespond;
+
+    assert ($actionclass->checkUserAccess(1, 'executor') == true, 'problem with checkUserAccess in respond action');
+    assert (false, 'test ActionClass complete');
+    */
