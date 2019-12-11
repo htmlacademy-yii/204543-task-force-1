@@ -38,20 +38,41 @@
       * $user == 1; если это заказчик
       * $user == 2; если это исполнитель
      */
+    echo '<hr />'; "\n";
+    $unit = new ActionCancel;
+    /*$unit->userId = 1;
+    $unit->roleUser = 'client';*/
+    var_dump($unit->checkUserAccess (1, 'client'));
 
-    echo 'Действия, доступные заказчику:';
+    echo '<hr />'; "\n";
     $unit = new AvailableActions;
-    var_dump($unit->getAvailableActions (1, 'client', 'STATUS_NEW')) ;
+    var_dump($unit->getActiveStatus(ActionRespond::class));
 
-    echo 'Действия, доступные исполнителю:';
+    echo '<hr />'; "\n";
+    echo 'Действия, доступные заказчику для статуса NEW:';
     $unit = new AvailableActions;
-    var_dump($unit->getAvailableActions (2, 'executor', 'STATUS_NEW')) ;
+    var_dump($unit->getAvailableActions (1, 'client', 'new')) ;
+
+    echo 'Действия, доступные заказчику для статуса FINISH:';
+    $unit = new AvailableActions;
+    var_dump($unit->getAvailableActions (1, 'client', 'finished')) ;
+    echo "\n";
+
+    echo 'Действия, доступные исполнителю для статуса NEW:';
+    $unit = new AvailableActions;
+    var_dump($unit->getAvailableActions (2, 'executor', 'new')) ;
+
+    echo 'Действия, доступные исполнителю для статуса INPROCESS:';
+    $unit = new AvailableActions;
+    var_dump($unit->getAvailableActions (2, 'executor', 'inprocess'));
+    echo "\n";
+
 
     $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (1, 'client', 'STATUS_NEW') == ['to_cancel', 'to_pay', 'to_refuse'], 'problem with client actions ');
+    assert ($unit->getAvailableActions (1, 'client','new') == ['to_cancel'], 'problem with client action in status NEW');
 
     $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (2, 'executor', 'STATUS_NEW') == ['to_respond', 'to_finish'], 'problem with executor actions');
+    assert ($unit->getAvailableActions (2, 'executor', 'new') == ['to_respond'], 'problem with executor action in status NEW');
 
     assert (false, 'test AvailableActions complete');
 

@@ -16,7 +16,7 @@
     // статусы задания
         public const STATUS_NEW = 'new';
         public const STATUS_CANCEL = 'cancel';
-        public const STATUS_INPROCESS = 'inprogress';
+        public const STATUS_INPROCESS = 'inprocess';
         public const STATUS_FINISH = 'finished';
         public const STATUS_PAID = 'paid';
         public const STATUS_FAILED = 'failed';
@@ -33,7 +33,7 @@
         public $clientId = 0; //id заказчика
         public $executerId = 0; //id исполнителя
         public $taskFinishDate = ""; //дата окончания работы по заказу
-        public $activeStatus = 'new'; // активный статус заказа
+        public $activeStatus = 'inprocess'; // активный статус заказа
 
     // действия заказчика и исполнителя
         private static $actions = [
@@ -69,13 +69,13 @@
         public function getActiveStatus (string $act)
         { // определяем активный статус
 
-            switch ($act) {
+        /*  switch ($act) {
 
                 case ActionCreate::class:
                     return self::STATUS_NEW;
 
                 case ActionCancel::class:
-                    return self::STATUS_CANCEL;
+                   return self::STATUS_CANCEL;
 
                 case ActionRespond::class:
                     return self::STATUS_INPROCESS;
@@ -86,37 +86,35 @@
                 case ActionPay::class:
                     return self::STATUS_PAID;
 
-                case ActionRefuse::class:
-                    return self::STATUS_FAILED;
-            }
+               case ActionRefuse::class:
+                return self::STATUS_FAILED;
+            } */
 
               return $this->activeStatus;
         }
-
-    public $className;
 
     public function getAvailableActions ( int $userId, string $roleUser, $activeStatus)
     {
         $actionsList = [];
 
-        if ( ActionCancel::checkUserAccess( $userId, $roleUser) &&  self::STATUS_NEW) {
+        if ( ActionCancel::checkUserAccess( $userId, $roleUser) && $activeStatus == 'new') {
           $actionsList[] = ActionCancel::getInnerName();
         }
 
-        if ( ActionRespond::checkUserAccess(  $userId, $roleUser) && self::STATUS_NEW) {
+        if ( ActionRespond::checkUserAccess ($userId, $roleUser) && $activeStatus == 'new') {
             $actionsList[] = ActionRespond::getInnerName();
         }
 
-        if ( ActionFinish::checkUserAccess(  $userId, $roleUser) && self::STATUS_INPROCESS) {
+        if ( ActionFinish::checkUserAccess($userId, $roleUser) && $activeStatus == 'inprocess') {
            $actionsList[] = ActionFinish::getInnerName();
 
         }
 
-        if ( ActionPay::checkUserAccess(  $userId, $roleUser) && self::STATUS_FINISH) {
+        if ( ActionPay::checkUserAccess($userId, $roleUser) && $activeStatus == 'finished' ) {
            $actionsList[] = ActionPay::getInnerName();
         }
 
-        if ( ActionRefuse::checkUserAccess(  $userId, $roleUser) &&  self::STATUS_FINISH) {
+        if ( ActionRefuse::checkUserAccess($userId, $roleUser) &&  $activeStatus == 'finished') {
             $actionsList[] = ActionRefuse::getInnerName();
         }
         return $actionsList;
