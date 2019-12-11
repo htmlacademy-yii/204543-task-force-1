@@ -33,7 +33,7 @@
         public $clientId = 0; //id заказчика
         public $executerId = 0; //id исполнителя
         public $taskFinishDate = ""; //дата окончания работы по заказу
-        public $activeStatus = 'inprocess'; // активный статус заказа
+        public $activeStatus = 'new'; // активный статус заказа
 
     // действия заказчика и исполнителя
         private static $actions = [
