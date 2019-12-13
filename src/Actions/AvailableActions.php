@@ -5,25 +5,18 @@
     * @author <sevostyanova@gmail.com>
     */
 
-    namespace YiiTaskForce\Strategy;
+    namespace YiiTaskForce\Actions;
 
-    use YiiTaskForce\Actions\Action;
-    use YiiTaskForce\Actions\ActionCancel;
-    use YiiTaskForce\Actions\ActionRespond;
-    use YiiTaskForce\Actions\ActionComplete;
-    use YiiTaskForce\Actions\ActionRefuse;
-
-
-    class TaskStatus
+    class AvailableActions
     {
-    // роли пользователей
+        // роли пользователей
        public const CLIENT = 'client';
        public const DOER = 'executor';
 
     // статусы задания
         public const STATUS_NEW = 'new';
         public const STATUS_CANCEL = 'cancel';
-        public const STATUS_INPROCESS = 'inprogress';
+        public const STATUS_INPROCESS = 'inprocess';
         public const STATUS_COMPLETED = 'completed';
         public const STATUS_FAILED = 'failed';
 
@@ -40,7 +33,8 @@
         public $taskFinishDate = ""; //дата окончания работы по заказу
         public $activeStatus = 'new'; // активный статус заказа
 
-         private static $actions = [
+
+        private static $actions = [
             0 => ActionCreate::class,
             1 => ActionCancel::class,
             2 => ActionCompleted::class,
@@ -90,4 +84,36 @@
             }
                 return $this->activeStatus;
         }
+
+   /**
+    * функция для получения списка доступных действий для заказчика и исполнителя
+    * @param $userId;
+    * @param $executorId;
+    * @param $activeStatus;
+    * @return array $actionsList;
+    */
+
+    public function getAvailableActions ( int $userId, int $clientId, int $executorId, $activeStatus) : array
+    {
+        $actionsList = [];
+
+        if ($this->activeStatus == self::STATUS_NEW) {
+            if ( ActionCancel::checkUserAccess ($userId, $clientId, $executorId)) {
+                $actionsList[] = ActionCancel::getInnerName();
+            }
+            if (ActionRespond::checkUserAccess($userId, $clientId, $executorId)) {
+                $actionsList[] = ActionRespond::getInnerName();
+            }
+        }
+
+        if ($this->activeStatus == self::STATUS_INPROCESS) {
+            if (ActionComplete::checkUserAccess($userId, $clientId, $executorId)) {
+                $actionsList[] = ActionComplete::getInnerName();
+            }
+            if (ActionRefuse::checkUserAccess($userId, $clientId, $executorId)) {
+                $actionsList[] = ActionRefuse::getInnerName();
+            }
+        }
+            return $actionsList;
     }
+}
