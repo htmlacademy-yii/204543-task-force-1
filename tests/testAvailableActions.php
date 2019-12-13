@@ -8,8 +8,7 @@
     use YiiTaskForce\Actions\Action;
     use YiiTaskForce\Actions\ActionCancel;
     use YiiTaskForce\Actions\ActionRespond;
-    use YiiTaskForce\Actions\ActionFinish;
-    use YiiTaskForce\Actions\ActionPay;
+    use YiiTaskForce\Actions\ActionComplete;
     use YiiTaskForce\Actions\ActionRefuse;
     use YiiTaskForce\Actions\AvailableActions;
 
@@ -25,61 +24,37 @@
     $available = new AvailableActions();
     assert ($available->getActiveStatus(ActionCancel::class) == AvailableActions::STATUS_CANCEL, 'problem with cancel action');
     assert ($available->getActiveStatus(ActionRespond::class) == AvailableActions::STATUS_INPROCESS, 'problem with respond action');
-    assert ($available->getActiveStatus(ActionFinish::class) == AvailableActions::STATUS_FINISH, 'problem with finish action');
-    assert ($available->getActiveStatus(ActionPay::class) == AvailableActions::STATUS_PAID, 'problem with pay action');
+    assert ($available->getActiveStatus(ActionComplete::class) == AvailableActions::STATUS_COMPLETED, 'problem with complete action');
     assert ($available->getActiveStatus(ActionRefuse::class) == AvailableActions::STATUS_FAILED, 'problem with refuse action');
 
     assert (false, 'test AvailableStatuses complete');
 
+   /**
+    * Проверка работы функции AvailableActions::getAvailableActions();
+    */
 
-    // проверки для $actionsList;
-    /*
-      * примем для тестирования, что свойство $userId принимает след. значения
-      * $user == 1; если это заказчик
-      * $user == 2; если это исполнитель
-     */
-    echo '<hr />'; "\n";
-    $unit = new ActionCancel;
-    /*$unit->userId = 1;
-    $unit->roleUser = 'client';*/
-    var_dump($unit->checkUserAccess (1, 'client'));
+    $unit = new AvailableActions();
 
-    echo '<hr />'; "\n";
-    $unit = new AvailableActions;
-    var_dump($unit->getActiveStatus(ActionRespond::class));
+    $clientId = 1;
+    $executorId = 2;
+    $otherUserId = 3;
 
-    echo '<hr />'; "\n";
-    echo 'Действия, доступные заказчику для статуса NEW:';
-    $unit = new AvailableActions;
-    var_dump($unit->getAvailableActions (1, 'client', 'new')) ;
+    $unit->activeStatus = $activeStatus = AvailableActions::STATUS_NEW;
 
-    echo 'Действия, доступные заказчику для статуса FINISH:';
-    $unit = new AvailableActions;
-    var_dump($unit->getAvailableActions (1, 'client', 'finished')) ;
-    echo "\n";
-
-    echo 'Действия, доступные исполнителю для статуса NEW:';
-    $unit = new AvailableActions;
-    var_dump($unit->getAvailableActions (2, 'executor', 'new')) ;
-
-    echo 'Действия, доступные исполнителю для статуса INPROCESS:';
-    $unit = new AvailableActions;
-    var_dump($unit->getAvailableActions (2, 'executor', 'inprocess'));
-    echo "\n";
+    $unit->clientId = $clientId;
+    $unit->executorId = $executorId;
+    $unit->otherUserId = $otherUserId;
 
 
-    $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (1, 'client','new') == ['to_cancel'], 'problem with client action in status NEW');
+    assert ($unit->getAvailableActions(1, $clientId, $executorId, $activeStatus) == [ActionCancel::getInnerName()], 'problem with Cancel action for client in status NEW');
+    assert ($unit->getAvailableActions(2, $clientId, $executorId, $activeStatus) == [ActionRespond::getInnerName()], 'problem with Respond action for executor in status NEW');
+    assert ($unit->getAvailableActions(3, $clientId, $executorId, $activeStatus) == [], 'problem with action for other user in status NEW');
 
-    $unit = new AvailableActions;
-    assert ($unit->getAvailableActions (2, 'executor', 'new') == ['to_respond'], 'problem with executor action in status NEW');
+
+    $unit->activeStatus = $activeStatus = AvailableActions::STATUS_INPROCESS;
+
+    assert ($unit->getAvailableActions(1, $clientId, $executorId, $activeStatus) == [ActionComplete::getInnerName()], 'problem with Complete action for client in status INPROCESS');
+    assert ($unit->getAvailableActions(2, $clientId, $executorId, $activeStatus) == [ActionRefuse::getInnerName()], 'problem with Refuse action for executor in status INPROCESS');
+    assert ($unit->getAvailableActions(3, $clientId, $executorId, $activeStatus) == [], 'problem with action for other user in status INPROCESS');
 
     assert (false, 'test AvailableActions complete');
-
-/*
-// проверка классов действий
-    $actionclass = new ActionRespond;
-
-    assert ($actionclass->checkUserAccess(1, 'executor') == true, 'problem with checkUserAccess in respond action');
-    assert (false, 'test ActionClass complete');
-    */

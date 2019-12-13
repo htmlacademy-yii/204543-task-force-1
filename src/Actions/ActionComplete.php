@@ -2,17 +2,16 @@
 
     namespace YiiTaskForce\Actions;
 
-    class ActionCancel extends Action
+    class ActionComplete extends Action
     {
         public static function getClassName ()
         {
-            return self::class;
+            return self::ActionComplete;
         }
 
         public static function getInnerName ()
         {
-            $innerName = 'to_cancel';
-
+            $innerName = 'to_complete';
             return $innerName;
         }
 
@@ -26,6 +25,6 @@
 
         public static function checkUserAccess  (int $userId, int $clientId, int $executorId ) : bool {
 
-                return $userId == $clientId;
+          return $userId == $clientId;
         }
     }

@@ -8,117 +8,112 @@
     namespace YiiTaskForce\Actions;
 
     class AvailableActions
-       {
-    // роли пользователей
+    {
+        // роли пользователей
        public const CLIENT = 'client';
-       public const EXECUTOR = 'executor';
+       public const DOER = 'executor';
 
     // статусы задания
         public const STATUS_NEW = 'new';
         public const STATUS_CANCEL = 'cancel';
         public const STATUS_INPROCESS = 'inprocess';
-        public const STATUS_FINISH = 'finished';
-        public const STATUS_PAID = 'paid';
+        public const STATUS_COMPLETED = 'completed';
         public const STATUS_FAILED = 'failed';
 
     // действия заказчика и исполнителя
         public const ACTION_CREATE = ActionCreate::class;
         public const ACTION_CANCEL = ActionCancel::class;
         public const ACTION_RESPOND = ActionRespond::class;
-        public const ACTION_FINISH = ActionFinish::class;
-        public const ACTION_PAY = ActionPay::class;
+        public const ACTION_COMPLETE= ActionComplete::class;
         public const ACTION_REFUSE = ActionRefuse::class;
 
     // свойства класса TaskStatus
         public $clientId = 0; //id заказчика
-        public $executerId = 0; //id исполнителя
+        public $executorId = 0; //id исполнителя
         public $taskFinishDate = ""; //дата окончания работы по заказу
         public $activeStatus = 'new'; // активный статус заказа
 
-    // действия заказчика и исполнителя
+
         private static $actions = [
             0 => ActionCreate::class,
             1 => ActionCancel::class,
-            2 => ActionPay::class,
-            3 => ActionRefuse::class,
-            4 => ActionRespond::class,
-            5 => ActionFinish::class
+            2 => ActionCompleted::class,
+            3 => ActionRespond::class,
+            4 => ActionRefuse::class,
+
         ];
 
-    // массив статусов задания
         private static $statuses = [
-            0 => self::STATUS_NEW,
-            1 => self::STATUS_CANCEL,
-            2 => self::STATUS_INPROCESS,
-            3 => self::STATUS_FINISH,
-            4 => self::STATUS_PAID,
-            5 => self::STATUS_FAILED
+                        1 => self::STATUS_NEW,
+                        2 => self::STATUS_CANCEL,
+                        3 => self::STATUS_INPROCESS,
+                        4 => self::STATUS_COMPLETED,
+                        5 => self::STATUS_FAILED
         ];
 
     // методы класса TaskStatus
-        public function getActions () : array
+
+        public function getActions ()
         { //получение массива действий
             return self::$actions;
         }
 
-        public function getStatuses (): array
+        public function getStatuses ()
         { //получение массива статусов задания
             return self::$statuses;
         }
 
         public function getActiveStatus (string $act)
         { // определяем активный статус
-
-        /*  switch ($act) {
+            switch ($act) {
 
                 case ActionCreate::class:
                     return self::STATUS_NEW;
 
                 case ActionCancel::class:
-                   return self::STATUS_CANCEL;
+                    return self::STATUS_CANCEL;
 
                 case ActionRespond::class:
                     return self::STATUS_INPROCESS;
 
-                case ActionFinish::class:
-                    return self::STATUS_FINISH;
+                case ActionComplete::class:
+                    return self::STATUS_COMPLETED;
 
-                case ActionPay::class:
-                    return self::STATUS_PAID;
-
-               case ActionRefuse::class:
-                return self::STATUS_FAILED;
-            } */
-
-              return $this->activeStatus;
+                case ActionRefuse::class:
+                    return self::STATUS_FAILED;
+            }
+                return $this->activeStatus;
         }
 
-    public function getAvailableActions ( int $userId, string $roleUser, $activeStatus)
+   /**
+    * функция для получения списка доступных действий для заказчика и исполнителя
+    * @param $userId;
+    * @param $executorId;
+    * @param $activeStatus;
+    * @return array $actionsList;
+    */
+
+    public function getAvailableActions ( int $userId, int $clientId, int $executorId, $activeStatus) : array
     {
         $actionsList = [];
 
-        if ( ActionCancel::checkUserAccess( $userId, $roleUser) && $activeStatus == 'new') {
-          $actionsList[] = ActionCancel::getInnerName();
+        if ($this->activeStatus == self::STATUS_NEW) {
+            if ( ActionCancel::checkUserAccess ($userId, $clientId, $executorId)) {
+                $actionsList[] = ActionCancel::getInnerName();
+            }
+            if (ActionRespond::checkUserAccess($userId, $clientId, $executorId)) {
+                $actionsList[] = ActionRespond::getInnerName();
+            }
         }
 
-        if ( ActionRespond::checkUserAccess ($userId, $roleUser) && $activeStatus == 'new') {
-            $actionsList[] = ActionRespond::getInnerName();
+        if ($this->activeStatus == self::STATUS_INPROCESS) {
+            if (ActionComplete::checkUserAccess($userId, $clientId, $executorId)) {
+                $actionsList[] = ActionComplete::getInnerName();
+            }
+            if (ActionRefuse::checkUserAccess($userId, $clientId, $executorId)) {
+                $actionsList[] = ActionRefuse::getInnerName();
+            }
         }
-
-        if ( ActionFinish::checkUserAccess($userId, $roleUser) && $activeStatus == 'inprocess') {
-           $actionsList[] = ActionFinish::getInnerName();
-
-        }
-
-        if ( ActionPay::checkUserAccess($userId, $roleUser) && $activeStatus == 'finished' ) {
-           $actionsList[] = ActionPay::getInnerName();
-        }
-
-        if ( ActionRefuse::checkUserAccess($userId, $roleUser) &&  $activeStatus == 'finished') {
-            $actionsList[] = ActionRefuse::getInnerName();
-        }
-        return $actionsList;
+            return $actionsList;
     }
-
 }
-

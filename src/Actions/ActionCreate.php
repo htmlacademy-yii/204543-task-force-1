@@ -16,11 +16,18 @@
             return $innerName;
         }
 
-        public $roleUser; // = получаем из результата запроса 'SELECT id_author FROM TABLE Task WHERE id_author = $userId';
+       /**
+        * функция проверки права пользователя на выполнение действия
+        * @param $userId;
+        * @param $clientId;
+        * @param $executorId;
+        * @return bool;
+        */
 
-        public static function checkUserAccess  (int $userId, string $roleUser) : bool
-        {
-            if ($userId ==2 || $roleUser == 'executor') {
+        public static function checkUserAccess  (int $userId, int $clientId, int $executorId ) : bool {
+
+            if (!$clientId && $userId == $executorId) {
+
                 return false;
             }
                 return true;
