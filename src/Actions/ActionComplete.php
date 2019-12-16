@@ -2,7 +2,7 @@
 
     namespace YiiTaskForce\Actions;
 
-    class ActionComplete extends Action
+    class ActionComplete extends AbstractAction
     {
         public static function getClassName ()
         {

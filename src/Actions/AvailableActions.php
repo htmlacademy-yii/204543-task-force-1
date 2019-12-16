@@ -7,6 +7,12 @@
 
     namespace YiiTaskForce\Actions;
 
+    require_once '../../vendor/autoload.php';
+
+    use YiiTaskForce\Exceptions\AllowedActionException;
+    use YiiTaskForce\Exceptions\AllowedStatusException;
+    use YiiTaskForce\Exceptions\WrongUserRoleException;
+
     class AvailableActions
     {
         // роли пользователей
@@ -37,7 +43,7 @@
         private static $actions = [
             0 => ActionCreate::class,
             1 => ActionCancel::class,
-            2 => ActionCompleted::class,
+            2 => ActionComplete::class,
             3 => ActionRespond::class,
             4 => ActionRefuse::class,
 
@@ -53,18 +59,26 @@
 
     // методы класса TaskStatus
 
-        public function getActions ()
+        public function getActions () : array
         { //получение массива действий
             return self::$actions;
         }
 
-        public function getStatuses ()
+        public function getStatuses () : array
         { //получение массива статусов задания
             return self::$statuses;
         }
 
-        public function getActiveStatus (string $act)
+
+   /**
+    * функция для получения статуса задания в зависимости  от произведенного действия
+    * @param string $act;
+    * @return string $activeStatus;
+    */
+
+        public function getActiveStatus (string $act) : string
         { // определяем активный статус
+
             switch ($act) {
 
                 case ActionCreate::class:
@@ -82,20 +96,28 @@
                 case ActionRefuse::class:
                     return self::STATUS_FAILED;
             }
+
+              if (array_search($this->activeStatus, $statuses) === false) {
+                    throw new AllowedStatusException("Cтатус не является допустимым для задания");
+            }
                 return $this->activeStatus;
         }
 
    /**
     * функция для получения списка доступных действий для заказчика и исполнителя
     * @param $userId;
+    * @param $clientId;
     * @param $executorId;
-    * @param $activeStatus;
     * @return array $actionsList;
     */
 
-    public function getAvailableActions ( int $userId, int $clientId, int $executorId, $activeStatus) : array
+    public function getAvailableActions (int $userId, int $clientId, int $executorId) : array
     {
         $actionsList = [];
+
+        if ($userId !== $clientId || $userId !== $executorId) {
+            throw new WrongUserRoleException("Введен Id незарегистрированного пользователя");
+        }
 
         if ($this->activeStatus == self::STATUS_NEW) {
             if ( ActionCancel::checkUserAccess ($userId, $clientId, $executorId)) {
@@ -117,3 +139,35 @@
             return $actionsList;
     }
 }
+
+    //настройки assert()
+
+    assert_options(ASSERT_ACTIVE, 1);
+    assert_options(ASSERT_WARNING, 0);
+    assert_options(ASSERT_CALLBACK, function () {
+        echo '<hr />';
+        echo func_get_arg(3);
+    });
+
+    $unit = new AvailableActions();
+
+    $clientId = 1;
+    $executorId = 2;
+    $otherUserId = 3;
+
+    $unit->clientId = $clientId;
+    $unit->executorId = $executorId;
+    //$unit->userId = $userId;
+
+
+    // обработка ошибки try catch
+
+    try {
+        $unit->getAvailableActions($otherUserId, $clientId, $executorId);
+
+    } catch (WrongUserRoleException $e) {
+
+        assert($unit->userId == $clientId || $unit->user == $clientId, $e->getMessage());
+    }
+
+     assert (false, 'test complete');

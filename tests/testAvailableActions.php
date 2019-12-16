@@ -5,7 +5,6 @@
       * File for testing if class AvailableActions works right way
       */
 
-    use YiiTaskForce\Actions\Action;
     use YiiTaskForce\Actions\ActionCancel;
     use YiiTaskForce\Actions\ActionRespond;
     use YiiTaskForce\Actions\ActionComplete;
@@ -39,22 +38,21 @@
     $executorId = 2;
     $otherUserId = 3;
 
-    $unit->activeStatus = $activeStatus = AvailableActions::STATUS_NEW;
 
+    $unit->activeStatus = AvailableActions::STATUS_NEW;
     $unit->clientId = $clientId;
     $unit->executorId = $executorId;
-    $unit->otherUserId = $otherUserId;
 
 
-    assert ($unit->getAvailableActions(1, $clientId, $executorId, $activeStatus) == [ActionCancel::getInnerName()], 'problem with Cancel action for client in status NEW');
-    assert ($unit->getAvailableActions(2, $clientId, $executorId, $activeStatus) == [ActionRespond::getInnerName()], 'problem with Respond action for executor in status NEW');
-    assert ($unit->getAvailableActions(3, $clientId, $executorId, $activeStatus) == [], 'problem with action for other user in status NEW');
+    assert ($unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionCancel::getInnerName()], 'problem with Cancel action for client in status NEW');
+    assert ($unit->getAvailableActions($executorId, $clientId, $executorId) == [ActionRespond::getInnerName()], 'problem with Respond action for executor in status NEW');
+    assert ($unit->getAvailableActions($otherUserId, $clientId, $executorId) == [], 'problem with action for other user in status NEW');
 
 
-    $unit->activeStatus = $activeStatus = AvailableActions::STATUS_INPROCESS;
+    $unit->activeStatus = AvailableActions::STATUS_INPROCESS;
 
-    assert ($unit->getAvailableActions(1, $clientId, $executorId, $activeStatus) == [ActionComplete::getInnerName()], 'problem with Complete action for client in status INPROCESS');
-    assert ($unit->getAvailableActions(2, $clientId, $executorId, $activeStatus) == [ActionRefuse::getInnerName()], 'problem with Refuse action for executor in status INPROCESS');
-    assert ($unit->getAvailableActions(3, $clientId, $executorId, $activeStatus) == [], 'problem with action for other user in status INPROCESS');
+    assert ($unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionComplete::getInnerName()], 'problem with Complete action for client in status INPROCESS');
+    assert ($unit->getAvailableActions($executorId, $clientId, $executorId) == [ActionRefuse::getInnerName()], 'problem with Refuse action for executor in status INPROCESS');
+    assert ($unit->getAvailableActions($otherUserId, $clientId, $executorId) == [], 'problem with action for other user in status INPROCESS');
 
     assert (false, 'test AvailableActions complete');

@@ -2,7 +2,7 @@
 
     namespace YiiTaskForce\Actions;
 
-    class ActionCancel extends Action
+    class ActionCancel extends AbstractAction
     {
         public static function getClassName ()
         {

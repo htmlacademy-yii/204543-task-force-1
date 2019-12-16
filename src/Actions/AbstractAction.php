@@ -2,7 +2,7 @@
 
     namespace YiiTaskForce\Actions;
 
-        abstract class Action
+        abstract class AbstractAction
         {
             public $className;
             public $innerName;
