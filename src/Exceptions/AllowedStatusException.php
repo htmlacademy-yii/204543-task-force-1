@@ -3,15 +3,15 @@
     * Класс-исключение для проверки допустимого действия в задании для TaskStatus::getActiveStatus();
     */
 
-    namespace YiiTaskForce\Exceptions;
+namespace YiiTaskForce\Exceptions;
 
-    class AllowedStatusException extends Exception
+class AllowedStatusException extends \Exception
+{
+    /*
+    * @param $message является обязательным
+    */
+    public function __construct ($message = null)
     {
-        /*
-         * @param $message является обязательным
-         */
-        public function __construct ($message) {
-
-            $this->message = $message;
-        }
+        parent::__construct($message);
     }
+}

@@ -1,16 +1,27 @@
 <?php
 
-    namespace YiiTaskForce\Actions;
+namespace YiiTaskForce\Actions;
 
-        abstract class AbstractAction
-        {
-            public $className;
-            public $innerName;
-            public $userId;
+abstract class AbstractAction
+{
+    public $className;
 
-            abstract public static function getClassName();
-            abstract public static function getInnerName();
-            abstract public static function checkUserAccess(int $userId, int $clientId, int $executorId );
-        }
+    public $innerName;
 
-//
+    public $userId;
+
+    public $clientId;
+
+    public $executorId;
+
+    //public $user = [];
+
+
+    abstract public static function getClassName(): string;
+
+    abstract public static function getInnerName(): string;
+
+    abstract public static function checkUserAccess(int $userId, int $clientId, int $executorId ): bool;
+
+    //abstract public static function getUser (array $user): array;
+}

@@ -1,45 +1,35 @@
 <?php
 
-    namespace YiiTaskForce\Actions;
+namespace YiiTaskForce\Actions;
 
-    class ActionCreate extends ActionAbstractAction
+use YiiTaskForce\Exceptions\WrongUserRoleException;
+
+class ActionCreate extends ActionAbstractAction
+{
+
+    public $userId;
+
+    public $clientId = 1;
+
+    public $executorId = 2;
+
+
+    public static function getInnerName (): string
     {
-        public static function getClassName ()
-        {
-            return self::class;
-        }
+        $innerName = 'to_create';
 
-        public static function getInnerName ()
-        {
-            $innerName = 'to_create';
-
-            return $innerName;
-        }
-
-       /**
-        * функция проверки права пользователя на выполнение действия
-        * @param $userId;
-        * @param $clientId;
-        * @param $executorId;
-        * @return bool;
-        */
-
-        public static function checkUserAccess  (int $userId, int $clientId, int $executorId ) : bool {
-
-            if (!$clientId && $userId == $executorId) {
-
-                return false;
-            }
-                return true;
-        }
+        return $innerName;
     }
 
-
-    // Проверка вывода имени и внутренного имени класса
-
-    /*
-    $unit = new ActionCancel;
-        echo ActionCancel::getClassName();
-        echo ActionCancel::getInnerName();
+   /**
+    * функция проверки права пользователя на выполнение действия
+    * @param int $userId;
+    * @param int $clientId;
+    * @param int $executorId;
+    * @return bool;
     */
-
+   public static function checkUserAccess  (int $userId, int $clientId, int $executorId ) : bool
+    {
+         return ($userId == $clientId && $userId !== $executorId);
+    }
+}
