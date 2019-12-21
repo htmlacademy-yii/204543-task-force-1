@@ -9,7 +9,6 @@ namespace YiiTaskForce\Actions;
 
 use YiiTaskForce\Exceptions\AllowedStatusException;
 use YiiTaskForce\Exceptions\AllowedActionException;
-use YiiTaskForce\Exceptions\WrongUserRoleException;
 
 class AvailableActions
 {
@@ -57,7 +56,7 @@ public $executorId = 0;
 public $taskFinishDate = "";
 
 // активный статус заказа
-public $activeStatus = 'new';
+public $activeStatus;
 
 
 private static $actions = [
@@ -101,11 +100,10 @@ private static $statuses = [
     * @param string $status;
     * @throws AllowedStatusException()
     */
-    public $status;
 
     private function validateStatus (string $status) : void
     {
-        if (!in_array($this->status, self::$statuses)) {
+        if (!in_array($status, self::$statuses)) {
             throw new AllowedStatusException("Неправильное значение статуса задания");
         }
     }
@@ -121,20 +119,30 @@ private static $statuses = [
         $this->activeStatus = $status;
     }
 
-       /**
-        * функция для получения статуса задания в зависимости  от произведенного действия
-        * @param string $act;
-        * @return string $activeStatus;
-        * @throws AllowedActionException()
-        */
+    /**
+    * функция валидации действия пользователя
+    * @param string $act;
+    * @throws AllowedActionException()
+    */
 
-    public $act;
+    private function validateAction (string $act) : void
+    {
+        if (!in_array($act, self::$actions)) {
+            throw new AllowedStatusException("Выбрано неверное действие");
+        }
+    }
+
+    /**
+    * функция для получения статуса задания в зависимости  от произведенного действия
+    * @param string $act;
+    * @return string $activeStatus;
+    * @throws AllowedActionException()
+    */
 
     public function getActiveStatus (string $act) : string
-    {  // проверяем допустимо ли действие
-        if(!in_array($this->act, self::$actions)) {
-            throw new AllowedActionException('Неверное действие');
-        }
+    {
+        $this->validateAction($act);
+        $this->act = $act;
         // определяем активный статус
         switch ($act) {
 
@@ -162,7 +170,7 @@ private static $statuses = [
     * @param string $status;
     * @throws AllowedStatusException()
     */
-    public function setActiveStatus (string $status)
+    public function setActiveStatus (string $status): void
     {
         $this->validateStatus($status);
         $this->activeStatus = $status;
@@ -185,12 +193,10 @@ private static $statuses = [
             if ( ActionCancel::checkUserAccess ($userId, $clientId, $executorId)) {
                  $actionsList[] = ActionCancel::getInnerName();
             }
-            else throw new WrongUserRoleException('Cancel action is not available for this user');
 
             if (ActionRespond::checkUserAccess($userId, $clientId, $executorId)) {
                 $actionsList[] = ActionRespond::getInnerName();
             }
-            else throw new WrongUserRoleException('Respond action is not available for this user');
         }
 
         if ($this->activeStatus == self::STATUS_INPROCESS) {

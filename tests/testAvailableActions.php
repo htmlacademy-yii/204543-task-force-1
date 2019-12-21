@@ -12,7 +12,6 @@ use YiiTaskForce\Actions\ActionRefuse;
 use YiiTaskForce\Actions\AvailableActions;
 use YiiTaskForce\Exceptions\AllowedActionException;
 use YiiTaskForce\Exceptions\AllowedStatusException;
-use YiiTaskForce\Exceptions\WrongUserRoleException;
 
 //настройки assert()
 assert_options(ASSERT_ACTIVE, 1);
@@ -32,39 +31,40 @@ assert ($available->getActiveStatus(ActionRefuse::class) == AvailableActions::ST
 
 assert (false, 'test AvailableStatuses complete');
 
-
-
-   /**
-    * Проверка исключений для корректного значения действия в методе AvailableActions::getActiveStatus()
-    */
+/**
+* Проверка исключений класса для корректного значения действия в методе AvailableActions::getActiveStatus()
+*/
 
 $available = new AvailableActions(AvailableActions::STATUS_NEW);
 
-$available->act = 'nonameAction';
+$act = ActionRespond::class;
+$available->act = $act;
+
 try {
     $available->getActiveStatus($act);
 }   catch(AllowedActionException $e) {
-    assert($e instanceof AllowedActionException, 'error call getActiveStatus object with wrong user action');
+    assert ($e instanceof AllowedActionException, 'error call getActiveStatus object with wrong user action');
 }
 
-    /**
-    * Проверка исключений для корректного значения статуса в методе AvailableActions::getAvailableActions()
-    * try-catch для исключений класса AllowedStatusException
-    */
-$available = new AvailableActions();
-$available->activeStatus = setActiveStatus($status);
+/**
+* Проверка исключений для корректного значения статуса в методе AvailableActions::getAvailableActions()
+* try-catch для исключений класса AllowedStatusException
+*/
+
+$available = new AvailableActions(AvailableActions::STATUS_NEW);
+$status = AvailableActions::STATUS_INPROCESS;
+$available->setActiveStatus($status);
 
 try {
    $available->setActiveStatus($status);
 } catch(AllowedStatusException $e) {
-  assert($e instanceof AllowedStatusException, 'error call AvailableActions object with wrong task status');
+  assert($e instanceof AllowedStatusException, 'error call setActiveStatus object with wrong task status');
 }
 
-  /**
-    * Проверка исключений для корректного значения статуса в методе AvailableActions::getAvailableActions()
-    * try-catch для исключений класса WrongUserRoleException
-    */
 
+/*
+* Проверка доступных действий для исполнителя и заказчика
+*/
 
 $unit = new AvailableActions(AvailableActions::STATUS_NEW);
 
@@ -78,39 +78,31 @@ $unit->executorId = $executorId;
 
 //вариант user = client
 
-try {
-    $unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionCancel::getInnerName()];
-} catch(WrongUserRoleException $e) {
-    assert($e instanceof WrongUserRoleException, 'problem with cancel action for client in status NEW');
-}
-
 assert ($unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionCancel::getInnerName()], 'problem with Cancel action for executor in status NEW');
 
 //вариант user = executor
 
-try {
-    $unit->getAvailableActions($executorId, $clientId, $executorId);
-}   catch (WrongUserRoleException $e) {
-    assert($e instanceof WrongUserRoleException, 'problem with Respond action for client in status NEW');
-}
-
 assert ($unit->getAvailableActions($executorId, $clientId, $executorId) == [ActionRespond::getInnerName()], 'problem with Respond action for executor in status NEW');
 
+//вариант user = other user
 
 assert ($unit->getAvailableActions($otherUserId, $clientId, $executorId) == [], 'problem with action for other user in status NEW');
 
-// Для статуса INPROCESS отключены проверки
 
-/*
+
+
 $unit->setActiveStatus(AvailableActions::STATUS_INPROCESS);
 
-try {
-    $unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionComplete::getInnerName()];
-} catch(Exception $e) {
-    assert($e instanceof WrongUserRoleException, $e);
-}
+//вариант user = client
+
+assert( $unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionComplete::getInnerName()],'problem with Complete action for executor in status INPROCESS');
+
+//вариант user = executor
 
 assert ($unit->getAvailableActions($executorId, $clientId, $executorId) == [ActionRefuse::getInnerName()], 'problem with Refuse action for executor in status INPROCESS');
-assert ($unit->getAvailableActions($otherUserId, $clientId, $executorId) == [], 'problem with action for other user in status INPROCESS'); */
+
+//вариант user = other user
+
+assert ($unit->getAvailableActions($otherUserId, $clientId, $executorId) == [], 'problem with action for other user in status INPROCESS');
 
 assert (false, 'test AvailableActions complete');
