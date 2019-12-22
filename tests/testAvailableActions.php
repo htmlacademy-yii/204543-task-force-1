@@ -41,8 +41,8 @@ $act = ActionRespond::class;
 $available->act = $act;
 
 try {
-    $available->getActiveStatus($act);
-}   catch(AllowedActionException $e) {
+    $available->getActiveStatus('noNameAction');
+}   catch(\Exception $e) {
     assert ($e instanceof AllowedActionException, 'error call getActiveStatus object with wrong user action');
 }
 
@@ -53,12 +53,12 @@ try {
 
 $available = new AvailableActions(AvailableActions::STATUS_NEW);
 $status = AvailableActions::STATUS_INPROCESS;
-$available->setActiveStatus($status);
 
 try {
-   $available->setActiveStatus($status);
-} catch(AllowedStatusException $e) {
-  assert($e instanceof AllowedStatusException, 'error call setActiveStatus object with wrong task status');
+   $available->setActiveStatus('nostatus');
+} catch(\Exception $e) {
+  assert($e instanceof AllowedStatusException == 'Неправильное значение статуса задания', 'error call setActiveStatus object with wrong task status');
+
 }
 
 
@@ -95,7 +95,7 @@ $unit->setActiveStatus(AvailableActions::STATUS_INPROCESS);
 
 //вариант user = client
 
-assert( $unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionComplete::getInnerName()],'problem with Complete action for executor in status INPROCESS');
+assert($unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionComplete::getInnerName()],'problem with Complete action for executor in status INPROCESS');
 
 //вариант user = executor
 

@@ -12,6 +12,6 @@ class AllowedActionException extends \Exception
          */
     public function __construct ($message = null)
     {
-        parent::__construct($message);
+        parent::__construct($message = "");
     }
 }

@@ -104,7 +104,7 @@ private static $statuses = [
     private function validateStatus (string $status) : void
     {
         if (!in_array($status, self::$statuses)) {
-            throw new AllowedStatusException("Неправильное значение статуса задания");
+            throw new \Exception('Неправильное значение статуса задания');
         }
     }
 
