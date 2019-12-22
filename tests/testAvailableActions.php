@@ -41,7 +41,7 @@ $act = ActionRespond::class;
 $available->act = $act;
 
 try {
-    $available->getActiveStatus('noNameAction');
+    $available->getActiveStatus(ActionCancel::class);
 }   catch(\Exception $e) {
     assert ($e instanceof AllowedActionException, 'error call getActiveStatus object with wrong user action');
 }
@@ -55,7 +55,7 @@ $available = new AvailableActions(AvailableActions::STATUS_NEW);
 $status = AvailableActions::STATUS_INPROCESS;
 
 try {
-   $available->setActiveStatus('nostatus');
+   $available->setActiveStatus($status);
 } catch(\Exception $e) {
   assert($e instanceof AllowedStatusException == 'Неправильное значение статуса задания', 'error call setActiveStatus object with wrong task status');
 

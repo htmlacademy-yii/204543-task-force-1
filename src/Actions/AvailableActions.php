@@ -182,7 +182,6 @@ private static $statuses = [
         * @param  int $clientId;
         * @param  int $executorId;
         * @return array $actionsList;
-        * @throws WrongUserRoleException;
         */
 
     public function getAvailableActions (int $userId, int $clientId, int $executorId) : array
