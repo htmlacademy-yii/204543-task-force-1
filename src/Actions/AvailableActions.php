@@ -104,7 +104,7 @@ private static $statuses = [
     private function validateStatus (string $status) : void
     {
         if (!in_array($status, self::$statuses)) {
-            throw new \Exception('Неправильное значение статуса задания');
+            throw new AllowedStatusException("Неправильное значение статуса задания");
         }
     }
 
@@ -125,10 +125,10 @@ private static $statuses = [
     * @throws AllowedActionException()
     */
 
-    private function validateAction (string $act) : void
+    public function validateAction (string $act) : void
     {
         if (!in_array($act, self::$actions)) {
-            throw new AllowedStatusException("Выбрано неверное действие");
+            throw new AllowedActionException("Выбрано неверное действие");
         }
     }
 
