@@ -5,56 +5,105 @@
       * File for testing if class AvailableActions works right way
       */
 
-    use YiiTaskForce\Actions\Action;
-    use YiiTaskForce\Actions\ActionCancel;
-    use YiiTaskForce\Actions\ActionRespond;
-    use YiiTaskForce\Actions\ActionComplete;
-    use YiiTaskForce\Actions\ActionRefuse;
-    use YiiTaskForce\Actions\AvailableActions;
+use YiiTaskForce\Actions\ActionCancel;
+use YiiTaskForce\Actions\ActionRespond;
+use YiiTaskForce\Actions\ActionComplete;
+use YiiTaskForce\Actions\ActionRefuse;
+use YiiTaskForce\Actions\AvailableActions;
+use YiiTaskForce\Exceptions\AllowedActionException;
+use YiiTaskForce\Exceptions\AllowedStatusException;
 
-       //настройки assert()
-    assert_options(ASSERT_ACTIVE, 1);
-    assert_options(ASSERT_WARNING, 0);
-    assert_options(ASSERT_CALLBACK, function () {
+//настройки assert()
+assert_options(ASSERT_ACTIVE, 1);
+assert_options(ASSERT_WARNING, 0);
+assert_options(ASSERT_CALLBACK, function () {
         echo '<hr />';
         echo func_get_arg(3);
     });
 
 
-    $available = new AvailableActions();
-    assert ($available->getActiveStatus(ActionCancel::class) == AvailableActions::STATUS_CANCEL, 'problem with cancel action');
-    assert ($available->getActiveStatus(ActionRespond::class) == AvailableActions::STATUS_INPROCESS, 'problem with respond action');
-    assert ($available->getActiveStatus(ActionComplete::class) == AvailableActions::STATUS_COMPLETED, 'problem with complete action');
-    assert ($available->getActiveStatus(ActionRefuse::class) == AvailableActions::STATUS_FAILED, 'problem with refuse action');
+$available = new AvailableActions(AvailableActions::STATUS_NEW);
 
-    assert (false, 'test AvailableStatuses complete');
+assert ($available->getActiveStatus(ActionCancel::class) == AvailableActions::STATUS_CANCEL, 'problem with cancel action');
+assert ($available->getActiveStatus(ActionRespond::class) == AvailableActions::STATUS_INPROCESS, 'problem with respond action');
+assert ($available->getActiveStatus(ActionComplete::class) == AvailableActions::STATUS_COMPLETED, 'problem with complete action');
+assert ($available->getActiveStatus(ActionRefuse::class) == AvailableActions::STATUS_FAILED, 'problem with refuse action');
 
-   /**
-    * Проверка работы функции AvailableActions::getAvailableActions();
-    */
+assert (false, 'test AvailableStatuses complete');
 
-    $unit = new AvailableActions();
+/**
+* Проверка исключений класса для корректного значения действия в методе AvailableActions::getActiveStatus()
+*/
 
-    $clientId = 1;
-    $executorId = 2;
-    $otherUserId = 3;
+$available = new AvailableActions(AvailableActions::STATUS_NEW);
 
-    $unit->activeStatus = $activeStatus = AvailableActions::STATUS_NEW;
+$act = 'noNameAction';
+$available->act = $act;
 
-    $unit->clientId = $clientId;
-    $unit->executorId = $executorId;
-    $unit->otherUserId = $otherUserId;
+try {
+    $available->getActiveStatus($act);
+}   catch(\Exception  $e) {
+    assert ($e instanceof AllowedActionException, 'error call getActiveStatus object with wrong user action');
+}
+
+/**
+* Проверка исключений для корректного значения статуса в методе AvailableActions::getAvailableActions()
+* try-catch для исключений класса AllowedStatusException
+*/
+
+$available = new AvailableActions(AvailableActions::STATUS_NEW);
+$status = AvailableActions::STATUS_INPROCESS;
+$available->status = $status;
+
+try {
+   $available->setActiveStatus('noNameStatus');
+} catch(\Exception $e) {
+  assert($e instanceof AllowedStatusException, 'error call setActiveStatus object with wrong task status');
+
+}
 
 
-    assert ($unit->getAvailableActions(1, $clientId, $executorId, $activeStatus) == [ActionCancel::getInnerName()], 'problem with Cancel action for client in status NEW');
-    assert ($unit->getAvailableActions(2, $clientId, $executorId, $activeStatus) == [ActionRespond::getInnerName()], 'problem with Respond action for executor in status NEW');
-    assert ($unit->getAvailableActions(3, $clientId, $executorId, $activeStatus) == [], 'problem with action for other user in status NEW');
+/*
+* Проверка доступных действий для исполнителя и заказчика
+*/
+
+$unit = new AvailableActions(AvailableActions::STATUS_NEW);
+
+$clientId = 1;
+$executorId = 2;
+$otherUserId = 3;
+
+$unit->clientId = $clientId;
+$unit->executorId = $executorId;
 
 
-    $unit->activeStatus = $activeStatus = AvailableActions::STATUS_INPROCESS;
+//вариант user = client
 
-    assert ($unit->getAvailableActions(1, $clientId, $executorId, $activeStatus) == [ActionComplete::getInnerName()], 'problem with Complete action for client in status INPROCESS');
-    assert ($unit->getAvailableActions(2, $clientId, $executorId, $activeStatus) == [ActionRefuse::getInnerName()], 'problem with Refuse action for executor in status INPROCESS');
-    assert ($unit->getAvailableActions(3, $clientId, $executorId, $activeStatus) == [], 'problem with action for other user in status INPROCESS');
+assert ($unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionCancel::getInnerName()], 'problem with Cancel action for executor in status NEW');
 
-    assert (false, 'test AvailableActions complete');
+//вариант user = executor
+
+assert ($unit->getAvailableActions($executorId, $clientId, $executorId) == [ActionRespond::getInnerName()], 'problem with Respond action for executor in status NEW');
+
+//вариант user = other user
+
+assert ($unit->getAvailableActions($otherUserId, $clientId, $executorId) == [], 'problem with action for other user in status NEW');
+
+
+
+
+$unit->setActiveStatus(AvailableActions::STATUS_INPROCESS);
+
+//вариант user = client
+
+assert($unit->getAvailableActions($clientId, $clientId, $executorId) == [ActionComplete::getInnerName()],'problem with Complete action for executor in status INPROCESS');
+
+//вариант user = executor
+
+assert ($unit->getAvailableActions($executorId, $clientId, $executorId) == [ActionRefuse::getInnerName()], 'problem with Refuse action for executor in status INPROCESS');
+
+//вариант user = other user
+
+assert ($unit->getAvailableActions($otherUserId, $clientId, $executorId) == [], 'problem with action for other user in status INPROCESS');
+
+assert (false, 'test AvailableActions complete');
