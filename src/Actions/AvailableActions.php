@@ -125,7 +125,7 @@ private static $statuses = [
     * @throws AllowedActionException()
     */
 
-    public function validateAction (string $act) : void
+    private function validateAction (string $act) : void
     {
         if (!in_array($act, self::$actions)) {
             throw new AllowedActionException("Выбрано неверное действие");

@@ -43,7 +43,7 @@ $available->act = $act;
 try {
     $available->getActiveStatus($act);
 }   catch(\Exception  $e) {
-    assert (!$e instanceof AllowedActionException, 'error call getActiveStatus object with wrong user action');
+    assert ($e instanceof AllowedActionException, 'error call getActiveStatus object with wrong user action');
 }
 
 /**
@@ -58,7 +58,7 @@ $available->status = $status;
 try {
    $available->setActiveStatus('noNameStatus');
 } catch(\Exception $e) {
-  assert(!$e instanceof AllowedStatusException, 'error call setActiveStatus object with wrong task status');
+  assert($e instanceof AllowedStatusException, 'error call setActiveStatus object with wrong task status');
 
 }
 
