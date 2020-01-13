@@ -59,7 +59,9 @@ class ImportCsvData
         //получаем заголовки полей/столбцов
       
         $file->seek(0);
+
         $this->columns = $file->fgetcsv(","); // array
+        
         $this->columnsNames = implode (", ", $this->columns);// string
 
 
@@ -81,7 +83,7 @@ class ImportCsvData
         
         }
 
-        //либо используем другой цикл
+        //либо используем другой цикл, что не меняет картины.. 
     /*
         while (!empty($file->fgetcsv(","))) {
             
