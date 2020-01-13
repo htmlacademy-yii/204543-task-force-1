@@ -61,7 +61,7 @@ class ImportCsvData
         $file->seek(0);
 
         $this->columns = $file->fgetcsv(","); // array
-        
+
         $this->columnsNames = implode (", ", $this->columns);// string
 
 
@@ -105,8 +105,18 @@ class ImportCsvData
         //return $this->csvData;
     }
     
-
-    public function getSqlQuery( /*string $fileCsvPath, string $fileSqlPath*/ ): string
+    public $fileSqlPath = ""; // 'string' путь к файлу .sql;
+    public $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
+    public $sqlData = ""; // 'string'
+    
+    /**
+    * Функция формирования строки запроса INSERT для записи в sql-файл
+    * @param string $dbTableName
+    * @param string $fileCsvPath
+    * @param string $fileSqlPath
+    * @return string $sqlData
+    */
+    public function getSqlQuery( /*string $dbTableName, string $fileCsvPath, string $fileSqlPath*/ ): string
         {
            
             $format = 'INSERT INTO %1$s (%2$s) VALUES (%3$s)'; 
@@ -114,5 +124,7 @@ class ImportCsvData
             $sqlData = printf ($format,'category', 'name, icon', 'Уборка, clean'); 
 
             return $this->sqlData;
+
+            //далее запись в файл ../data/sql/category.sql
         }
 }
