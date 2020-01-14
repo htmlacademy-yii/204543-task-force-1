@@ -6,10 +6,10 @@ require_once '../vendor/autoload.php';
       */
 
 use YiiTaskForce\Convertation\ImportCsvData;
-use YiiTaskForce\Convertation\RecordToSQL;
-use YiiTaskForce\Exceptions\FileExistExcetion;
-use YiiTaskForce\Exceptions\FileSizeExcetion;
-use YiiTaskForce\Exceptions\FileOpenExcetion;
+use YiiTaskForce\Exceptions\FileExistException;
+use YiiTaskForce\Exceptions\FileOpenException;
+use YiiTaskForce\Exceptions\StringQueryException;
+use YiiTaskForce\Exceptions\SqlRecordException;
 
 //настройки assert()
 assert_options(ASSERT_ACTIVE, 1);
@@ -23,47 +23,81 @@ assert_options(ASSERT_CALLBACK, function () {
 $fileCsvPath = '../data/categories.csv';
 $importcsv = new ImportCsvData($fileCsvPath);
 
-$importcsv->filePath = $fileCsvPath;
+$importcsv->fileCsvPath = $fileCsvPath;
 
 try {
     $importcsv->parseCSV($fileCsvPath);
 }   catch (\Exception  $e) {
-    assert ($e instanceof FileExistException, 'File does not exist in this directory');
+    assert (!$e instanceof FileExistException, 'File does not exist in this directory');
     }
     catch (\Exception  $e) {
-    assert ($e instanceof FileSizeException, 'File is empty');
-    }
-    catch (\Exception  $e) {
-    assert ($e instanceof FileOpenException, 'Failed to open file for reading');
+    assert (!$e instanceof FileOpenException, 'Failed to open file for reading');
     }
 
 assert (1 == 2, 'test ImportCSVData::parseCSV() is completed');
 
-echo '<hr /> . $columns';"\n";
+
+echo '<hr /> . $valuesTotalString';"\n";
 var_dump($importcsv->getCsvLines($fileCsvPath));"\n";
 
-echo '<hr /> . $columnsNames';"\n";
-var_dump($importcsv->columnsNames);"\n";
+echo '<hr /> .$columns';"\n";
+var_dump($importcsv->columns);"\n";
 
 echo '<hr /> .$values';"\n";
 var_dump($importcsv->values);"\n";
 
-echo '<hr /> . $valueString';"\n";
-var_dump($importcsv->valueString);"\n";
 
-echo '<hr /> . $row';"\n";
-var_dump($importcsv->row);"\n";
 
-echo '<hr /> . $csvData';"\n";
-var_dump($importcsv->csvData);"\n";
+assert(1 == 2, 'test ImportCsvData::getCsvLines() is completed');
 
+
+// проверка записи строки запроса INSERT
+// ???? при создании объекта класса ImportCsvData() выдает ошибку, что получает null в качестве всех трех аргументов.  
+
+
+
+$importcsv = new ImportCsvData($dbTableName, $columns, $valuesTotalString); 
 $fileCsvPath = '../data/categories.csv';
 $fileSqlPath = '../data/sql/category.sql';
 $dbTableName = 'category';
 
- 
+$importcsv->fileCsvPath;
+$importcsv->fileSqlPath; 
+$importcsv->dbTableName;
+
+$importcsv->columns = $columns;
+$importcsv->valuesTotalString = $valuesTotalString;
+
+
 echo '<hr /> . $sqlData';"\n";
-var_dump($importcsv->getSqlQuery());"\n";
+
+// вариант с подставленными значениями параметров для отладки
+//var_dump($importcsv->getSqlQuery('category', 'name, icon', 'Курьерские услуги, delivary; Уборка, clean;'));"\n";
+//
+var_dump($importcsv->getSqlQuery($dbTableName, $columns, $valuesTotalString));"\n";
+// exception StringQueryException
 
 
-assert(false, 'test ImportCsvData::getCsvLines() is completed');
+try {
+    $importcsv->getSqlQuery($dbTableName, $columns, $valuesTotalString);
+}   catch (\Exception  $e) {
+    assert (!$e instanceof StringQueryException, 'Failed to write data to sql-file');
+}
+   
+assert(1 == 2, 'test ImportCsvData::getSqlQuery() is completed'); 
+
+// проверка записи данных в sql-файл
+// SqlRecordException
+
+$fileSqlPath = '../data/sql/category.sql';
+
+$importcsv = new ImportCsvData('../data/sql/category.sql'); 
+$importcsv->fileSqlPath = $fileSqlPath;
+
+try {
+    $importcsv->writeSqlFile($fileSqlPath);
+}   catch (\Exception  $e) {
+    assert (!$e instanceof SqlRecordException, 'Failed to write data to sql-file');
+}
+   
+assert(1 == 2, 'test ImportCsvData::writeSqlFile() is completed');    

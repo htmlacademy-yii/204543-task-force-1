@@ -1,12 +1,12 @@
 <?php 
 
 /**
-    * Класс-исключение для проверки существования csv-файла
+    * Класс-исключение для проверки записи данных в sql-файл
     */
 
 namespace YiiTaskForce\Exceptions;
 
-class FileSizeException extends \Exception
+class SqlRecordException extends \Exception
 {
     /*
     * @param $message является обязательным

@@ -2,70 +2,78 @@
 
 namespace YiiTaskForce\Convertation;
 
-use YiiTaskForce\Exceptions\FileExistExcetion;
-use YiiTaskForce\Exceptions\FileSizeExcetion;
-use YiiTaskForce\Exceptions\FileOpenExcetion;
+use YiiTaskForce\Exceptions\FileExistException;
+use YiiTaskForce\Exceptions\FileOpenException;
+use YiiTaskForce\Exceptions\StringQueryException;
+use YiiTaskForce\Exceptions\SqlRecordException;
 
 class ImportCsvData
 {
     public $fileCsvPath = ""; // 'string' путь к файлу .csv; для категорий = '../data/categories.csv';
-    public $values = []; // 'array' массив значений полей файла csv
-    public $columns = []; // 'array' массив имен столбцов/полей файла csv
-    public $csvData =[]; //'array' массив 1 строки  csv-файла
-    public $columnsNames = "";
-    public $valuesString = ""; // строка из элементов массива строки csv-файла
-
-
+    public $values = []; // 'array' массив значений  файла csv
+    public $columns = []; // 'array' массив имен столбцов файла csv
+    public $valuesTotalString = ""; //string все значения $values в одну строку
+    public $fileSqlPath = ""; // 'string' путь к файлу .sql;
+    public $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
+    public $sqlData = ""; // 'string'
+    
+   
 
     public function __construct( string $fileCsvPath)
     {
         $this->fileCsvPath = $fileCsvPath;
+        $this->fileSqlPath = $fileSqlPath;
+        $this->dbTableName = $dbTableName;
     }
+
+
     /**
-    * Функция для проверки существования файла и возможности его открыть дял чтения
+    * Проверка существования файла и возможности его открыть для чтения
     * @param string $fileCsvPath
     * @return void
     * @throws FileExistException
-    * @throws FileSizeException
     * @throws FileOpenException
     */
 
     public function parseCSV (string $fileCsvPath): void
     {
         if (!file_exists($this->fileCsvPath)) {
-            throw new FileExistException('Файл не найден в данной директории'); // exception needs try-catch in test
+
+            throw new FileExistException('Файл не найден в данной директории'); 
         }
 
         $this->fp = fopen($this->fileCsvPath, "rb");
 
         if (!$this->fp) {
-            throw new FileOpenException('Не удалось открыть файл для чтения'); // exception needs try-catch in test
+            throw new FileOpenException('Не удалось открыть файл для чтения'); 
         }
 
     }
 
     /**
-    * Функция для получения имен столбцов/полей
+    * Получаем имена столбцов файла *csv
     * @param string $fileCsvPath
     * @return string
     */
    
-    public function getCsvLines($fileCsvPath)
+    public function getCsvLines($fileCsvPath): string 
     {
         $file = new \SplFileObject($this->fileCsvPath);
-        $file->setFlags(\SplFileObject::READ_CSV);
-        $file->setCsvControl(",", '"', "\"");          
 
+        $file->setFlags(\SplFileObject::READ_CSV);
+
+        $file->setCsvControl(",", '"', "\"");   
+
+        
         //получаем заголовки полей/столбцов
       
         $file->seek(0);
 
-        $this->columns = $file->fgetcsv(","); // array
-
-        $this->columnsNames = implode (", ", $this->columns);// string
-
-
+        $this->columns = implode (", ",$file->fgetcsv(",")); // string
+                    
+        
         //считаем кол-во строк csv-файла
+        
         $row = 0; 
 
         while (!empty($file->fgetcsv(","))) {
@@ -74,57 +82,66 @@ class ImportCsvData
         }
 
         //получаем строки значений полей из csv-файла
-        $file->seek(1);
-        $i = 1;
-
-        for ($i = 1; $i <= $row - 1; $i++) {
-          
-          $this->values = $file->fgetcsv(",");  
         
+        $file->seek(1);
+
+        $i = 0;
+
+        for ($i = 0; $i <= $row - 1; $i++) {
+            
+            $this->values[] = implode (", ", $file->current());  
+            
+            $file->next();
         }
 
-        //либо используем другой цикл, что не меняет картины.. 
-    /*
-        while (!empty($file->fgetcsv(","))) {
-            
-            if ($file->key() >= 1) {
-            
-            $this->values = $file->fgetcsv(","); //array
-            $this->valueString = implode(", ", $values); //string  
-            $file->next(); 
-            
-            }
-        }    
-    */       
-       //варианты return для тестирования
-        return $this->columns;
-        //return $this->values;
-        //return $this->valuesString;
-        //return $this->columnsNames;
-        //return $this->columnsString;
-        //return $this->csvData;
+        $this->valuesTotalString = implode ("; \n", $this->values);
+
+        return $this->valuesTotalString;
     }
     
-    public $fileSqlPath = ""; // 'string' путь к файлу .sql;
-    public $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
-    public $sqlData = ""; // 'string'
-    
+      
     /**
-    * Функция формирования строки запроса INSERT для записи в sql-файл
+    * Формирует строки запроса INSERT для записи в sql-файл
     * @param string $dbTableName
     * @param string $fileCsvPath
     * @param string $fileSqlPath
     * @return string $sqlData
+    * @throws SqlRecordException
     */
-    public function getSqlQuery( /*string $dbTableName, string $fileCsvPath, string $fileSqlPath*/ ): string
-        {
-           
-            $format = 'INSERT INTO %1$s (%2$s) VALUES (%3$s)'; 
-            //в printf() подставлены значения переменных для тестирования
-            $sqlData = printf ($format,'category', 'name, icon', 'Уборка, clean'); 
+    public function getSqlQuery( string $dbTableName, string $columns, string $valuesTotalString ): string
+    {
+        $col = $this->columns;
+        $val = $this->valuesTotalString;
 
-            return $this->sqlData;
 
-            //далее запись в файл ../data/sql/category.sql
+        $format = "INSERT INTO ${dbTableName} (${col}) VALUES (${val})";        
+    
+        $this->sqlData = sprintf ($format, $this->dbTableName, $this->columns, $this->$valuesTotalString);
+        
+        if (empty($this->sqlData)) {
+
+            throw new StringQueryException('Не удалось записать данные в строку запроса INSERT');
         }
+
+        return $this->sqlData;
+    }
+
+    /**
+    * Функция для записи запроса INSERT в sql-файл
+    * @param string $fileSqlPath
+    * @return true
+    */
+
+    public function writeSqlFile ( string $fileSqlPath ): bool
+    {
+        
+        $sqlString = getSqlQuery($this->dbTableName, $columns, $valuesTotalString);
+        $record = file_put_contents($fileSqlPath, getSqlQuery(), FILE_APPEND);
+
+        if ($record === false) {
+
+            throw new SqlRecordException('Не удалось записать данные в sql-файл');  
+        } 
+           return true;
+    }
 }
