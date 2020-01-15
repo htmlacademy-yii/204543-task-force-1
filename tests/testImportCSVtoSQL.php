@@ -19,14 +19,15 @@ assert_options(ASSERT_CALLBACK, function () {
         echo func_get_arg(3);
     });
 
+$importcsv = new ImportCsvData('../data/categories.csv', '../data/sql/category.sql', 'category');
 
-$fileCsvPath = '../data/categories.csv';
-$importcsv = new ImportCsvData($fileCsvPath);
+$columns = ImportCsvData::$columnsE;
+$valuesTotalString = ImportCsvData::getCsvLines('../data/categories.csv');
 
-$importcsv->fileCsvPath = $fileCsvPath;
+// FileExistException
 
 try {
-    $importcsv->parseCSV($fileCsvPath);
+    $importcsv->parseCSV('../data/categories.csv');
 }   catch (\Exception  $e) {
     assert (!$e instanceof FileExistException, 'File does not exist in this directory');
     }
@@ -36,66 +37,42 @@ try {
 
 assert (1 == 2, 'test ImportCSVData::parseCSV() is completed');
 
-
+/*
 echo '<hr /> . $valuesTotalString';"\n";
-var_dump($importcsv->getCsvLines($fileCsvPath));"\n";
+var_dump($importcsv->getCsvLines('../data/categories.csv'));"\n";
 
 echo '<hr /> .$columns';"\n";
-var_dump($importcsv->columns);"\n";
+var_dump(ImportCSVData::$columnsE);"\n";
 
 echo '<hr /> .$values';"\n";
-var_dump($importcsv->values);"\n";
-
-
+var_dump(ImportCSVData::$valuesE);"\n";
 
 assert(1 == 2, 'test ImportCsvData::getCsvLines() is completed');
 
 
 // проверка записи строки запроса INSERT
-// ???? при создании объекта класса ImportCsvData() выдает ошибку, что получает null в качестве всех трех аргументов.  
-
-
-
-$importcsv = new ImportCsvData($dbTableName, $columns, $valuesTotalString); 
-$fileCsvPath = '../data/categories.csv';
-$fileSqlPath = '../data/sql/category.sql';
-$dbTableName = 'category';
-
-$importcsv->fileCsvPath;
-$importcsv->fileSqlPath; 
-$importcsv->dbTableName;
-
-$importcsv->columns = $columns;
-$importcsv->valuesTotalString = $valuesTotalString;
-
 
 echo '<hr /> . $sqlData';"\n";
-
-// вариант с подставленными значениями параметров для отладки
-//var_dump($importcsv->getSqlQuery('category', 'name, icon', 'Курьерские услуги, delivary; Уборка, clean;'));"\n";
-//
 var_dump($importcsv->getSqlQuery($dbTableName, $columns, $valuesTotalString));"\n";
+
+*/
 // exception StringQueryException
 
-
 try {
-    $importcsv->getSqlQuery($dbTableName, $columns, $valuesTotalString);
+    $importcsv->getSqlQuery('category', $columns, $valuesTotalString);
 }   catch (\Exception  $e) {
     assert (!$e instanceof StringQueryException, 'Failed to write data to sql-file');
 }
    
 assert(1 == 2, 'test ImportCsvData::getSqlQuery() is completed'); 
 
+
 // проверка записи данных в sql-файл
+
 // SqlRecordException
 
-$fileSqlPath = '../data/sql/category.sql';
-
-$importcsv = new ImportCsvData('../data/sql/category.sql'); 
-$importcsv->fileSqlPath = $fileSqlPath;
-
 try {
-    $importcsv->writeSqlFile($fileSqlPath);
+    $importcsv->writeSqlFile('../data/sql/category.sql');
 }   catch (\Exception  $e) {
     assert (!$e instanceof SqlRecordException, 'Failed to write data to sql-file');
 }

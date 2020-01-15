@@ -9,17 +9,17 @@ use YiiTaskForce\Exceptions\SqlRecordException;
 
 class ImportCsvData
 {
-    public $fileCsvPath = ""; // 'string' путь к файлу .csv; для категорий = '../data/categories.csv';
-    public $values = []; // 'array' массив значений  файла csv
-    public $columns = []; // 'array' массив имен столбцов файла csv
-    public $valuesTotalString = ""; //string все значения $values в одну строку
-    public $fileSqlPath = ""; // 'string' путь к файлу .sql;
-    public $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
+    public static $fileCsvPath = '../data/categories.csv'; // 'string' путь к файлу .csv; 
+    public static $values = []; // 'array' массив значений  файла csv
+    public static $columns = []; // 'array' массив имен столбцов файла csv
+    public static $valuesTotalString = ""; //string все значения $values в одну строку
+    public static $fileSqlPath = '../data/categories.csv'; // 'string' путь к файлу .sql 
+    public static $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
     public $sqlData = ""; // 'string'
     
    
 
-    public function __construct( string $fileCsvPath)
+    public function __construct( string $fileCsvPath,  string $fileSqlPath, string $dbTableName)
     {
         $this->fileCsvPath = $fileCsvPath;
         $this->fileSqlPath = $fileSqlPath;
@@ -56,9 +56,9 @@ class ImportCsvData
     * @return string
     */
    
-    public function getCsvLines($fileCsvPath): string 
+    public static function getCsvLines($fileCsvPath): string 
     {
-        $file = new \SplFileObject($this->fileCsvPath);
+        $file = new \SplFileObject($fileCsvPath);
 
         $file->setFlags(\SplFileObject::READ_CSV);
 
@@ -69,9 +69,9 @@ class ImportCsvData
       
         $file->seek(0);
 
-        $this->columns = implode (", ",$file->fgetcsv(",")); // string
-                    
-        
+        $columns = implode (", ",$file->fgetcsv(",")); // string
+
+    
         //считаем кол-во строк csv-файла
         
         $row = 0; 
@@ -82,24 +82,25 @@ class ImportCsvData
         }
 
         //получаем строки значений полей из csv-файла
-        
+                       
         $file->seek(1);
 
         $i = 0;
 
         for ($i = 0; $i <= $row - 1; $i++) {
             
-            $this->values[] = implode (", ", $file->current());  
+            $values[] = implode (", ", $file->current());  
             
             $file->next();
         }
 
-        $this->valuesTotalString = implode ("; \n", $this->values);
+        $valuesTotalString = implode ("; \n", $values);
 
-        return $this->valuesTotalString;
+        return $valuesTotalString;
     }
     
-      
+    public static $columnsE = ""; 
+          
     /**
     * Формирует строки запроса INSERT для записи в sql-файл
     * @param string $dbTableName
@@ -135,7 +136,7 @@ class ImportCsvData
     public function writeSqlFile ( string $fileSqlPath ): bool
     {
         
-        $sqlString = getSqlQuery($this->dbTableName, $columns, $valuesTotalString);
+        $sqlString = self::getSqlQuery(self::$dbTableName, self::$columns, $this->valuesTotalString);
         $record = file_put_contents($fileSqlPath, getSqlQuery(), FILE_APPEND);
 
         if ($record === false) {
