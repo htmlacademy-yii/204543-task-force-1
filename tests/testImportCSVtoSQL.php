@@ -21,8 +21,8 @@ assert_options(ASSERT_CALLBACK, function () {
 
 $importcsv = new ImportCsvData('../data/categories.csv', '../data/sql/category.sql', 'category');
 
-$columns = ImportCsvData::$columnsE;
-$valuesTotalString = ImportCsvData::getCsvLines('../data/categories.csv');
+$columns = ImportCsvData::$columnsSql;
+$valuesTotalString = ImportCsvData::getCsvColumns('../data/categories.csv');
 
 // FileExistException
 
@@ -37,29 +37,21 @@ try {
 
 assert (1 == 2, 'test ImportCSVData::parseCSV() is completed');
 
-/*
 echo '<hr /> . $valuesTotalString';"\n";
-var_dump($importcsv->getCsvLines('../data/categories.csv'));"\n";
+var_dump($importcsv->loadCsvValues('../data/categories.csv'));"\n";
 
 echo '<hr /> .$columns';"\n";
-var_dump(ImportCSVData::$columnsE);"\n";
-
-echo '<hr /> .$values';"\n";
-var_dump(ImportCSVData::$valuesE);"\n";
-
-assert(1 == 2, 'test ImportCsvData::getCsvLines() is completed');
-
+var_dump(ImportCSVData::getCsvColumns('../data/categories.csv'));"\n";
 
 // проверка записи строки запроса INSERT
 
 echo '<hr /> . $sqlData';"\n";
-var_dump($importcsv->getSqlQuery($dbTableName, $columns, $valuesTotalString));"\n";
+var_dump($importcsv->getSqlQuery('../data/categories.csv','category', $col, $val));"\n";
 
-*/
 // exception StringQueryException
 
 try {
-    $importcsv->getSqlQuery('category', $columns, $valuesTotalString);
+    $importcsv->getSqlQuery('../data/categories.csv', 'category');
 }   catch (\Exception  $e) {
     assert (!$e instanceof StringQueryException, 'Failed to write data to sql-file');
 }
@@ -72,9 +64,13 @@ assert(1 == 2, 'test ImportCsvData::getSqlQuery() is completed');
 // SqlRecordException
 
 try {
-    $importcsv->writeSqlFile('../data/sql/category.sql');
+    $importcsv->writeSqlFile('../data/sql/category.sql', 'category');
 }   catch (\Exception  $e) {
+    assert (!$e instanceof FileOpenException, 'Failed to write data to sql-file');
+    }
+
+    catch (\Exception  $e) {
     assert (!$e instanceof SqlRecordException, 'Failed to write data to sql-file');
-}
+    }   
    
 assert(1 == 2, 'test ImportCsvData::writeSqlFile() is completed');    

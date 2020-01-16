@@ -15,6 +15,7 @@ class ImportCsvData
     public static $valuesTotalString = ""; //string все значения $values в одну строку
     public static $fileSqlPath = '../data/categories.csv'; // 'string' путь к файлу .sql 
     public static $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
+    public static $columnsSql = ""; //string промежуточная переменная метода getCsvColumns
     public $sqlData = ""; // 'string'
     
    
@@ -56,7 +57,7 @@ class ImportCsvData
     * @return string
     */
    
-    public static function getCsvLines($fileCsvPath): string 
+    public static function getCsvColumns($fileCsvPath): string 
     {
         $file = new \SplFileObject($fileCsvPath);
 
@@ -68,9 +69,19 @@ class ImportCsvData
         //получаем заголовки полей/столбцов
       
         $file->seek(0);
+        //$columnsCsv[0] = $file->fgetcsv(",");
+        $columns = implode (", ", $file->fgetcsv()); // string
 
-        $columns = implode (", ",$file->fgetcsv(",")); // string
+       return $columns;
 
+    }
+
+    public static function loadCsvValues($fileCsvPath): string
+    {
+        
+        $file = new \SplFileObject($fileCsvPath);
+        $file->setFlags(\SplFileObject::READ_CSV /*| \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY*/);
+        
     
         //считаем кол-во строк csv-файла
         
@@ -82,24 +93,26 @@ class ImportCsvData
         }
 
         //получаем строки значений полей из csv-файла
-                       
-        $file->seek(1);
-
+       
+        $file->rewind();
+                
         $i = 0;
 
         for ($i = 0; $i <= $row - 1; $i++) {
             
-            $values[] = implode (", ", $file->current());  
-            
+            $values[] = implode (", ", $file->current()); 
+                        
             $file->next();
         }
+
+        unset($values[0]);
 
         $valuesTotalString = implode ("; \n", $values);
 
         return $valuesTotalString;
     }
     
-    public static $columnsE = ""; 
+    
           
     /**
     * Формирует строки запроса INSERT для записи в sql-файл
@@ -109,15 +122,16 @@ class ImportCsvData
     * @return string $sqlData
     * @throws SqlRecordException
     */
-    public function getSqlQuery( string $dbTableName, string $columns, string $valuesTotalString ): string
+    public function getSqlQuery(string $fileCsvPath, string $dbTableName): string
     {
-        $col = $this->columns;
-        $val = $this->valuesTotalString;
+       
+       $col = self::getCsvColumns($fileCsvPath);
+       $val = self::loadCsvValues($fileCsvPath);
 
 
         $format = "INSERT INTO ${dbTableName} (${col}) VALUES (${val})";        
     
-        $this->sqlData = sprintf ($format, $this->dbTableName, $this->columns, $this->$valuesTotalString);
+        $this->sqlData = sprintf ($format, $this->dbTableName, $col, $val);
         
         if (empty($this->sqlData)) {
 
@@ -128,16 +142,28 @@ class ImportCsvData
     }
 
     /**
-    * Функция для записи запроса INSERT в sql-файл
+    * Функция для записи строки запроса INSERT в sql-файл
     * @param string $fileSqlPath
     * @return true
     */
 
-    public function writeSqlFile ( string $fileSqlPath ): bool
+    
+    public function writeSqlFile ( string $fileSqlPath,string $dbTableName ): bool
     {
+        $fw = fopen($fileSqlPath , 'w');
         
-        $sqlString = self::getSqlQuery(self::$dbTableName, self::$columns, $this->valuesTotalString);
-        $record = file_put_contents($fileSqlPath, getSqlQuery(), FILE_APPEND);
+        if (!$fw) {
+
+            throw new FileOpenException('Не удалось открыть sql-файл для записи');
+        }
+
+        $sqlString = self::getSqlQuery($fileSqlPath, $dbTableName);
+       
+        //fclose($fd);
+
+        $file = new \SplFileObject($sqlString, "w");
+        
+        $record = $file->fwrite($sqlString, 1000);
 
         if ($record === false) {
 
