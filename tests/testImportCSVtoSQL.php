@@ -21,8 +21,9 @@ assert_options(ASSERT_CALLBACK, function () {
 
 $importcsv = new ImportCsvData('../data/categories.csv', '../data/sql/category.sql', 'category');
 
-$columnsSql = ImportCsvData::getCsvColumns('../data/categories.csv');
-$sqlString = ImportCsvData::loadCsvVAlues('../data/categories.csv', 'category');
+//$columnsSql = ImportCsvData::getCsvColumns('../data/categories.csv');
+//$sqlString = ImportCsvData::loadCsvVAlues('../data/categories.csv', 'category');
+
 
 // FileExistException + FileOpenException = проверка метода parseCSV
 
@@ -36,8 +37,8 @@ try {
     }
 
 assert (1 == 2, 'test ImportCSVData::parseCSV() is completed');
-
 /*
+
 echo '<hr /> . $sqlString';"\n";
 var_dump($importcsv->loadCsvValues('../data/categories.csv', 'category'));"\n";
 
@@ -45,9 +46,8 @@ echo '<hr /> .$columnsSql';"\n";
 var_dump(ImportCSVData::getCsvColumns('../data/categories.csv'));"\n";
 */
 
+
 // exception StringQueryException = проверка записи строки запроса INSERT
-
-
 
 try {
     $importcsv->loadCsvValues('../data/categories.csv', 'category');

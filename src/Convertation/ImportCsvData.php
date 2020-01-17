@@ -11,15 +11,11 @@ class ImportCsvData
 {
     public static $fileCsvPath = '../data/categories.csv'; // 'string' путь к файлу .csv; 
     public static $values = []; // 'array' массив значений  файла csv
-    public static $columns = []; // 'array' массив имен столбцов файла csv
-    public static $valuesTotalString = ""; //string все значения $values в одну строку
     public static $fileSqlPath = '../data/categories.csv'; // 'string' путь к файлу .sql 
     public static $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
     public static $columnsSql = ""; //string промежуточная переменная метода getCsvColumns
     
     
-   
-
     public function __construct( string $fileCsvPath,  string $fileSqlPath, string $dbTableName)
     {
         $this->fileCsvPath = $fileCsvPath;
@@ -69,12 +65,13 @@ class ImportCsvData
         //получаем заголовки полей/столбцов
       
         $file->seek(0);
-        //$columnsCsv[0] = $file->fgetcsv(",");
+
         $columnsSql = implode (", ", $file->fgetcsv(",")); // string
 
-       return $columnsSql;
+        return $columnsSql;
 
     }
+    
 
 
      /**
@@ -89,10 +86,10 @@ class ImportCsvData
     {
         
         $file = new \SplFileObject($fileCsvPath);
-        $file->setFlags(\SplFileObject::READ_CSV /*| \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY*/);
+
+        $file->setFlags(\SplFileObject::READ_CSV);
         
-    
-        //считаем кол-во строк csv-файла
+            //считаем кол-во строк csv-файла
         
         $row = 0; 
 
@@ -115,11 +112,7 @@ class ImportCsvData
             $values = implode (", ", $file->current()); //string
                         
             $file->next(); 
-
-            //$columnsSql = implode (", ", $values);
-
-            //$format = "INSERT INTO %s (${columnsSql})\nVALUES (${values})";
-            
+                       
             $format =  "INSERT INTO %s (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "%s;";
             $sqlData[] = sprintf ($format, $dbTableName, $columnsSql, $values);
 
