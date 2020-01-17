@@ -16,7 +16,7 @@ class ImportCsvData
     public static $fileSqlPath = '../data/categories.csv'; // 'string' путь к файлу .sql 
     public static $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
     public static $columnsSql = ""; //string промежуточная переменная метода getCsvColumns
-    public $sqlData = ""; // 'string'
+    
     
    
 
@@ -70,13 +70,22 @@ class ImportCsvData
       
         $file->seek(0);
         //$columnsCsv[0] = $file->fgetcsv(",");
-        $columns = implode (", ", $file->fgetcsv()); // string
+        $columnsSql = implode (", ", $file->fgetcsv(",")); // string
 
-       return $columns;
+       return $columnsSql;
 
     }
 
-    public static function loadCsvValues($fileCsvPath): string
+
+     /**
+    * Получает значения полей csv-файла, записыввает их в строку запроса INSERT и формирует массив из запросов INSERT
+    * @param string $fileCsvPath
+    * @return string $dbTableName
+    * @return array
+    * @throws StringQueryException
+    * */
+
+    public static function loadCsvValues( string $fileCsvPath, string $dbTableName): string
     {
         
         $file = new \SplFileObject($fileCsvPath);
@@ -92,6 +101,8 @@ class ImportCsvData
             $row++;
         }
 
+        $columnsSql = self::getCsvColumns($fileCsvPath); //string
+
         //получаем строки значений полей из csv-файла
        
         $file->rewind();
@@ -99,71 +110,48 @@ class ImportCsvData
         $i = 0;
 
         for ($i = 0; $i <= $row - 1; $i++) {
-            
-            $values[] = implode (", ", $file->current()); 
+
+
+            $values = implode (", ", $file->current()); //string
                         
-            $file->next();
+            $file->next(); 
+
+            //$columnsSql = implode (", ", $values);
+
+            //$format = "INSERT INTO %s (${columnsSql})\nVALUES (${values})";
+            
+            $format =  "INSERT INTO %s (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "%s;";
+            $sqlData[] = sprintf ($format, $dbTableName, $columnsSql, $values);
+
         }
 
-        unset($values[0]);
+        //получили массив из строк запросов INSERT
 
-        $valuesTotalString = implode ("; \n", $values);
+        unset($sqlData[0]); //удаляем первую строку с именами столбцов
 
-        return $valuesTotalString;
-    }
-    
-    
-          
+        if (empty($sqlData)) {
+
+            throw new StringQueryException('Не удалось записать данные запроса INSERT');
+        }
+
+        $sqlString = implode(" \n\r", $sqlData); //string - строка из массива строк запросов
+
+        return  $sqlString;
+    }   
+
+
     /**
-    * Формирует строки запроса INSERT для записи в sql-файл
+    * Записывает строки запроса INSERT в sql-файл
+    * @param string $fileSqlPath
     * @param string $dbTableName
-    * @param string $fileCsvPath
-    * @param string $fileSqlPath
-    * @return string $sqlData
-    * @throws SqlRecordException
+    * @return bool
     */
-    public function getSqlQuery(string $fileCsvPath, string $dbTableName): string
-    {
-       
-       $col = self::getCsvColumns($fileCsvPath);
-       $val = self::loadCsvValues($fileCsvPath);
-
-
-        $format = "INSERT INTO ${dbTableName} (${col}) VALUES (${val})";        
     
-        $this->sqlData = sprintf ($format, $this->dbTableName, $col, $val);
-        
-        if (empty($this->sqlData)) {
-
-            throw new StringQueryException('Не удалось записать данные в строку запроса INSERT');
-        }
-
-        return $this->sqlData;
-    }
-
-    /**
-    * Функция для записи строки запроса INSERT в sql-файл
-    * @param string $fileSqlPath
-    * @return true
-    */
-
-    
-    public function writeSqlFile ( string $fileSqlPath,string $dbTableName ): bool
-    {
-        $fw = fopen($fileSqlPath , 'w');
-        
-        if (!$fw) {
-
-            throw new FileOpenException('Не удалось открыть sql-файл для записи');
-        }
-
-        $sqlString = self::getSqlQuery($fileSqlPath, $dbTableName);
+    public function writeSqlFile (string $fileCsvPath, string $fileSqlPath, string $dbTableName ): bool
+    {   
+        $sqlString = self::loadCsvValues($fileCsvPath, $dbTableName);
        
-        //fclose($fd);
-
-        $file = new \SplFileObject($sqlString, "w");
-        
-        $record = $file->fwrite($sqlString, 1000);
+        $record = file_put_contents ( $fileSqlPath, $sqlString, FILE_USE_INCLUDE_PATH | LOCK_EX);
 
         if ($record === false) {
 
