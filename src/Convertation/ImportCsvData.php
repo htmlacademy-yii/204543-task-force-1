@@ -109,11 +109,11 @@ class ImportCsvData
         for ($i = 0; $i <= $row - 1; $i++) {
 
 
-            $values = implode (", ", $file->current()); //string
-            $values = '"' . implode ('", "', $file->current()) . '"';            
+            //$values = implode (", ", $file->current()); //string
+            $values = '\'' . implode ('\', \'', $file->current()) . '\'';            
             $file->next(); 
                        
-            $format =  "INSERT INTO %s (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "%s;";
+            $format =  "INSERT INTO %s (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "(%s);";
             //$format =  'INSERT INTO %s (%s) ' . PHP_EOL . 'VALUES ' . PHP_EOL . '(%s);';
             $sqlData[] = sprintf ($format, $dbTableName, $columnsSql, $values);
 
