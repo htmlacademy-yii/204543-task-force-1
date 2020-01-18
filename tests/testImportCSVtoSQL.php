@@ -37,14 +37,14 @@ try {
     }
 
 assert (1 == 2, 'test ImportCSVData::parseCSV() is completed');
-/*
+
 
 echo '<hr /> . $sqlString';"\n";
 var_dump($importcsv->loadCsvValues('../data/categories.csv', 'category'));"\n";
 
 echo '<hr /> .$columnsSql';"\n";
 var_dump(ImportCSVData::getCsvColumns('../data/categories.csv'));"\n";
-*/
+
 
 
 // exception StringQueryException = проверка записи строки запроса INSERT

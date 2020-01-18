@@ -11,7 +11,7 @@ class ImportCsvData
 {
     public static $fileCsvPath = '../data/categories.csv'; // 'string' путь к файлу .csv; 
     public static $values = []; // 'array' массив значений  файла csv
-    public static $fileSqlPath = '../data/categories.csv'; // 'string' путь к файлу .sql 
+    public static $fileSqlPath = '../data/sql/category.sql'; // 'string' путь к файлу .sql 
     public static $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
     public static $columnsSql = ""; //string промежуточная переменная метода getCsvColumns
     
@@ -110,10 +110,11 @@ class ImportCsvData
 
 
             $values = implode (", ", $file->current()); //string
-                        
+            $values = '"' . implode ('", "', $file->current()) . '"';            
             $file->next(); 
                        
             $format =  "INSERT INTO %s (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "%s;";
+            //$format =  'INSERT INTO %s (%s) ' . PHP_EOL . 'VALUES ' . PHP_EOL . '(%s);';
             $sqlData[] = sprintf ($format, $dbTableName, $columnsSql, $values);
 
         }
@@ -142,9 +143,10 @@ class ImportCsvData
     
     public function writeSqlFile (string $fileCsvPath, string $fileSqlPath, string $dbTableName ): bool
     {   
+        
         $sqlString = self::loadCsvValues($fileCsvPath, $dbTableName);
        
-        $record = file_put_contents ( $fileSqlPath, $sqlString, FILE_USE_INCLUDE_PATH | LOCK_EX);
+        $record = file_put_contents ( $fileSqlPath, $sqlString, FILE_USE_INCLUDE_PATH | LOCK_EX | FILE_APPEND);
 
         if ($record === false) {
 
