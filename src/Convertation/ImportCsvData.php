@@ -10,7 +10,6 @@ use YiiTaskForce\Exceptions\SqlRecordException;
 class ImportCsvData
 {
     public static $fileCsvPath = '../data/categories.csv'; // 'string' путь к файлу .csv; 
-    public static $values = []; // 'array' массив значений  файла csv
     public static $fileSqlPath = '../data/sql/category.sql'; // 'string' путь к файлу .sql 
     public static $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
     public static $columnsSql = ""; //string промежуточная переменная метода getCsvColumns
@@ -44,7 +43,6 @@ class ImportCsvData
         if (!$this->fp) {
             throw new FileOpenException('Не удалось открыть файл для чтения'); 
         }
-
     }
 
     /**
@@ -61,18 +59,15 @@ class ImportCsvData
 
         $file->setCsvControl(",", '"', "\"");   
 
-        
-        //получаем заголовки полей/столбцов
+    //получаем заголовки полей/столбцов
       
         $file->seek(0);
 
         $columnsSql = implode (", ", $file->fgetcsv(",")); // string
 
         return $columnsSql;
-
     }
     
-
 
      /**
     * Получает значения полей csv-файла, записыввает их в строку запроса INSERT и формирует массив из запросов INSERT
@@ -89,7 +84,7 @@ class ImportCsvData
 
         $file->setFlags(\SplFileObject::READ_CSV);
         
-            //считаем кол-во строк csv-файла
+    //считаем кол-во строк csv-файла
         
         $row = 0; 
 
@@ -100,26 +95,23 @@ class ImportCsvData
 
         $columnsSql = self::getCsvColumns($fileCsvPath); //string
 
-        //получаем строки значений полей из csv-файла
+    //получаем строки значений полей из csv-файла
        
         $file->rewind();
                 
         $i = 0;
 
         for ($i = 0; $i <= $row - 1; $i++) {
-
-
-            //$values = implode (", ", $file->current()); //string
+            
             $values = '\'' . implode ('\', \'', $file->current()) . '\'';            
             $file->next(); 
                        
             $format =  "INSERT INTO %s (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "(%s);";
-            //$format =  'INSERT INTO %s (%s) ' . PHP_EOL . 'VALUES ' . PHP_EOL . '(%s);';
+           
             $sqlData[] = sprintf ($format, $dbTableName, $columnsSql, $values);
-
         }
 
-        //получили массив из строк запросов INSERT
+    //получаем массив из строк запросов INSERT
 
         unset($sqlData[0]); //удаляем первую строку с именами столбцов
 
