@@ -1,4 +1,7 @@
 <?php
+ini_set('error_reporting', E_ALL);
+
+
 require_once '../vendor/autoload.php';
 
     /**
@@ -19,16 +22,16 @@ assert_options(ASSERT_CALLBACK, function () {
         echo func_get_arg(3);
     });
 
-$importcsv = new ImportCsvData('../data/categories.csv', '../data/sql/category.sql', 'category');
+$cities = new ImportCSVData('../data/cities.csv', '../data/sql/cities.sql', 'cities'); 
 
-//$columnsSql = ImportCsvData::getCsvColumns('../data/categories.csv');
-//$sqlString = ImportCsvData::loadCsvVAlues('../data/categories.csv', 'category');
+echo '<hr /> . $sqlString';"\n";
+var_dump($cities->loadCsvValues('../data/cities.csv', 'cities'));"\n";
 
-
-// FileExistException + FileOpenException = проверка метода parseCSV
+echo '<hr /> .$columnsSql';"\n";
+var_dump(ImportCSVData::getCsvColumns('../data/cities.csv'));"\n";
 
 try {
-    $importcsv->parseCSV('../data/categories.csv');
+    $cities->parseCSV('../data/cities.csv');
 }   catch (\Exception  $e) {
     assert (!$e instanceof FileExistException, 'File does not exist in this directory');
     }
@@ -36,21 +39,10 @@ try {
     assert (!$e instanceof FileOpenException, 'Failed to open file for reading');
     }
 
-assert (1 == 2, 'test ImportCSVData::parseCSV() is completed');
-
-
-echo '<hr /> . $sqlString';"\n";
-var_dump($importcsv->loadCsvValues('../data/categories.csv', 'category'));"\n";
-
-echo '<hr /> .$columnsSql';"\n";
-var_dump(ImportCSVData::getCsvColumns('../data/categories.csv'));"\n";
-
-
-
 // exception StringQueryException = проверка записи строки запроса INSERT
 
 try {
-    $importcsv->loadCsvValues('../data/categories.csv', 'category');
+    $cities->loadCsvValues('../data/cities.csv', 'cities');
 }   catch (\Exception  $e) {
     assert (!$e instanceof StringQueryException, 'Failed to write data to sql-file');
 }
@@ -61,9 +53,11 @@ assert(1 == 2, 'test ImportCsvData::loadCsvValues() is completed');
 // SqlRecordException = проверка записи данных в sql-файл
 
 try {
-    $importcsv->writeSqlFile('../data/categories.csv', '../data/sql/category.sql', 'category');
+    $cities->writeSqlFile('../data/cities.csv', '../data/sql/cities.sql', 'cities');
 }    catch (\Exception  $e) {
-    assert (!$e instanceof SqlRecordException, 'Failed to write data to sql-file');
+    assert (!$e instanceof SqlRecordException, 'Failed to write cities data to sql-file');
     }   
  
 assert(1 == 2, 'test ImportCsvData::writeSqlFile() is completed');    
+
+assert(1 == 2, 'test loading cities is completed');  

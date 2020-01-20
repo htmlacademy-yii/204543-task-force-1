@@ -9,17 +9,17 @@ use YiiTaskForce\Exceptions\SqlRecordException;
 
 class ImportCsvData
 {
-    public static $fileCsvPath = '../data/categories.csv'; // 'string' путь к файлу .csv; 
-    public static $fileSqlPath = '../data/sql/category.sql'; // 'string' путь к файлу .sql 
-    public static $dbTableName = 'category'; // 'string', имя таблицы в базе данных;
+    public static $fileCsvPath = '../data/cities.csv'; // 'string' путь к файлу .csv; 
+    public static $fileSqlPath = '../data/sql/cities.sql'; // 'string' путь к файлу .sql 
+    public static $dbTableName = 'cities'; // 'string', имя таблицы в базе данных;
     public static $columnsSql = ""; //string промежуточная переменная метода getCsvColumns
     
     
     public function __construct( string $fileCsvPath,  string $fileSqlPath, string $dbTableName)
     {
-        $this->fileCsvPath = $fileCsvPath;
-        $this->fileSqlPath = $fileSqlPath;
-        $this->dbTableName = $dbTableName;
+        self::$fileCsvPath = $fileCsvPath;
+        self::$fileSqlPath = $fileSqlPath;
+        self::$dbTableName = $dbTableName;
     }
 
 
@@ -33,12 +33,12 @@ class ImportCsvData
 
     public function parseCSV (string $fileCsvPath): void
     {
-        if (!file_exists($this->fileCsvPath)) {
+        if (!file_exists(self::$fileCsvPath)) {
 
             throw new FileExistException('Файл не найден в данной директории'); 
         }
 
-        $this->fp = fopen($this->fileCsvPath, "rb");
+        $this->fp = fopen(self::$fileCsvPath, "rb");
 
         if (!$this->fp) {
             throw new FileOpenException('Не удалось открыть файл для чтения'); 
@@ -63,7 +63,7 @@ class ImportCsvData
       
         $file->seek(0);
 
-        $columnsSql = implode (", ", $file->fgetcsv(",")); // string
+        $columnsSql = '`' . implode ("`, `",  $file->fgetcsv(",")). '`'; // string
 
         return $columnsSql;
     }
@@ -82,7 +82,7 @@ class ImportCsvData
         
         $file = new \SplFileObject($fileCsvPath);
 
-        $file->setFlags(\SplFileObject::READ_CSV);
+        $file->setFlags(\SplFileObject::READ_CSV /*| \SplFileObject::SKIP_EMPTY*/);
         
     //считаем кол-во строк csv-файла
         
@@ -103,12 +103,17 @@ class ImportCsvData
 
         for ($i = 0; $i <= $row - 1; $i++) {
             
-            $values = '\'' . implode ('\', \'', $file->current()) . '\'';            
+           //$values = '\'' . implode ('\', \'', $file->current()) . '\''; 
+           $values = '"' . implode ('", "', $file->current()) . '"';           
             $file->next(); 
                        
-            $format =  "INSERT INTO %s (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "(%s);";
+            //$format =  'INSERT INTO %1$s (%2$s)' . PHP_EOL . 'VALUES' . PHP_EOL . '(%3$s)';
+            
+            
+            $format = "INSERT INTO %s (%s)" . PHP_EOL . "VALUES" . PHP_EOL . "(%s);";
            
             $sqlData[] = sprintf ($format, $dbTableName, $columnsSql, $values);
+
         }
 
     //получаем массив из строк запросов INSERT
@@ -120,7 +125,7 @@ class ImportCsvData
             throw new StringQueryException('Не удалось записать данные запроса INSERT');
         }
 
-        $sqlString = implode(" \n\r", $sqlData); //string - строка из массива строк запросов
+        $sqlString = implode(" \n\r", $sqlData) . '\'' ; //string - строка из массива строк запросов
 
         return  $sqlString;
     }   
