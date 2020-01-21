@@ -22,16 +22,16 @@ assert_options(ASSERT_CALLBACK, function () {
         echo func_get_arg(3);
     });
 
-$cities = new ImportCSVData('../data/cities.csv', '../data/sql/cities.sql', 'cities'); 
+$replies = new ImportCSVData('../data/replies.csv', '../data/sql/replies.sql', 'replies'); 
 
 echo '<hr /> . $sqlString';"\n";
-var_dump($cities->loadCsvValues('../data/cities.csv', 'cities'));"\n";
+var_dump($replies->loadCsvValues('../data/replies.csv', 'replies'));"\n";
 
 echo '<hr /> .$columnsSql';"\n";
-var_dump(ImportCSVData::getCsvColumns('../data/cities.csv'));"\n";
+var_dump(ImportCSVData::getCsvColumns('../data/replies.csv'));"\n";
 
 try {
-    $cities->parseCSV('../data/cities.csv');
+    $replies->parseCSV('../data/replies.csv');
 }   catch (\Exception  $e) {
     assert (!$e instanceof FileExistException, 'File does not exist in this directory');
     }
@@ -42,7 +42,7 @@ try {
 // exception StringQueryException = проверка записи строки запроса INSERT
 
 try {
-    $cities->loadCsvValues('../data/cities.csv', 'cities');
+    $replies->loadCsvValues('../data/replies.csv', 'replies');
 }   catch (\Exception  $e) {
     assert (!$e instanceof StringQueryException, 'Failed to write data to sql-file');
 }
@@ -53,11 +53,11 @@ assert(1 == 2, 'test ImportCsvData::loadCsvValues() is completed');
 // SqlRecordException = проверка записи данных в sql-файл
 
 try {
-    $cities->writeSqlFile('../data/cities.csv', '../data/sql/cities.sql', 'cities');
+    $replies->writeSqlFile('../data/replies.csv', '../data/sql/replies.sql', 'replies');
 }    catch (\Exception  $e) {
-    assert (!$e instanceof SqlRecordException, 'Failed to write cities data to sql-file');
+    assert (!$e instanceof SqlRecordException, 'Failed to write replies data to sql-file');
     }   
  
 assert(1 == 2, 'test ImportCsvData::writeSqlFile() is completed');    
 
-assert(1 == 2, 'test loading cities is completed');  
+assert(1 == 2, 'test loading replies is completed');  

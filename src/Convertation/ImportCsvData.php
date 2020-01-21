@@ -9,9 +9,9 @@ use YiiTaskForce\Exceptions\SqlRecordException;
 
 class ImportCsvData
 {
-    public static $fileCsvPath = '../data/cities.csv'; // 'string' путь к файлу .csv; 
-    public static $fileSqlPath = '../data/sql/cities.sql'; // 'string' путь к файлу .sql 
-    public static $dbTableName = 'cities'; // 'string', имя таблицы в базе данных;
+    public static $fileCsvPath = '../data/replies.csv'; // 'string' путь к файлу .csv; 
+    public static $fileSqlPath = '../data/sql/replies.sql'; // 'string' путь к файлу .sql 
+    public static $dbTableName = 'replies'; // 'string', имя таблицы в базе данных;
     public static $columnsSql = ""; //string промежуточная переменная метода getCsvColumns
     
     

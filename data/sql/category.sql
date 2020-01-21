@@ -1,4 +1,3 @@
-
 INSERT INTO category (name, icon) 
 VALUES 
 ('Курьерские услуги', 'delivary'); 
