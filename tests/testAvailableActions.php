@@ -1,5 +1,5 @@
 <?php
-    require_once '../vendor/autoload.php';
+    //require_once '../vendor/autoload.php';
 
     /**
       * File for testing if class AvailableActions works right way
