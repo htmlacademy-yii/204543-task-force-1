@@ -131,7 +131,7 @@ AppAsset::register($this);
 <!-- START Of page content -->
     <main class="page-main">
         <div class="main-container page-container">
-            <?= $content ?>
+            <?= $content; ?>
         </div>
     </main>
 <!-- END Of page content -->
