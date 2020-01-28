@@ -21,8 +21,6 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
     <?php $this->head() ?>
 </head>
 <body>
@@ -138,7 +136,7 @@ AppAsset::register($this);
 
 <!-- START of inserted footer -->
     <footer class="page-footer">
-        <div style="background-color:#2f3542;" class="main-container page-footer__container" >
+        <div  class="main-container page-footer__container" >
             <div class="page-footer__info">
                 <p class="page-footer__info-copyright">
                     © 2019, ООО «ТаскФорс»
