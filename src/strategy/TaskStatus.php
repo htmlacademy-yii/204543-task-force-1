@@ -7,13 +7,6 @@
 
     namespace YiiTaskForce\Strategy;
 
-    use YiiTaskForce\Actions\Action;
-    use YiiTaskForce\Actions\ActionCancel;
-    use YiiTaskForce\Actions\ActionRespond;
-    use YiiTaskForce\Actions\ActionComplete;
-    use YiiTaskForce\Actions\ActionRefuse;
-
-
     class TaskStatus
     {
     // роли пользователей
@@ -24,38 +17,37 @@
         public const STATUS_NEW = 'new';
         public const STATUS_CANCEL = 'cancel';
         public const STATUS_INPROCESS = 'inprogress';
-        public const STATUS_COMPLETED = 'completed';
-        public const STATUS_FAILED = 'failed';
+        public const STATUS_FINISH = 'finished';
+        public const STATUS_PAID = 'paid';
 
     // действия заказчика и исполнителя
-        public const ACTION_CREATE = ActionCreate::class;
-        public const ACTION_CANCEL = ActionCancel::class;
-        public const ACTION_RESPOND = ActionRespond::class;
-        public const ACTION_COMPLETE= ActionComplete::class;
-        public const ACTION_REFUSE = ActionRefuse::class;
+        public const ACTION_ORDER = 'create';
+        public const ACTION_CANCEL = 'cancel';
+        public const ACTION_PAY = 'pay';
+        public const ACTION_DO ='respond';
+        public const ACTION_FINISH = 'job_is_done';
 
     // свойства класса TaskStatus
         public $clientId = 0; //id заказчика
-        public $executorId = 0; //id исполнителя
+        public $doerId = 0; //id исполнителя
         public $taskFinishDate = ""; //дата окончания работы по заказу
         public $activeStatus = 'new'; // активный статус заказа
 
-         private static $actions = [
-            0 => ActionCreate::class,
-            1 => ActionCancel::class,
-            2 => ActionCompleted::class,
-            3 => ActionRespond::class,
-            4 => ActionRefuse::class,
-
-        ];
+        private static $actions = [
+                        1 => self::ACTION_ORDER,
+                        2 => self::ACTION_CANCEL,
+                        3 => self::ACTION_DO,
+                        4 => self::ACTION_FINISH,
+                        5 => self::ACTION_PAY
+                        ];
 
         private static $statuses = [
                         1 => self::STATUS_NEW,
                         2 => self::STATUS_CANCEL,
                         3 => self::STATUS_INPROCESS,
-                        4 => self::STATUS_COMPLETED,
-                        5 => self::STATUS_FAILED
-        ];
+                        4 => self::STATUS_FINISH,
+                        5 => self::STATUS_PAID
+                        ];
 
     // методы класса TaskStatus
 
@@ -72,22 +64,15 @@
         public function getActiveStatus (string $act)
         { // определяем активный статус
             switch ($act) {
-
-                case ActionCreate::class:
-                    return self::STATUS_NEW;
-
-                case ActionCancel::class:
+                case self::ACTION_CANCEL:
                     return self::STATUS_CANCEL;
-
-                case ActionRespond::class:
+                case self::ACTION_DO:
                     return self::STATUS_INPROCESS;
-
-                case ActionComplete::class:
-                    return self::STATUS_COMPLETED;
-
-                case ActionRefuse::class:
-                    return self::STATUS_FAILED;
+                case self::ACTION_FINISH:
+                    return self::STATUS_FINISH;
+                case self::ACTION_PAY:
+                    return self::STATUS_PAID;
             }
-                return $this->activeStatus;
+              return $this->activeStatus;
         }
     }
