@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -17,7 +17,12 @@ use Yii;
  * @property Reply[] $replies
  */
 class Users extends \yii\db\ActiveRecord
-{
+{   
+    public $email;
+    public $name;
+    public $password;
+    public $dt_add;
+
     /**
      * {@inheritdoc}
      */
@@ -44,11 +49,11 @@ class Users extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'email' => Yii::t('app', 'Email'),
-            'name' => Yii::t('app', 'Name'),
-            'password' => Yii::t('app', 'Password'),
-            'dt_add' => Yii::t('app', 'Dt Add'),
+            'id' => 'ID',
+            'email' => 'email пользователя',
+            'name' => 'имя пользователя',
+            'password' => 'пароль' ,
+            'dt_add' => 'дата регистрации'),
         ];
     }
 
