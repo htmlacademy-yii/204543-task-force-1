@@ -27,7 +27,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <div class="table-layout">
 
-    <!-- START of header  -->
+<!-- START of header  -->
     <header class="page-header">
         <div class="main-container page-header__container">
             <div class="page-header__logo">
@@ -124,7 +124,7 @@ AppAsset::register($this);
             </div>
         </div>
     </header>
-    <!-- END of header из signup.html -->
+<!-- END of header из signup.html -->
 
 <!-- START Of page content -->
     <main class="page-main">

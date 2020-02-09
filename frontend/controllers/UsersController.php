@@ -2,15 +2,18 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Users;
-use frontend\models\Category;
+use app\models\Users;
+use app\models\Category;
 use Yii;
 use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use yii\helpers\Url;
 
 
 class UsersController extends \yii\web\Controller
+
 {  
     public function actionIndex()
     {
@@ -20,7 +23,7 @@ class UsersController extends \yii\web\Controller
         $user->name = 'Petrov Ivan';
         $user->password = '789456_23';
 
-        $user->dt_add = '22.01.2020';
+        $user->dt_add = '2020-02-10';
         // сохранение модели в базе данных
         $user->insert();
         return $this->render('index', ['user' => $user]);
@@ -30,7 +33,7 @@ class UsersController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $users = Users::findAll([102,104,106,108,120]);
+        $users = Users::findAll();
         
         if ($users) {
         	print($user->email);
@@ -40,7 +43,8 @@ class UsersController extends \yii\web\Controller
         }
         
         return $this->render('index', ['users' => $users]);
-    } */
+    } 
+
     public function actionView($id)
     {
         $user = Users::findOne($id);
@@ -55,5 +59,5 @@ class UsersController extends \yii\web\Controller
         $users = Users::findAll(['category' => $category]);
         return $this->render('index', ['users' => $users]);
     }
-
+*/
 }

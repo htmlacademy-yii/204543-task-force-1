@@ -1,26 +1,25 @@
 <?php
 
 namespace app\models;
-
 use Yii;
 
 /**
- * This is the model class for table "category".
+ * This is the model class for table "categories".
  *
  * @property int $id id категории
  * @property string $name название категории
  * @property string $icon
  *
- * @property Tasks[] $tasks
+ * @property Task[] $tasks
  */
-class Category extends \yii\db\ActiveRecord
+class Categories extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'category';
+        return 'categories';
     }
 
     /**
@@ -49,19 +48,19 @@ class Category extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Tasks]].
      *
-     * @return \yii\db\ActiveQuery|TasksQuery
+     * @return \yii\db\ActiveQuery|TaskQuery
      */
     public function getTasks()
     {
-        return $this->hasMany(Tasks::className(), ['category_id' => 'id']);
+        return $this->hasMany(Task::className(), ['category_id' => 'id']);
     }
 
     /**
      * {@inheritdoc}
-     * @return CategoryQuery the active query used by this AR class.
+     * @return CategoriesQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CategoryQuery(get_called_class());
+        return new CategoriesQuery(get_called_class());
     }
 }

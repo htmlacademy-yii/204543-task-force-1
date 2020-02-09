@@ -16,15 +16,6 @@ return [
             'password' => '',
             'charset' => 'utf8'
         ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'enableStrictParsing' => false,
-            'rules' => [
-                'posts' => 'post/index', 
-                'post/<id:\d+>' => 'post/view',
-            ],
-        ],
-        
+      
     ],
 ];
