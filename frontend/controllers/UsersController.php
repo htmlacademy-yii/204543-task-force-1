@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Users;
-use app\models\Category;
+use app\models\Profiles;
 use Yii;
 use yii\db\Query;
 use yii\web\Controller;
