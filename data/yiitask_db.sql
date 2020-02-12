@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 10 2020 г., 02:08
--- Версия сервера: 10.3.13-MariaDB-log
--- Версия PHP: 7.1.32
+-- Время создания: Фев 13 2020 г., 00:01
+-- Версия сервера: 5.7.16
+-- Версия PHP: 7.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -1331,16 +1329,16 @@ INSERT INTO `tasks` (`id`, `dt_add`, `category_id`, `description`, `expire`, `na
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userName` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dt_add` datetime DEFAULT current_timestamp()
+  `dt_add` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `name`, `password`, `dt_add`) VALUES
+INSERT INTO `users` (`id`, `email`, `userName`, `password`, `dt_add`) VALUES
 (100, 'kbuttress0@1und1.de', 'Karrie Buttress', 'JcfoKBYAB4k', '2019-08-10 00:00:00'),
 (101, 'baymer1@hp.com', 'Bob Aymer', 'ZEE54kg', '2018-12-21 00:00:00'),
 (102, 'zboulding2@macromedia.com', 'Zilvia Boulding', 'VJyMV1Zat', '2019-07-25 00:00:00'),
@@ -1361,10 +1359,11 @@ INSERT INTO `users` (`id`, `email`, `name`, `password`, `dt_add`) VALUES
 (117, 'nculliph@fc2.com', 'Nixie Cullip', '2UdKIR2f', '2019-04-07 00:00:00'),
 (118, 'mpimblotti@xing.com', 'Matilde Pimblott', 'nGZ8disdg', '2019-07-18 00:00:00'),
 (119, 'askurrayj@un.org', 'Al Skurray', 'bL9tAf', '2018-11-25 00:00:00'),
-(122, 'petrov.ivan@mail.ru', 'Petrov Ivan', '789456_23', '2020-02-10 00:00:00'),
-(123, 'petrov.ivan@mail.ru', 'Petrov Ivan', '789456_23', '2020-02-10 00:00:00'),
-(124, 'petrov.ivan@mail.ru', 'Petrov Ivan', '789456_23', '2020-02-10 00:00:00'),
-(125, 'petrov.ivan@mail.ru', 'Petrov Ivan', '789456_23', '2020-02-10 00:00:00');
+(125, 'petrov.ivan@mail.ru', 'Petrov Ivan', '789456_23', '2020-02-10 00:00:00'),
+(127, 'john.depp@mail.ru', 'johny depp', '458923asd', '2020-02-11 00:00:00'),
+(128, 'real@mail.ru', 'Adam Smith', 'dft051vert', '2020-02-12 00:00:00'),
+(131, 'Greta@gmail.se', 'G.Tunberg', 'greenforever', '2020-02-12 00:00:00'),
+(132, 'robinson@bk.home', 'Antony Rob', '14256_qwer', '2020-02-13 00:00:00');
 
 --
 -- Индексы сохранённых таблиц
@@ -1428,37 +1427,31 @@ ALTER TABLE `users`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id категории', AUTO_INCREMENT=26;
-
 --
 -- AUTO_INCREMENT для таблицы `cities`
 --
 ALTER TABLE `cities`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id города', AUTO_INCREMENT=4433;
-
 --
 -- AUTO_INCREMENT для таблицы `opinions`
 --
 ALTER TABLE `opinions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
 --
 -- AUTO_INCREMENT для таблицы `replies`
 --
 ALTER TABLE `replies`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id отклика', AUTO_INCREMENT=41;
-
 --
 -- AUTO_INCREMENT для таблицы `tasks`
 --
 ALTER TABLE `tasks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -1481,7 +1474,6 @@ ALTER TABLE `replies`
 --
 ALTER TABLE `tasks`
   ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

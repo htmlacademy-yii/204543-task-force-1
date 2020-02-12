@@ -9,9 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $email
- * @property string $name
+ * @property string $userName
  * @property string $password
- * @property string $dt_add
+ * @property string|null $dt_add
  *
  * @property Profile[] $profiles
  * @property Reply[] $replies
@@ -32,9 +32,9 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'name', 'password'], 'required'],
+            [['email', 'userName', 'password'], 'required'],
             [['dt_add'], 'safe'],
-            [['email', 'name', 'password'], 'string', 'max' => 120],
+            [['email', 'userName', 'password'], 'string', 'max' => 120],
         ];
     }
 
@@ -46,7 +46,7 @@ class Users extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'email' => Yii::t('app', 'Email'),
-            'name' => Yii::t('app', 'Name'),
+            'userName' => Yii::t('app', 'User Name'),
             'password' => Yii::t('app', 'Password'),
             'dt_add' => Yii::t('app', 'Dt Add'),
         ];

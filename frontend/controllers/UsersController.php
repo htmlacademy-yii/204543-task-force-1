@@ -18,46 +18,58 @@ class UsersController extends \yii\web\Controller
     public function actionIndex()
     {
         
-      $user = new Users();
-        $user->email = 'petrov.ivan@mail.ru';
-        $user->name = 'Petrov Ivan';
-        $user->password = '789456_23';
+      $users = new Users();
+        $users->email = 'robinson@bk.home';
+        $users->userName = 'Antony Rob';
+        $users->password = '14256_qwer';
+        $users->dt_add = '2020-02-13';
 
-        $user->dt_add = '2020-02-10';
-        // сохранение модели в базе данных
-        $user->insert();
-        return $this->render('index', ['user' => $user]);
-    }
-     
-    /*
-
-    public function actionIndex()
-    {
-        $users = Users::findAll();
-        
-        if ($users) {
-        	print($user->email);
-            print($user->name);
-            print($user->password);
-            print($user->dt_add);
+        //проверяем, есть ли пользователь с таким же email
+        $user = Users::findOne(['email' => $users->email]);
+        if($user) {
+             throw new NotFoundHttpException("Пользователь с таким email  уже зарегистрирован");
+        }   else {
+        // сохранение модели в базе данных} 
+        $users->insert();
         }
         
         return $this->render('index', ['users' => $users]);
-    } 
-
+    }
+    
+    //actionView($id) - запрос к таблицt users для страницы users/view/id
     public function actionView($id)
     {
         $user = Users::findOne($id);
         if (!$user) {
             throw new NotFoundHttpException("Пользователь с ID=$id не найден");
         }
-        return $this->render('view', ['users' => $user]);
+        return $this->render('view', ['user' => $user]);
     }
 
-    public function actionFilter($category)
+    //actionUser($id) - запрос к таблицам users и profiles для страницы users/user/id
+    public function actionUser($id)
     {
-        $users = Users::findAll(['category' => $category]);
-        return $this->render('index', ['users' => $users]);
+        $profile = Profiles::find()->where($user_id)->joinWith('users')->one($id);
+
+        $users = $profile->users;
+
+        return $this->render('user', ['user' => $users]);
     }
-*/
+
+   
+
+
+/*
+    public function actionUser    {
+        $query = new Query();
+        
+        $query->select('u.email', 'u.userName')->from('users u')
+            ->join('INNER JOIN', 'profiles p', 'p.about', 'p.phone', 'p.skype', 'p.user_id = u.id');
+           
+        // выполнить запрос и получить результат в виде ассоциативного массива
+        $rows = $query->one($id);
+
+        return $this->render('user', ['user' => $row]);
+    }
+  */
 }

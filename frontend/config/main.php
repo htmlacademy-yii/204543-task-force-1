@@ -38,11 +38,12 @@ return [
         ],
     
         'urlManager' => [
-            'enablePrettyUrl' => false,
+            'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
-               'users' => 'users/index',
-               'users/view/<id>' => 'users/view'  
+           /*    'users' => 'users/index',
+               'users/view/<id>' => 'users/view'  */
             ], 
         ], 
       
