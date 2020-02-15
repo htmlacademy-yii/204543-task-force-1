@@ -39,6 +39,7 @@ class Profile extends \yii\db\ActiveRecord
             [['address'], 'string', 'max' => 250],
             [['phone'], 'string', 'max' => 15],
             [['skype'], 'string', 'max' => 120],
+            [['user_id'], 'unique'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

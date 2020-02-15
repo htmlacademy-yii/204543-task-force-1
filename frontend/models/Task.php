@@ -18,6 +18,7 @@ use Yii;
  * @property float $latitude
  * @property float $longitude
  *
+ * @property Reply[] $replies
  * @property Category $category
  */
 class Task extends \yii\db\ActiveRecord
@@ -64,6 +65,16 @@ class Task extends \yii\db\ActiveRecord
             'latitude' => Yii::t('app', 'Latitude'),
             'longitude' => Yii::t('app', 'Longitude'),
         ];
+    }
+
+    /**
+     * Gets query for [[Replies]].
+     *
+     * @return \yii\db\ActiveQuery|ReplyQuery
+     */
+    public function getReplies()
+    {
+        return $this->hasMany(Reply::className(), ['task_id' => 'id']);
     }
 
     /**

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 15 2020 г., 22:25
+-- Время создания: Фев 16 2020 г., 00:54
 -- Версия сервера: 5.7.16
 -- Версия PHP: 7.1.0
 
@@ -1393,6 +1393,7 @@ ALTER TABLE `Opinion`
 -- Индексы таблицы `Profile`
 --
 ALTER TABLE `Profile`
+  ADD UNIQUE KEY `user_id_2` (`user_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -1416,7 +1417,9 @@ ALTER TABLE `Task`
 -- Индексы таблицы `User`
 --
 ALTER TABLE `User`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -1460,20 +1463,20 @@ ALTER TABLE `User`
 -- Ограничения внешнего ключа таблицы `Profile`
 --
 ALTER TABLE `Profile`
-  ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `Reply`
 --
 ALTER TABLE `Reply`
-  ADD CONSTRAINT `reply_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reply_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
+  ADD CONSTRAINT `reply_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `reply_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `Task` (`id`) ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `Task`
 --
 ALTER TABLE `Task`
-  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `Category` (`id`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

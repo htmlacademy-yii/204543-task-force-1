@@ -11,9 +11,9 @@ use Yii;
  * @property string $email
  * @property string $userName
  * @property string $password
- * @property string $dt_add
+ * @property string|null $dt_add
  *
- * @property Profile[] $profiles
+ * @property Profile $profile
  * @property Reply[] $replies
  */
 class User extends \yii\db\ActiveRecord
@@ -21,13 +21,6 @@ class User extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    
-    public $email;
-    public $userName;
-    public $password;
-    public $dt_add;
-    
-
     public static function tableName()
     {
         return 'User';
@@ -39,10 +32,10 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-
             [['email', 'userName', 'password'], 'required'],
             [['dt_add'], 'safe'],
             [['email', 'userName', 'password'], 'string', 'max' => 120],
+            [['email'], 'unique'],
         ];
     }
 
@@ -54,7 +47,7 @@ class User extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'email' => Yii::t('app', 'Email'),
-            'userName' => Yii::t('app', 'UserName'),
+            'userName' => Yii::t('app', 'User Name'),
             'password' => Yii::t('app', 'Password'),
             'dt_add' => Yii::t('app', 'Dt Add'),
         ];
@@ -71,7 +64,7 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Reply]].
+     * Gets query for [[Replies]].
      *
      * @return \yii\db\ActiveQuery|ReplyQuery
      */
