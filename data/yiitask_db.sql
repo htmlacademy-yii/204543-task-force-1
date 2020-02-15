@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 13 2020 г., 00:01
+-- Время создания: Фев 15 2020 г., 22:25
 -- Версия сервера: 5.7.16
 -- Версия PHP: 7.1.0
 
@@ -23,20 +23,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `categories`
+-- Структура таблицы `Category`
 --
 
-CREATE TABLE `categories` (
+CREATE TABLE `Category` (
   `id` int(11) NOT NULL COMMENT 'id категории',
   `name` varchar(120) NOT NULL COMMENT 'название категории',
   `icon` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `categories`
+-- Дамп данных таблицы `Category`
 --
 
-INSERT INTO `categories` (`id`, `name`, `icon`) VALUES
+INSERT INTO `Category` (`id`, `name`, `icon`) VALUES
 (18, 'Курьерские услуги', 'delivary'),
 (19, 'Уборка', 'clean'),
 (20, 'Переезды', 'cargo'),
@@ -49,10 +49,10 @@ INSERT INTO `categories` (`id`, `name`, `icon`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `cities`
+-- Структура таблицы `City`
 --
 
-CREATE TABLE `cities` (
+CREATE TABLE `City` (
   `id` int(11) NOT NULL COMMENT 'id города',
   `city` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'название города',
   `latitude` decimal(10,7) NOT NULL COMMENT 'широта местоположения',
@@ -60,10 +60,10 @@ CREATE TABLE `cities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Дамп данных таблицы `cities`
+-- Дамп данных таблицы `City`
 --
 
-INSERT INTO `cities` (`id`, `city`, `latitude`, `longitude`) VALUES
+INSERT INTO `City` (`id`, `city`, `latitude`, `longitude`) VALUES
 (3325, 'Абаза', '52.6517296', '90.0885929'),
 (3326, 'Абакан', '53.7223661', '91.4437792'),
 (3327, 'Абдулино', '53.6778096', '53.6473115'),
@@ -1142,7 +1142,7 @@ INSERT INTO `cities` (`id`, `city`, `latitude`, `longitude`) VALUES
 (4400, 'Щелкино', '45.4289847', '35.8251329'),
 (4401, 'Щелково', '55.9234303', '37.9784419'),
 (4402, 'Щигры', '51.8787808', '36.8910674');
-INSERT INTO `cities` (`id`, `city`, `latitude`, `longitude`) VALUES
+INSERT INTO `City` (`id`, `city`, `latitude`, `longitude`) VALUES
 (4403, 'Щучье', '55.2088300', '62.7478475'),
 (4404, 'Электрогорск', '55.8778573', '38.7805239'),
 (4405, 'Электросталь', '55.7847718', '38.4446531'),
@@ -1177,10 +1177,10 @@ INSERT INTO `cities` (`id`, `city`, `latitude`, `longitude`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `opinions`
+-- Структура таблицы `Opinion`
 --
 
-CREATE TABLE `opinions` (
+CREATE TABLE `Opinion` (
   `id` int(11) NOT NULL,
   `dt_add` date NOT NULL,
   `rate` int(11) NOT NULL,
@@ -1188,10 +1188,10 @@ CREATE TABLE `opinions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Дамп данных таблицы `opinions`
+-- Дамп данных таблицы `Opinion`
 --
 
-INSERT INTO `opinions` (`id`, `dt_add`, `rate`, `description`) VALUES
+INSERT INTO `Opinion` (`id`, `dt_add`, `rate`, `description`) VALUES
 (11, '2019-08-19', 3, 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.'),
 (12, '2019-02-22', 2, 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.'),
 (13, '2019-07-11', 2, 'Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.'),
@@ -1206,10 +1206,10 @@ INSERT INTO `opinions` (`id`, `dt_add`, `rate`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `profiles`
+-- Структура таблицы `Profile`
 --
 
-CREATE TABLE `profiles` (
+CREATE TABLE `Profile` (
   `user_id` int(11) NOT NULL,
   `address` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bd` date NOT NULL,
@@ -1219,10 +1219,10 @@ CREATE TABLE `profiles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Дамп данных таблицы `profiles`
+-- Дамп данных таблицы `Profile`
 --
 
-INSERT INTO `profiles` (`user_id`, `address`, `bd`, `about`, `phone`, `skype`) VALUES
+INSERT INTO `Profile` (`user_id`, `address`, `bd`, `about`, `phone`, `skype`) VALUES
 (100, '738 Hagan Lane', '1989-03-05', 'Pellentesque ultrices mattis odio.', '75531015353', 'mobile'),
 (101, '758 Old Shore Parkway', '1989-12-30', 'Morbi a ipsum. Integer a nibh. In quis justo.', '16371407508', 'Re-engineered'),
 (102, '11 Dovetail Junction', '0629-03-03', 'Suspendisse potenti.', '21468788926', 'Grass-roots'),
@@ -1247,10 +1247,10 @@ INSERT INTO `profiles` (`user_id`, `address`, `bd`, `about`, `phone`, `skype`) V
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `replies`
+-- Структура таблицы `Reply`
 --
 
-CREATE TABLE `replies` (
+CREATE TABLE `Reply` (
   `id` int(11) NOT NULL COMMENT 'id отклика',
   `dt_add` datetime NOT NULL COMMENT 'дата и время создания отклика',
   `rate` int(11) NOT NULL,
@@ -1260,10 +1260,10 @@ CREATE TABLE `replies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Дамп данных таблицы `replies`
+-- Дамп данных таблицы `Reply`
 --
 
-INSERT INTO `replies` (`id`, `dt_add`, `rate`, `description`, `user_id`, `task_id`) VALUES
+INSERT INTO `Reply` (`id`, `dt_add`, `rate`, `description`, `user_id`, `task_id`) VALUES
 (21, '2019-05-09 00:00:00', 1, 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 101, 16),
 (22, '2018-10-27 00:00:00', 4, 'Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', 111, 17),
 (23, '2018-11-02 00:00:00', 5, 'Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', 105, 18),
@@ -1288,10 +1288,10 @@ INSERT INTO `replies` (`id`, `dt_add`, `rate`, `description`, `user_id`, `task_i
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `tasks`
+-- Структура таблицы `Task`
 --
 
-CREATE TABLE `tasks` (
+CREATE TABLE `Task` (
   `id` int(11) NOT NULL,
   `dt_add` datetime NOT NULL,
   `category_id` int(11) NOT NULL,
@@ -1305,10 +1305,10 @@ CREATE TABLE `tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Дамп данных таблицы `tasks`
+-- Дамп данных таблицы `Task`
 --
 
-INSERT INTO `tasks` (`id`, `dt_add`, `category_id`, `description`, `expire`, `name`, `address`, `budget`, `latitude`, `longitude`) VALUES
+INSERT INTO `Task` (`id`, `dt_add`, `category_id`, `description`, `expire`, `name`, `address`, `budget`, `latitude`, `longitude`) VALUES
 (16, '2019-03-09 00:00:00', 22, 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platitudeea dictumst.', '2019-11-15', 'enable impactful technologies', '1 Eagan Crossing', '6587.00', '6.9641667', '158.2083333'),
 (17, '2019-07-03 00:00:00', 23, 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\r\n\r\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', '2019-12-07', 'exploit revolutionary portals', '24043 Paget Alley', '2904.00', '5.6235050', '10.2544044'),
 (18, '2019-06-27 00:00:00', 25, 'Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\r\n\r\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\r\n\r\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', '2019-11-23', 'matrix next-generation e-commerce', '2867 Dryden Pass', '1170.00', '63.5932190', '53.9068532'),
@@ -1323,10 +1323,10 @@ INSERT INTO `tasks` (`id`, `dt_add`, `category_id`, `description`, `expire`, `na
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `users`
+-- Структура таблицы `User`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `User` (
   `id` int(11) NOT NULL,
   `email` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
   `userName` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1335,10 +1335,10 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Дамп данных таблицы `users`
+-- Дамп данных таблицы `User`
 --
 
-INSERT INTO `users` (`id`, `email`, `userName`, `password`, `dt_add`) VALUES
+INSERT INTO `User` (`id`, `email`, `userName`, `password`, `dt_add`) VALUES
 (100, 'kbuttress0@1und1.de', 'Karrie Buttress', 'JcfoKBYAB4k', '2019-08-10 00:00:00'),
 (101, 'baymer1@hp.com', 'Bob Aymer', 'ZEE54kg', '2018-12-21 00:00:00'),
 (102, 'zboulding2@macromedia.com', 'Zilvia Boulding', 'VJyMV1Zat', '2019-07-25 00:00:00'),
@@ -1370,52 +1370,52 @@ INSERT INTO `users` (`id`, `email`, `userName`, `password`, `dt_add`) VALUES
 --
 
 --
--- Индексы таблицы `categories`
+-- Индексы таблицы `Category`
 --
-ALTER TABLE `categories`
+ALTER TABLE `Category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `cities`
+-- Индексы таблицы `City`
 --
-ALTER TABLE `cities`
+ALTER TABLE `City`
   ADD PRIMARY KEY (`id`),
   ADD KEY `latitude` (`latitude`),
   ADD KEY `longitude` (`longitude`);
 
 --
--- Индексы таблицы `opinions`
+-- Индексы таблицы `Opinion`
 --
-ALTER TABLE `opinions`
+ALTER TABLE `Opinion`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `profiles`
+-- Индексы таблицы `Profile`
 --
-ALTER TABLE `profiles`
+ALTER TABLE `Profile`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Индексы таблицы `replies`
+-- Индексы таблицы `Reply`
 --
-ALTER TABLE `replies`
+ALTER TABLE `Reply`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `task_id` (`task_id`);
 
 --
--- Индексы таблицы `tasks`
+-- Индексы таблицы `Task`
 --
-ALTER TABLE `tasks`
+ALTER TABLE `Task`
   ADD PRIMARY KEY (`id`),
   ADD KEY `category_id` (`category_id`),
   ADD KEY `latitude` (`latitude`),
   ADD KEY `longitude` (`longitude`);
 
 --
--- Индексы таблицы `users`
+-- Индексы таблицы `User`
 --
-ALTER TABLE `users`
+ALTER TABLE `User`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1423,57 +1423,57 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT для таблицы `categories`
+-- AUTO_INCREMENT для таблицы `Category`
 --
-ALTER TABLE `categories`
+ALTER TABLE `Category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id категории', AUTO_INCREMENT=26;
 --
--- AUTO_INCREMENT для таблицы `cities`
+-- AUTO_INCREMENT для таблицы `City`
 --
-ALTER TABLE `cities`
+ALTER TABLE `City`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id города', AUTO_INCREMENT=4433;
 --
--- AUTO_INCREMENT для таблицы `opinions`
+-- AUTO_INCREMENT для таблицы `Opinion`
 --
-ALTER TABLE `opinions`
+ALTER TABLE `Opinion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
--- AUTO_INCREMENT для таблицы `replies`
+-- AUTO_INCREMENT для таблицы `Reply`
 --
-ALTER TABLE `replies`
+ALTER TABLE `Reply`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id отклика', AUTO_INCREMENT=41;
 --
--- AUTO_INCREMENT для таблицы `tasks`
+-- AUTO_INCREMENT для таблицы `Task`
 --
-ALTER TABLE `tasks`
+ALTER TABLE `Task`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
--- AUTO_INCREMENT для таблицы `users`
+-- AUTO_INCREMENT для таблицы `User`
 --
-ALTER TABLE `users`
+ALTER TABLE `User`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
--- Ограничения внешнего ключа таблицы `profiles`
+-- Ограничения внешнего ключа таблицы `Profile`
 --
-ALTER TABLE `profiles`
-  ADD CONSTRAINT `profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `Profile`
+  ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `replies`
+-- Ограничения внешнего ключа таблицы `Reply`
 --
-ALTER TABLE `replies`
-  ADD CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `replies_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`);
+ALTER TABLE `Reply`
+  ADD CONSTRAINT `reply_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reply_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `tasks`
+-- Ограничения внешнего ключа таблицы `Task`
 --
-ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+ALTER TABLE `Task`
+  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
