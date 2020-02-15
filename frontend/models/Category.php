@@ -4,7 +4,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "categories".
+ * This is the model class for table "Category".
  *
  * @property int $id id категории
  * @property string $name название категории
@@ -12,14 +12,14 @@ use Yii;
  *
  * @property Task[] $tasks
  */
-class Categories extends \yii\db\ActiveRecord
+class Category extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'categories';
+        return 'Category';
     }
 
     /**
@@ -57,10 +57,10 @@ class Categories extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return CategoriesQuery the active query used by this AR class.
+     * @return CategoryQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CategoriesQuery(get_called_class());
+        return new CategoryQuery(get_called_class());
     }
 }

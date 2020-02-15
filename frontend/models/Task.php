@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "tasks".
+ * This is the model class for table "Task".
  *
  * @property int $id
  * @property string $dt_add
@@ -18,17 +18,16 @@ use Yii;
  * @property float $latitude
  * @property float $longitude
  *
- * @property Reply[] $replies
  * @property Category $category
  */
-class Tasks extends \yii\db\ActiveRecord
+class Task extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'tasks';
+        return 'Task';
     }
 
     /**
@@ -68,16 +67,6 @@ class Tasks extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Replies]].
-     *
-     * @return \yii\db\ActiveQuery|ReplyQuery
-     */
-    public function getReplies()
-    {
-        return $this->hasMany(Reply::className(), ['task_id' => 'id']);
-    }
-
-    /**
      * Gets query for [[Category]].
      *
      * @return \yii\db\ActiveQuery|CategoryQuery
@@ -89,10 +78,10 @@ class Tasks extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return TasksQuery the active query used by this AR class.
+     * @return TaskQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new TasksQuery(get_called_class());
+        return new TaskQuery(get_called_class());
     }
 }

@@ -5,21 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "opinions".
+ * This is the model class for table "Opinion".
  *
  * @property int $id
  * @property string $dt_add
  * @property int $rate
  * @property string $description
  */
-class Opinions extends \yii\db\ActiveRecord
+class Opinion extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'opinions';
+        return 'Opinion';
     }
 
     /**
@@ -46,5 +46,14 @@ class Opinions extends \yii\db\ActiveRecord
             'rate' => Yii::t('app', 'Rate'),
             'description' => Yii::t('app', 'Description'),
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return OpinionQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new OpinionQuery(get_called_class());
     }
 }

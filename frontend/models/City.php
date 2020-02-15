@@ -2,22 +2,24 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
- * This is the model class for table "cities".
+ * This is the model class for table "City".
  *
  * @property int $id id города
  * @property string $city название города
  * @property float $latitude широта местоположения
  * @property float $longitude долгота местоположения
  */
-class Cities extends \yii\db\ActiveRecord
+class City extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'cities';
+        return 'City';
     }
 
     /**
@@ -47,10 +49,10 @@ class Cities extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return CitiesQuery the active query used by this AR class.
+     * @return CityQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CitiesQuery(get_called_class());
+        return new CityQuery(get_called_class());
     }
 }

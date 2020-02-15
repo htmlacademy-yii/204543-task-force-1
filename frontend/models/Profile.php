@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "profiles".
+ * This is the model class for table "Profile".
  *
  * @property int $user_id
  * @property string $address
@@ -16,14 +16,14 @@ use Yii;
  *
  * @property User $user
  */
-class Profiles extends \yii\db\ActiveRecord
+class Profile extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'profiles';
+        return 'Profile';
     }
 
     /**
@@ -70,10 +70,10 @@ class Profiles extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return ProfilesQuery the active query used by this AR class.
+     * @return ProfileQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new ProfilesQuery(get_called_class());
+        return new ProfileQuery(get_called_class());
     }
 }

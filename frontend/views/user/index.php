@@ -1,11 +1,11 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $users */
+/* @var $user */
 
-use app\models\Users;
+use app\models\User;
 use yii\web\Controller;
-use frontend\controllers\UsersController;
+use frontend\controllers\UserController;
 use yii\web\NotFoundHttpException;
 use yii\helpers\Html;
 use yii\helpers\Url;

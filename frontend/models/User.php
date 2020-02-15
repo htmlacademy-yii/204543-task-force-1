@@ -5,25 +5,32 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "users".
+ * This is the model class for table "User".
  *
  * @property int $id
  * @property string $email
  * @property string $userName
  * @property string $password
- * @property string|null $dt_add
+ * @property string $dt_add
  *
  * @property Profile[] $profiles
  * @property Reply[] $replies
  */
-class Users extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
+    
+    public $email;
+    public $userName;
+    public $password;
+    public $dt_add;
+    
+
     public static function tableName()
     {
-        return 'users';
+        return 'User';
     }
 
     /**
@@ -32,6 +39,7 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+
             [['email', 'userName', 'password'], 'required'],
             [['dt_add'], 'safe'],
             [['email', 'userName', 'password'], 'string', 'max' => 120],
@@ -46,24 +54,24 @@ class Users extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'email' => Yii::t('app', 'Email'),
-            'userName' => Yii::t('app', 'User Name'),
+            'userName' => Yii::t('app', 'UserName'),
             'password' => Yii::t('app', 'Password'),
             'dt_add' => Yii::t('app', 'Dt Add'),
         ];
     }
 
     /**
-     * Gets query for [[Profiles]].
+     * Gets query for [[Profile]].
      *
      * @return \yii\db\ActiveQuery|ProfileQuery
      */
-    public function getProfiles()
+    public function getProfile()
     {
-        return $this->hasMany(Profile::className(), ['user_id' => 'id']);
+        return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 
     /**
-     * Gets query for [[Replies]].
+     * Gets query for [[Reply]].
      *
      * @return \yii\db\ActiveQuery|ReplyQuery
      */
@@ -74,10 +82,10 @@ class Users extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return UsersQuery the active query used by this AR class.
+     * @return UserQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new UsersQuery(get_called_class());
+        return new UserQuery(get_called_class());
     }
 }

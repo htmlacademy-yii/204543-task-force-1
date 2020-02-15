@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Opinions]].
+ * This is the ActiveQuery class for [[City]].
  *
- * @see Opinions
+ * @see City
  */
-class OpinionsQuery extends \yii\db\ActiveQuery
+class CityQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class OpinionsQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Opinions[]|array
+     * @return City[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class OpinionsQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Opinions|array|null
+     * @return City|array|null
      */
     public function one($db = null)
     {

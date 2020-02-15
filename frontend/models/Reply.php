@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "replies".
+ * This is the model class for table "Reply".
  *
  * @property int $id id отклика
  * @property string $dt_add дата и время создания отклика
@@ -17,14 +17,14 @@ use Yii;
  * @property User $user
  * @property Task $task
  */
-class Replies extends \yii\db\ActiveRecord
+class Reply extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'replies';
+        return 'Reply';
     }
 
     /**
@@ -79,10 +79,10 @@ class Replies extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return RepliesQuery the active query used by this AR class.
+     * @return ReplyQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new RepliesQuery(get_called_class());
+        return new ReplyQuery(get_called_class());
     }
 }

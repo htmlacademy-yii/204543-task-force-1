@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Tasks]].
+ * This is the ActiveQuery class for [[Profile]].
  *
- * @see Tasks
+ * @see Profile
  */
-class TasksQuery extends \yii\db\ActiveQuery
+class ProfileQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class TasksQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Tasks[]|array
+     * @return Profile[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class TasksQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Tasks|array|null
+     * @return Profile|array|null
      */
     public function one($db = null)
     {
