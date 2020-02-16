@@ -38,11 +38,11 @@ class UserController extends \yii\web\Controller
     }
 
     //actionView($id) - запрос к таблицe User для страницы user/view/id
-    public function actionView()
+    public function actionView($id)
     {
-        $user = User::findOne(113);
+        $user = User::findOne($id);
         if (!$user) {
-            throw new NotFoundHttpException("Пользователь с ID=113 не найден");
+            throw new NotFoundHttpException("Пользователь с ID=$id не найден");
         }
         return $this->render('view', ['user' => $user]);
     }
