@@ -42,8 +42,8 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-           /*    'users' => 'users/index',
-               'users/view/<id>' => 'users/view'  */
+           
+                'users/view/<id>' => 'users/view' 
             ], 
         ], 
       

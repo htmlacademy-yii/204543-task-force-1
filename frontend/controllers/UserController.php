@@ -17,11 +17,18 @@ class UserController extends \yii\web\Controller
 {  
     public function actionIndex()
     {
-                    
-        return $this->render('index');
+       $user = User::findOne(112);
+        if (!$user) {
+            throw new NotFoundHttpException("Пользователь с ID=112 не найден");
+        }
+
+     
+
+                  
+        return $this->render('index', ['user' => $user]);
     }
     
-    //actionView($id) - запрос к таблицt users для страницы users/view/id
+    //actionView($id) - запрос к таблицe User для страницы User/view/id
     public function actionView($id)
     {
         $user = User::findOne($id);
@@ -32,25 +39,5 @@ class UserController extends \yii\web\Controller
     }
 
     //actionUser($id) - запрос к таблицам users и profiles для страницы users/user/id
-    public function actionUser($id)
-    {
-        $profile = Profile::find()->where($user_id)->joinWith('User')->one($id);
-
-        $user = $profile->user;
-
-        return $this->render('user', [ 'user' => $user]);
-    }
-/*
-    public function actionUser    {
-        $query = new Query();
-        
-        $query->select('u.email', 'u.userName')->from('user u')
-            ->join('INNER JOIN', 'profile p', 'p.about', 'p.phone', 'p.skype', 'p.user_id = u.id');
-           
-        // выполнить запрос и получить результат в виде ассоциативного массива
-        $rows = $query->one($id);
-
-        return $this->render('user', ['user' => $row]);
-    }
-  */
+   
 }
