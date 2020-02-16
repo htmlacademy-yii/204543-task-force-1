@@ -17,12 +17,17 @@ $this->title = 'Исполнитель';
 
 <h1> User Page is expected </h1>
 
-
+<pre>
 <h2> <?= $user->userName; ?></h2>	
+</pre>
 
-	
-<h3>Контакты</h3>
-
-	<p><?= $user->email; ?></p>
-	
+<pre>
+	<ul>
+		<li>КОНТАКТЫ</li>
+		<li><?= $user->profile->about; ?></li>
+		<li>Телефон: <?= $user->profile->phone; ?></li>
+		<li>email:   <?= $user->email; ?></li>
+		<li>skype:   <?= $user->profile->skype; ?></li>
+	</ul>
+</pre>
 

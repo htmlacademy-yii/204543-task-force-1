@@ -17,14 +17,15 @@ $this->title = 'Пользователи';
 
 <pre>
 	<ul>
-		<li>КОНТАКТЫ</li>
-		<li>Имя:     <?= $user->userName; ?></li>
-		<li><?= $user->profile->about; ?></li>
-		<li>Телефон: <?= $user->profile->phone; ?></li>
-		<li>email:   <?= $user->email; ?></li>
-		<li>skype:   <?= $user->profile->skype; ?></li>
+        <li>ИСПОЛНИТЕЛИ</li>
+        
+        <?php foreach($users as $user): ?> 
+        
+        <li><?= $user->userName; ?></li> 
+        
+        <?php endforeach; ?> 
 
-	</ul>
+    </ul>
 </pre>
 
 
