@@ -50,12 +50,12 @@ class Profile extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('app', 'User ID'),
-            'address' => Yii::t('app', 'Address'),
-            'bd' => Yii::t('app', 'Bd'),
-            'about' => Yii::t('app', 'About'),
-            'phone' => Yii::t('app', 'Phone'),
-            'skype' => Yii::t('app', 'Skype'),
+            'user_id' => 'id пользователя',
+            'address' => 'Адрес',
+            'bd' => 'День рождения',
+            'about' => 'Краткая информация',
+            'phone' => 'Телефон',
+            'skype' => 'Skype',
         ];
     }
 

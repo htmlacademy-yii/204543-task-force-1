@@ -45,11 +45,11 @@ class User extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'email' => Yii::t('app', 'Email'),
-            'userName' => Yii::t('app', 'User Name'),
-            'password' => Yii::t('app', 'Password'),
-            'dt_add' => Yii::t('app', 'Dt Add'),
+            'id' => 'id пользователя',
+            'email' => 'email' ,
+            'userName' => 'Имя пользователя',
+            'password' => 'Пароль',
+            'dt_add' => 'Дата регистрации',
         ];
     }
 

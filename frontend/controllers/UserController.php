@@ -15,7 +15,8 @@ use yii\helpers\Url;
 class UserController extends \yii\web\Controller
 
 {  
-     public function actionJson() {
+     public function actionJson() 
+     {
         $users = User::find()->asArray()->all();
         $response = Yii::$app->response;
         $response->data = $users;
@@ -45,6 +46,19 @@ class UserController extends \yii\web\Controller
             throw new NotFoundHttpException("Пользователь с ID=$id не найден");
         }
         return $this->render('view', ['user' => $user]);
+    }
+
+    public function actionCreate()
+    {
+        $newUser = new User();
+
+        $newUser->email => 'banksy@hotmal.com',
+        $newUser->userName => 'Isaak Newton',
+        $newUser->password => 'dfg_56wer',
+
+        if($newUser->'email' == findOne)
+
+        
     }
 
     
