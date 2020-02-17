@@ -13,4 +13,4 @@ use yii\helpers\Url;
 
 $this->title = 'Регистрация завершена успешно';
 ?>
-<h2> Dear <?= $newUser->userName; ?>! </br>Your are a member of Taskforce team!</h2>	
+<h2> Dear <?= $newUser->userName; ?>! </br>You are a member of Taskforce team!</h2>	
