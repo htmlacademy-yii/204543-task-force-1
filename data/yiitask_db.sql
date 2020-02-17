@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 16 2020 г., 00:54
+-- Время создания: Фев 17 2020 г., 19:41
 -- Версия сервера: 5.7.16
 -- Версия PHP: 7.1.0
 
@@ -1242,7 +1242,9 @@ INSERT INTO `Profile` (`user_id`, `address`, `bd`, `about`, `phone`, `skype`) VA
 (116, '507 Graceland Junction', '1989-03-19', 'Suspendisse potenti.', '12403580562', 'knowledge base'),
 (117, '92 Gina Park', '1989-09-29', 'Phasellus sit amet erat.', '40139478003', 'dynamic'),
 (118, '8 Ridgeview Trail', '1989-12-21', 'Cras pellentesque volutpat dui.', '76657531985', 'solution'),
-(119, '8 Ridgeview Garden', '1989-12-24', 'Phasellus sit amet erat.', '73357531985', 'nosolution');
+(119, '8 Ridgeview Garden', '1989-12-24', 'Phasellus sit amet erat.', '73357531985', 'nosolution'),
+(134, '23522, Baltimor av. 152', '1995-02-16', 'In viverra odio quis ante placerat, mollis semper urna accumsan. Phasellus interdum pharetra fermentum. Praesent aliquam leo mollis, laoreet lacus eu, pellentesque dui.', '1425667788', 'fermentum'),
+(135, '23522, Baltimor av. 152', '1995-02-16', 'In viverra odio quis ante placerat, mollis semper urna accumsan. Phasellus interdum pharetra fermentum. Praesent aliquam leo mollis, laoreet lacus eu, pellentesque dui.', '1425667788', 'fermentum');
 
 -- --------------------------------------------------------
 
@@ -1363,7 +1365,10 @@ INSERT INTO `User` (`id`, `email`, `userName`, `password`, `dt_add`) VALUES
 (127, 'john.depp@mail.ru', 'johny depp', '458923asd', '2020-02-11 00:00:00'),
 (128, 'real@mail.ru', 'Adam Smith', 'dft051vert', '2020-02-12 00:00:00'),
 (131, 'Greta@gmail.se', 'G.Tunberg', 'greenforever', '2020-02-12 00:00:00'),
-(132, 'robinson@bk.home', 'Antony Rob', '14256_qwer', '2020-02-13 00:00:00');
+(132, 'robinson@bk.home', 'Antony Rob', '14256_qwer', '2020-02-13 00:00:00'),
+(133, 'banksy@hotmal.com', 'Isaak Newton', 'dfg_56wer', '2020-02-17 19:08:27'),
+(134, 'mollycat@hotmal.com', 'Molly Edwards', '123456wer', '2020-02-17 19:18:29'),
+(135, 'matild.danon@rtf.com', 'Tilda Danon', 'Bear789', '2020-02-17 19:37:04');
 
 --
 -- Индексы сохранённых таблиц
@@ -1454,7 +1459,7 @@ ALTER TABLE `Task`
 -- AUTO_INCREMENT для таблицы `User`
 --
 ALTER TABLE `User`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -1463,7 +1468,7 @@ ALTER TABLE `User`
 -- Ограничения внешнего ключа таблицы `Profile`
 --
 ALTER TABLE `Profile`
-  ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `Reply`

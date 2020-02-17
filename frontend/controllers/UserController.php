@@ -50,17 +50,37 @@ class UserController extends \yii\web\Controller
 
     public function actionCreate()
     {
+
         $newUser = new User();
+        $newUser->email = 'alex.m@riverdance.com';
+        $newUser->userName = 'Alexandra Miren';
+        $newUser->password = 'clever456';
 
-        $newUser->email => 'banksy@hotmal.com',
-        $newUser->userName => 'Isaak Newton',
-        $newUser->password => 'dfg_56wer',
 
-        if($newUser->'email' == findOne)
+        if(User::findOne(['email' => $newUser->email])) {
+            throw new NotFoundHttpException("Пользователь с таким email уже зарегистрирован");
+        } else {
+            $newUser->save();
+        }
+      
+        $newProfile = new Profile();
 
-        
+        if($newUser->save()){
+ 
+            $newProfile->user_id = $newUser->id;
+        }
+
+        $newProfile->address = '23522, Baltimor av. 152';
+        $newProfile->bd = '1995-02-16';
+        $newProfile->about = 'In viverra odio quis ante placerat, mollis semper urna accumsan. Phasellus interdum pharetra fermentum. Praesent aliquam leo mollis, laoreet lacus eu, pellentesque dui.';
+        $newProfile->phone = '1425667788';
+        $newProfile->skype = 'fermentum';
+
+        $newProfile->save();
+
+        if($newProfile->save()) {
+
+        return $this->render('create',['newUser' => $newUser]);
+        }
     }
-
-    
-   
 }
