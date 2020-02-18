@@ -27,7 +27,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <div class="table-layout">
 
-    <!-- START of header  -->
+<!-- START of header  -->
     <header class="page-header">
         <div class="main-container page-header__container">
             <div class="page-header__logo">
@@ -101,7 +101,7 @@ AppAsset::register($this);
             </div>
             <div class="header__account">
                 <a class="header__account-photo">
-                    <img src="./img/user-photo.png"
+                    <img src="../../img/user-photo.png"
                          width="43" height="44"
                          alt="Аватар пользователя">
                 </a>
@@ -124,7 +124,7 @@ AppAsset::register($this);
             </div>
         </div>
     </header>
-    <!-- END of header из signup.html -->
+<!-- END of header из signup.html -->
 
 <!-- START Of page content -->
     <main class="page-main">
@@ -172,7 +172,7 @@ AppAsset::register($this);
             <div class="page-footer__copyright">
                 <a>
                     <img class="copyright-logo"
-                         src="img/academy-logo.png"
+                         src="../../img/academy-logo.png"
                          width="185" height="63"
                          alt="Логотип HTML Academy">
                 </a>
