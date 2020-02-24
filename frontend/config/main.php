@@ -38,14 +38,17 @@ return [
         ],
     
         'urlManager' => [
-            'enablePrettyUrl' => true,
+            'enablePrettyUrl' => false,
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                              
-                'user/view/<id>' => 'user/view'
+                'users' => 'users/index',
+                'users/view/<id>' => 'users/view',
+                'tasks' => 'tasks/index',
+                '<module:gii>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>', 
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ], 
-        ], 
+        ],  
       
     ],
     'params' => $params,

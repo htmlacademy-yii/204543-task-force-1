@@ -1,0 +1,68 @@
+<?php
+
+return [
+    'review0' => [
+        'author_id' => 7,
+        'task_id' => 5,
+        'executor_id' => 8,
+        'review_content' => 'Ipsam et explicabo labore natus sed optio voluptatem. Ducimus aliquid blanditiis sit vitae. Dolorem qui ratione id est officia esse culpa. Officia quam aut itaque recusandae dicta dolores quam.',
+        'rate_stars' => 5,
+        'created_at' => '2019-04-28 16:54:14',
+    ],
+    'review1' => [
+        'author_id' => 9,
+        'task_id' => 12,
+        'executor_id' => 7,
+        'review_content' => 'Voluptate ullam eos delectus cumque autem. Omnis in fugiat recusandae. Aliquid incidunt exercitationem ad.',
+        'rate_stars' => 2,
+        'created_at' => '2019-02-27 23:08:34',
+    ],
+    'review2' => [
+        'author_id' => 6,
+        'task_id' => 6,
+        'executor_id' => 8,
+        'review_content' => 'Quis quasi ducimus natus rerum consectetur veritatis et. Nulla consequatur esse atque omnis. Expedita optio deserunt incidunt. Ipsa explicabo unde neque qui consectetur.',
+        'rate_stars' => 4,
+        'created_at' => '2019-06-03 06:25:41',
+    ],
+    'review3' => [
+        'author_id' => 9,
+        'task_id' => 10,
+        'executor_id' => 7,
+        'review_content' => 'Repudiandae nobis provident id reiciendis consectetur dolorem. Ad architecto optio distinctio exercitationem sint voluptatum. Natus ut aspernatur quia explicabo deserunt et.',
+        'rate_stars' => 1,
+        'created_at' => '2019-08-20 19:44:28',
+    ],
+    'review4' => [
+        'author_id' => 9,
+        'task_id' => 7,
+        'executor_id' => 1,
+        'review_content' => 'Omnis repellat tempora porro adipisci. Eaque totam officia corporis inventore. Minus pariatur ipsa et voluptatum est nostrum praesentium ipsum.',
+        'rate_stars' => 4,
+        'created_at' => '2019-01-09 09:47:54',
+    ],
+    'review5' => [
+        'author_id' => 5,
+        'task_id' => 9,
+        'executor_id' => 5,
+        'review_content' => 'Amet nihil quae dignissimos sit ut quia. Quia quo consequatur quos hic provident. Et nulla voluptates aut reiciendis commodi fuga. Fuga porro tempora ad in quis. Labore tempora in est quos et illum rerum. Sequi et natus voluptas corporis.',
+        'rate_stars' => 2,
+        'created_at' => '2019-07-05 11:28:27',
+    ],
+    'review6' => [
+        'author_id' => 5,
+        'task_id' => 9,
+        'executor_id' => 8,
+        'review_content' => 'Laborum delectus voluptatem necessitatibus qui. Vel quasi aut excepturi nesciunt eaque dolorum. Ut voluptatem error velit veritatis atque vero rem.',
+        'rate_stars' => 4,
+        'created_at' => '2019-04-08 04:35:04',
+    ],
+    'review7' => [
+        'author_id' => 6,
+        'task_id' => 9,
+        'executor_id' => 1,
+        'review_content' => 'Accusantium qui suscipit quia mollitia aliquid ea quo. Eum vel nobis maxime sint rerum debitis a. Nihil quasi sunt est. Sint aut officia qui sed at quidem qui. Enim nostrum dolor sequi aliquid.',
+        'rate_stars' => 3,
+        'created_at' => '2019-05-05 08:03:52',
+    ],
+];

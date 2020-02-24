@@ -1,18 +1,18 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
 /**
- * This is the model class for table "Profile".
+ * This is the model class for table "profile".
  *
- * @property int $user_id
- * @property string $address
- * @property string $bd
- * @property string $about
- * @property string $phone
- * @property string $skype
+ * @property int $user_id id исполнителя
+ * @property string $address адрес исполнителя
+ * @property string $phone номер телефона пользователя
+ * @property string $email email пользователя
+ * @property string $skype skype пользователя
+ * @property string $other_messenger другой мессенжер
  *
  * @property User $user
  */
@@ -23,7 +23,7 @@ class Profile extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Profile';
+        return 'profile';
     }
 
     /**
@@ -32,13 +32,12 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'address', 'bd', 'about', 'phone', 'skype'], 'required'],
+            [['user_id', 'address', 'phone', 'email', 'skype', 'other_messenger'], 'required'],
             [['user_id'], 'integer'],
-            [['bd'], 'safe'],
-            [['about'], 'string'],
-            [['address'], 'string', 'max' => 250],
-            [['phone'], 'string', 'max' => 15],
-            [['skype'], 'string', 'max' => 120],
+            [['address'], 'string', 'max' => 200],
+            [['phone', 'email', 'skype', 'other_messenger'], 'string', 'max' => 120],
+            [['phone'], 'unique'],
+            [['email'], 'unique'],
             [['user_id'], 'unique'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -50,12 +49,12 @@ class Profile extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => 'id пользователя',
-            'address' => 'Адрес',
-            'bd' => 'День рождения',
-            'about' => 'Краткая информация',
-            'phone' => 'Телефон',
-            'skype' => 'Skype',
+            'user_id' => Yii::t('app', 'id исполнителя'),
+            'address' => Yii::t('app', 'адрес исполнителя'),
+            'phone' => Yii::t('app', 'номер телефона пользователя'),
+            'email' => Yii::t('app', 'email пользователя'),
+            'skype' => Yii::t('app', 'skype пользователя'),
+            'other_messenger' => Yii::t('app', 'другой мессенжер'),
         ];
     }
 

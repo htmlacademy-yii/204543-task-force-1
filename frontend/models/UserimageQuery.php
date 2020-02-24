@@ -3,11 +3,11 @@
 namespace frontend\models;
 
 /**
- * This is the ActiveQuery class for [[Profile]].
+ * This is the ActiveQuery class for [[Userimage]].
  *
- * @see Profile
+ * @see Userimage
  */
-class ProfileQuery extends \yii\db\ActiveQuery
+class UserimageQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class ProfileQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Profile[]|array
+     * @return Userimage[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class ProfileQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Profile|array|null
+     * @return Userimage|array|null
      */
     public function one($db = null)
     {

@@ -1,17 +1,18 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
 /**
- * This is the model class for table "Category".
+ * This is the model class for table "category".
  *
  * @property int $id id категории
  * @property string $name название категории
  * @property string $icon
  *
  * @property Task[] $tasks
+ * @property UserCategory[] $userCategories
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -20,7 +21,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Category';
+        return 'category';
     }
 
     /**
@@ -54,6 +55,16 @@ class Category extends \yii\db\ActiveRecord
     public function getTasks()
     {
         return $this->hasMany(Task::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserCategories]].
+     *
+     * @return \yii\db\ActiveQuery|UserCategoryQuery
+     */
+    public function getUserCategories()
+    {
+        return $this->hasMany(UserCategory::className(), ['category_id' => 'id']);
     }
 
     /**
