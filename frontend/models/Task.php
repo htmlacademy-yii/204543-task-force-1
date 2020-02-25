@@ -8,9 +8,10 @@ use Yii;
  * This is the model class for table "task".
  *
  * @property int $id id задания
+ * @property string $created_at время создания задания
  * @property int $author_id id заказчика
  * @property int $executor_id id  исполнителя
- * @property int $location_id код города
+ * @property int $location_id почтовый индекс города
  * @property string $title название задания
  * @property string $description описание задания
  * @property int $category_id категория работ
@@ -41,9 +42,9 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['author_id', 'executor_id', 'location_id', 'title', 'description', 'category_id', 'budget', 'end_date', 'task_status'], 'required'],
+            [['created_at', 'author_id', 'executor_id', 'location_id', 'title', 'description', 'category_id', 'budget', 'end_date', 'task_status'], 'required'],
+            [['created_at', 'end_date'], 'safe'],
             [['author_id', 'executor_id', 'location_id', 'category_id', 'budget'], 'integer'],
-            [['end_date'], 'safe'],
             [['title'], 'string', 'max' => 200],
             [['description'], 'string', 'max' => 450],
             [['task_status'], 'string', 'max' => 120],
@@ -61,6 +62,7 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'id задания'),
+            'created_at' => Yii::t('app', 'время создания задания'),
             'author_id' => Yii::t('app', 'id заказчика'),
             'executor_id' => Yii::t('app', 'id  исполнителя'),
             'location_id' => Yii::t('app', 'почтовый индекс города'),
@@ -141,5 +143,4 @@ class Task extends \yii\db\ActiveRecord
     {
         return new TaskQuery(get_called_class());
     }
-
 }

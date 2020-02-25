@@ -24,10 +24,10 @@ $this->title = 'Исполнитель';
 <pre>
 	<ul>
 		<li>КОНТАКТЫ</li>
-		<li><?= $user->profile->about; ?></li>
-		<li>Телефон: <?= $user->profile->phone; ?></li>
+		<li><?= $user->about_user; ?></li>
+		<li>Телефон: <?= $user->phone; ?></li>
 		<li>email:   <?= $user->email; ?></li>
-		<li>skype:   <?= $user->profile->skype; ?></li>
+		<li>skype:   <?= $user->skype; ?></li>
 	</ul>
 </pre>
 

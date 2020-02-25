@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\helpers\Url;
+use \DateTime;
 
 class TasksController extends \yii\web\Controller
 {
@@ -33,9 +34,21 @@ class TasksController extends \yii\web\Controller
             ->orderBy(['created_at' => SORT_ASC])
             ->limit(3);
         
-        $tasks = $query->all(); 
+        $tasks = $query->all();
 
+        //определяем промежуток времени с момента создания задания
+       /* 
+        $created_at = $tasks['created_at'];
+        
+        $datetime1 = new \DateTime($created_at);
+		$datetime2 = new \DateTime('now');
+
+        $interval = DateTime::diff($datetime1, $datetime2);
+        $interval->format('%h')." Hours ";    
+        */
+          
         return $this->render('index', ['tasks' => $tasks]);
+
 
     }
 

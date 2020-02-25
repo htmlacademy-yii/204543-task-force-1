@@ -45,10 +45,18 @@ class UsersController extends \yii\web\Controller
     //actionView($id) - запрос к таблицe User для страницы user/view/id
     public function actionView($id)
     {
-        $user = User::findOne($id);
+        $query = new Query($id);
+
+        $query->from(['user u', 'profile p'])
+            ->where(['id' => $id])
+            ->one($id);
+            
         if (!$user) {
             throw new NotFoundHttpException("Пользователь с ID=$id не найден");
         }
+
+        $user = $query;
+
         return $this->render('view', ['user' => $user]);
     }
 }    

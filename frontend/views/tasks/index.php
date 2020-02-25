@@ -29,7 +29,7 @@ $this->title = 'Задания';
                         </p>
                         <b class="new-task__price new-task__price--cargo"><?= Html::encode($task['budget']); ?><b> ₽</b></b>
                         <p class="new-task__place">Почтовый индекс (пока вместо района) &nbsp<?= Html::encode($task['location_id']); ?></p>
-                        <span class="new-task__time">10 часов назад</span>
+                        <span class="new-task__time"><?= Html::encode($task['created_at']); ?></span>
                     </div>
                     <?php endforeach; ?>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 24 2020 г., 14:03
+-- Время создания: Фев 25 2020 г., 17:58
 -- Версия сервера: 10.3.13-MariaDB-log
 -- Версия PHP: 7.2.22
 
@@ -100,26 +100,36 @@ CREATE TABLE `location` (
 --
 
 INSERT INTO `location` (`id`, `town_id`, `latitude`, `longitude`) VALUES
-(1, 697411, '-1.3570920', '-67.3543080'),
-(2, 103155, '24.1753230', '-75.9914690'),
-(3, 318109, '-0.4902120', '26.8846580'),
-(4, 286936, '-15.4135130', '65.8877010'),
-(5, 541086, '-8.7904180', '10.2198740'),
-(6, 482779, '2.5178530', '-40.9102850'),
-(7, 653812, '84.9370600', '47.5746740'),
-(8, 392808, '-26.8748810', '-79.9072510'),
-(9, 104058, '-19.7029770', '73.9535140'),
-(10, 638766, '65.9778380', '53.2718320'),
-(11, 334394, '60.5960140', '37.2920130'),
-(12, 356037, '-25.0304200', '46.0955080'),
-(13, 306903, '-23.3408240', '17.2386540'),
-(14, 331575, '-74.0238200', '-40.8466980'),
-(15, 356832, '-68.6926170', '10.3224040'),
-(16, 262119, '55.4717990', '73.8446210'),
-(17, 421256, '-1.8680570', '17.5140910'),
-(18, 684892, '-1.3833290', '-1.2987390'),
-(19, 103080, '26.6146940', '-1.4252590'),
-(20, 654855, '-88.4507980', '-6.0114320');
+(1, 232886, '-70.7705420', '46.0429520'),
+(2, 133287, '61.4974130', '51.9076910'),
+(3, 453647, '-30.3226740', '45.3572070'),
+(4, 296611, '77.0569760', '17.7501210'),
+(5, 570693, '-44.9048110', '28.1853370'),
+(6, 625447, '-10.4545610', '74.9961860'),
+(7, 232886, '1.5388320', '79.7985030'),
+(8, 551192, '-56.5496030', '-59.2492440'),
+(9, 504279, '18.6631590', '-0.3512290'),
+(10, 133287, '80.6895010', '4.0059510'),
+(11, 110213, '22.7761530', '64.9375100'),
+(12, 453647, '4.0965620', '-59.9047320'),
+(13, 257031, '-22.8360120', '50.7642470'),
+(14, 132844, '48.0068480', '-80.3847220'),
+(15, 110213, '-20.3219410', '38.9696310'),
+(16, 470300, '-65.9789760', '74.9211830'),
+(17, 551192, '0.0009850', '-37.5169200'),
+(18, 199007, '-47.7217540', '-16.5517040'),
+(19, 232886, '-29.7057600', '-47.3913200'),
+(20, 614726, '-75.7596680', '-71.2398050'),
+(21, 509927, '33.2054780', '89.6944790'),
+(22, 551192, '10.4368410', '57.7233410'),
+(23, 107192, '41.5848880', '9.1850950'),
+(24, 210099, '13.1538020', '20.8087230'),
+(25, 257031, '36.7402140', '-80.5030440'),
+(26, 453647, '45.0955840', '-30.1017690'),
+(27, 216399, '-28.3062090', '-9.8676780'),
+(28, 430893, '69.7532420', '69.8778510'),
+(29, 132844, '-27.4130500', '-39.7548220'),
+(30, 570693, '35.5880870', '5.4046410');
 
 -- --------------------------------------------------------
 
@@ -240,31 +250,23 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `created_at`, `author_id`, `executor_id`, `location_id`, `title`, `description`, `category_id`, `budget`, `end_date`, `task_status`) VALUES
-(1, '2019-08-25 00:59:06', 8, 6, 594930, 'Illum ut.', 'Magni porro laborum voluptas placeat dolor omnis eos molestiae. Aspernatur est vero velit.', 6, 902, '2019-07-05 00:00:00', 'failed'),
-(2, '2019-10-20 17:56:51', 2, 1, 265798, 'Laudantium nesciunt aspernatur.', 'Mollitia eveniet nam autem officiis asperiores distinctio. Et nulla at dolorem facilis. Eos voluptas velit consequuntur natus.', 1, 4134, '2019-04-20 00:00:00', 'cancel'),
-(3, '2019-07-30 09:12:41', 7, 8, 348635, 'Hic molestias.', 'Nihil labore qui nihil molestiae soluta necessitatibus. Laudantium natus aliquid a nisi fugiat assumenda. Quam error dignissimos officiis velit adipisci.', 5, 2958, '2019-02-10 00:00:00', 'cancel'),
-(4, '2019-06-16 03:12:10', 6, 4, 220159, 'Molestias eos.', 'Vitae enim non quia eveniet aliquam numquam et consequatur. Eos veritatis animi et vero sit quis natus. Ea nulla sunt molestiae eos enim. Quia vitae aut omnis.', 2, 9521, '2019-02-09 00:00:00', 'cancel'),
-(5, '2019-01-30 01:45:41', 2, 6, 538202, 'Voluptatem sint possimus.', 'Enim dolores aut qui in fugit. Ea perferendis neque aut iste repudiandae. Quo aut omnis et voluptate voluptatum aperiam. Minus voluptatem dolor at occaecati.', 1, 5277, '2020-01-01 00:00:00', 'inprogress'),
-(6, '2019-11-27 21:58:56', 3, 2, 622589, 'Velit nemo.', 'Est fugiat totam repudiandae dignissimos sunt et. Quis necessitatibus impedit consequatur eos iste. Non repellendus quia aut perspiciatis.', 2, 5054, '2019-08-06 00:00:00', 'completed'),
-(7, '2019-10-08 12:38:39', 3, 6, 613015, 'Nulla ratione est.', 'Quas aut eum libero. Quia minima autem animi facilis harum commodi velit voluptas. Vel et cum iure quam eius iste.', 1, 8745, '2019-02-14 00:00:00', 'inprogress'),
-(8, '2019-08-02 16:33:29', 10, 2, 270026, 'Odit tempora.', 'Corporis quaerat quidem soluta consequatur iure sit officiis. Voluptas perferendis beatae laudantium eligendi quas amet. Et et repudiandae nemo quo id. Ut provident delectus ut harum debitis.', 6, 2783, '2019-11-15 00:00:00', 'completed'),
-(9, '2019-09-04 04:37:49', 3, 4, 530556, 'Repellat similique.', 'Voluptatibus dolores quam magni laudantium. Nulla aliquid earum eius nisi omnis mollitia. Ipsa reiciendis ullam sequi velit.', 3, 5617, '2019-08-23 00:00:00', 'cancel'),
-(10, '2019-09-03 00:44:32', 1, 1, 663054, 'Amet fugit.', 'Et architecto nam debitis. Voluptatem commodi quia voluptate a qui vero. Aut et dolore sunt dignissimos tempora.', 5, 3446, '2019-04-17 00:00:00', 'completed'),
-(11, '2019-06-07 10:25:25', 1, 1, 436721, 'Rerum mollitia.', 'Et perferendis dolor a voluptatem magni. Quibusdam et rerum voluptates a natus. Dolore laudantium eum voluptatem aut ullam corrupti.', 1, 506, '2019-05-15 00:00:00', 'completed'),
-(12, '2019-06-06 17:01:40', 4, 4, 299769, 'Nihil libero laborum.', 'Eaque nisi sapiente voluptas repudiandae molestias. Soluta dicta rerum ea amet fuga architecto veritatis. Quo fuga libero non dolorem aut iusto. Quidem consequatur vitae quo quia ut.', 6, 1435, '2019-01-19 00:00:00', 'failed'),
-(13, '2019-06-29 12:30:08', 1, 7, 477728, 'Sed id vitae.', 'Necessitatibus omnis voluptas voluptatem fugiat eum. Id quia delectus dignissimos. Accusamus qui animi dolorem. Doloribus in possimus qui adipisci.', 5, 2546, '2019-04-07 00:00:00', 'failed'),
-(14, '2019-06-20 23:43:49', 7, 4, 328628, 'Vero et.', 'Voluptatem eligendi est autem sed minima beatae. Non quis est et. Asperiores porro et quis. Fuga qui enim maiores aut ea.', 3, 6150, '2019-07-17 00:00:00', 'new'),
-(15, '2019-06-07 03:49:13', 3, 9, 119027, 'Sint temporibus veritatis.', 'Dolores id debitis aliquid. Voluptatem esse aperiam enim eligendi totam voluptate. Explicabo voluptas excepturi consequuntur eum et fugiat debitis et.', 1, 7066, '2019-07-16 00:00:00', 'new'),
-(16, '2019-03-08 10:55:35', 3, 1, 162516, 'Repudiandae quis.', 'Id ut aut eaque totam consequatur. Impedit non quam quo dignissimos enim. Ipsa porro voluptates consectetur sunt itaque aliquam repellendus ea. Aperiam est omnis animi sequi laboriosam.', 3, 8081, '2019-08-06 00:00:00', 'inprogress'),
-(17, '2019-10-04 05:49:39', 10, 9, 378799, 'Beatae labore.', 'Ea ad ipsa voluptas vel corrupti necessitatibus labore. Enim ut iusto quam deleniti saepe est. Voluptatem blanditiis eveniet quod eos mollitia laudantium alias.', 2, 8958, '2019-01-29 00:00:00', 'cancel'),
-(18, '2019-07-02 09:25:19', 1, 2, 555458, 'Enim quia voluptas.', 'Repudiandae ducimus dolor sit quis. Minus rerum asperiores recusandae molestias sed. Dolorem voluptatibus quia adipisci et quo minima dolorem. Earum voluptas id ut.', 3, 8234, '2019-07-15 00:00:00', 'inprogress'),
-(19, '2019-09-17 15:36:06', 10, 1, 233061, 'Possimus temporibus.', 'Est rerum ut incidunt laborum laboriosam ipsum sed. Vel deserunt odio in sunt. At quia sit neque. Dolorum quis quis ullam exercitationem nesciunt minus.', 2, 1887, '2019-06-04 00:00:00', 'completed'),
-(20, '2019-05-01 02:45:14', 6, 9, 621265, 'Voluptate aliquam amet.', 'Aliquam perferendis minima ex magnam quisquam facere beatae. Quo quibusdam ut nostrum quaerat. Quae quos qui quia. Et sint enim magnam ea numquam impedit.', 3, 313, '2019-05-14 00:00:00', 'failed'),
-(21, '2020-02-23 20:25:55', 8, 8, 215080, 'Eius exercitationem.', 'Nulla voluptate consequuntur et minus. Quo aliquam autem veniam hic. Saepe nisi totam dolorem labore tempore ut.', 2, 1537, '2019-06-30 00:00:00', 'completed'),
-(22, '2019-07-17 00:39:43', 6, 9, 405560, 'Fuga ut dolor.', 'Fugit excepturi qui sunt aperiam rerum consequuntur ut. Quia eius eum est. Ea corrupti explicabo magnam consequatur aperiam. Modi nemo enim eum ipsum temporibus quia hic.', 4, 8275, '2019-03-25 00:00:00', 'inprogress'),
-(23, '2019-08-01 00:07:10', 4, 8, 286885, 'Iusto dolorem ea.', 'Id ipsam hic officia qui voluptatem. Ipsa eum dolores vero eveniet natus accusamus. Porro alias beatae consequatur alias nemo eos. Qui recusandae aut in.', 3, 9491, '2019-10-08 00:00:00', 'new'),
-(24, '2019-02-08 15:38:40', 9, 9, 152168, 'Amet nam velit.', 'Quis soluta recusandae eius ducimus magni. Quam maiores qui beatae. Dicta deleniti magni molestiae enim quae. Occaecati dolore velit sapiente voluptatibus hic.', 6, 9816, '2019-06-15 00:00:00', 'failed'),
-(25, '2019-05-18 11:41:38', 6, 10, 171278, 'Cumque quia.', 'Repellendus iusto molestias quia. Maiores et perspiciatis est autem dolorem dignissimos amet. Esse itaque qui maiores quas.', 4, 2041, '2019-09-11 00:00:00', 'new');
+(1, '2019-08-08 17:10:02', 7, 2, 453647, 'Id exercitationem omnis.', 'Magni quas incidunt nulla ut omnis repudiandae. Voluptas unde odit cum et cupiditate. Modi explicabo eos facere odio esse qui.', 1, 7374, '2019-09-23 00:00:00', 'cancel'),
+(2, '2019-09-24 18:30:03', 4, 10, 232886, 'Cumque hic reiciendis.', 'Cupiditate quae dolore numquam qui ut. Minima corrupti saepe harum iusto est. Corrupti eum facere consequatur sunt ratione ut quos quis.', 4, 5151, '2019-03-26 00:00:00', 'cancel'),
+(3, '2020-02-09 03:39:24', 9, 5, 380567, 'Vel omnis.', 'Maiores est veniam sunt veritatis. Aut et ut eos et ut vel. Deserunt sed inventore tempora dicta nobis non. Earum suscipit possimus quia nihil odio sunt ipsam.', 3, 9495, '2019-03-19 00:00:00', 'cancel'),
+(4, '2019-10-03 11:17:23', 2, 7, 570693, 'Et omnis eius.', 'Ut vel voluptatem nobis sit voluptatem atque ex. Nobis id dolorem nostrum alias molestias. Dolor aut quis expedita sequi. Facilis illo inventore voluptate.', 4, 4063, '2019-09-17 00:00:00', 'failed'),
+(5, '2019-07-18 13:50:23', 7, 8, 107192, 'Eius deleniti.', 'Delectus ut ipsum illo nisi et voluptatem quis. Eos qui ut officiis maiores quaerat quos. Magnam dignissimos cupiditate id ducimus in molestiae.', 6, 1280, '2019-10-18 00:00:00', 'inprogress'),
+(6, '2019-02-16 06:23:06', 3, 5, 216399, 'Blanditiis occaecati.', 'Qui molestias sint occaecati nulla. Quae odio quo similique ipsum. Quidem dolores fugit cumque et. Totam iure quam fugiat et.', 2, 5211, '2019-11-05 00:00:00', 'new'),
+(7, '2019-02-22 04:26:12', 2, 9, 504279, 'Non eum.', 'Porro quis quos praesentium ea. Dolorem impedit earum officia hic. Aut cum molestiae voluptas ut explicabo magnam nulla. Et aut reiciendis quaerat ipsam cupiditate.', 6, 2883, '2019-06-24 00:00:00', 'cancel'),
+(8, '2020-02-19 00:32:22', 9, 6, 133287, 'Voluptate non.', 'In vel molestias eius sapiente totam sit ullam. Sit tenetur nisi voluptatibus ea. Omnis velit maxime saepe amet soluta accusamus ullam magni.', 6, 9571, '2019-12-04 00:00:00', 'inprogress'),
+(9, '2019-05-12 11:55:35', 5, 10, 257031, 'Molestiae voluptatum magnam.', 'Non quo mollitia et quibusdam. Non consequatur ut et ipsa. Eligendi aperiam rerum sit ea optio. Sed tenetur architecto ab sit. Architecto sed esse voluptatem enim tenetur porro incidunt doloribus.', 2, 1039, '2019-12-06 00:00:00', 'new'),
+(10, '2019-04-23 19:13:40', 10, 3, 132844, 'Tenetur enim.', 'Sint dolore aspernatur sapiente dolor. Inventore et voluptates fugiat vel possimus. Nisi nesciunt asperiores maxime eos.', 4, 5542, '2019-06-13 00:00:00', 'new'),
+(11, '2019-03-21 00:11:41', 6, 5, 430893, 'Est quas.', 'Dolores esse dignissimos totam nam. Quibusdam numquam sed eum delectus optio deserunt quis dolorem. Placeat voluptates porro dolores quam. Et ut velit similique asperiores animi.', 5, 6799, '2019-01-04 00:00:00', 'failed'),
+(12, '2019-10-08 16:06:07', 2, 9, 570693, 'Atque est.', 'Ut est qui id maiores. Quaerat porro est numquam ea saepe qui et. Cupiditate sint eaque nobis ut molestias. Necessitatibus et consequatur veniam quia aut facilis earum et.', 5, 9917, '2019-09-11 00:00:00', 'failed'),
+(13, '2019-04-05 22:10:34', 2, 4, 430893, 'Eum at.', 'Sequi nihil assumenda omnis. Quia temporibus alias debitis omnis voluptas eum natus.', 4, 1137, '2019-03-18 00:00:00', 'cancel'),
+(14, '2019-10-29 14:49:07', 5, 4, 380567, 'Maiores et.', 'Error molestiae sed iusto rerum ut. Autem voluptas tempora sed voluptate. Sunt est molestias molestiae consequatur dicta dolorem itaque.', 6, 6808, '2019-08-03 00:00:00', 'inprogress'),
+(15, '2019-10-19 21:03:15', 8, 9, 504279, 'Iure sint.', 'Culpa fuga qui esse sint rerum sapiente delectus cupiditate. Facilis optio nam in et nesciunt magnam mollitia. Aliquid magnam vero alias officiis.', 6, 1954, '2019-07-15 00:00:00', 'inprogress'),
+(16, '2019-11-12 20:24:09', 5, 3, 380567, 'Distinctio molestiae.', 'Dolor et numquam ea. Et quis praesentium quis voluptatem vel. Cupiditate quia hic repellat quia. Consequuntur odio facilis aut earum ad est quae.', 4, 9397, '2019-12-25 00:00:00', 'cancel'),
+(17, '2019-10-04 14:39:52', 9, 8, 132844, 'Adipisci fuga ut.', 'Voluptates eveniet culpa at nam. Voluptates magni optio voluptas quo quia exercitationem. Ad non nostrum architecto omnis veritatis enim ut rerum.', 4, 4860, '2019-06-20 00:00:00', 'new');
 
 -- --------------------------------------------------------
 
@@ -282,26 +284,36 @@ CREATE TABLE `town` (
 --
 
 INSERT INTO `town` (`id`, `town`) VALUES
-(108714, 'Bufordmouth'),
-(116320, 'South Eula'),
-(135424, 'Port Loma'),
-(141527, 'Justinaborough'),
-(238007, 'Lake Leonieville'),
-(245039, 'Emileville'),
-(248411, 'Johnstonside'),
-(269497, 'Franeckiport'),
-(281804, 'Haileemouth'),
-(313782, 'New Joanneport'),
-(318219, 'North Loganside'),
-(341149, 'Montymouth'),
-(429842, 'Reichelshire'),
-(485512, 'Barrowsfort'),
-(515084, 'North Herminia'),
-(517996, 'North Broderickborough'),
-(544122, 'New Greg'),
-(574431, 'Devonshire'),
-(635092, 'Lake Noe'),
-(699887, 'South Halle');
+(107192, 'Feeneyville'),
+(110213, 'Steuberstad'),
+(132844, 'Josefinahaven'),
+(133287, 'Rauburgh'),
+(199007, 'Jordynhaven'),
+(210099, 'New Oscarland'),
+(216399, 'Ernestfurt'),
+(232886, 'Zemlakshire'),
+(257031, 'Casperside'),
+(296611, 'New Leta'),
+(380567, 'West Herminia'),
+(430893, 'Lake Daxstad'),
+(453647, 'Eleanoreburgh'),
+(457564, 'O\'Connerview'),
+(470300, 'Collinsport'),
+(504279, 'Spinkaport'),
+(509927, 'Brettberg'),
+(551192, 'East Mariane'),
+(564435, 'Wardberg'),
+(569521, 'East Adelle'),
+(570693, 'Kayleighville'),
+(596258, 'Dinofort'),
+(598728, 'Greenbury'),
+(614726, 'Port Albertaside'),
+(622006, 'Cronafort'),
+(625447, 'Hartmannton'),
+(626657, 'North Claremouth'),
+(626871, 'Towneberg'),
+(641652, 'West Andres'),
+(691287, 'Smithshire');
 
 -- --------------------------------------------------------
 
@@ -579,7 +591,7 @@ ALTER TABLE `chat`
 -- AUTO_INCREMENT для таблицы `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id записи локации', AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id записи локации', AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `respond`
@@ -597,7 +609,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT для таблицы `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id задания', AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id задания', AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
