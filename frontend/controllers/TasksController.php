@@ -26,29 +26,16 @@ class TasksController extends \yii\web\Controller
 
     public function actionIndex()
     {
-
-        $query = new Query();
-
-        $query->from('task')
+        
+        $query = Task::find()
             ->where(['task_status' => 'new'])
+            ->joinWith('category')
             ->orderBy(['add_dt' => SORT_ASC])
             ->limit(3);
         
         $tasks = $query->all();
-
-        //определяем промежуток времени с момента создания задания
-       /* 
-        $created_at = $tasks['created_at'];
-        
-        $datetime1 = new \DateTime($created_at);
-		$datetime2 = new \DateTime('now');
-
-        $interval = DateTime::diff($datetime1, $datetime2);
-        $interval->format('%h')." Hours ";    
-        */
-          
+ 
         return $this->render('index', ['tasks' => $tasks]);
-
 
     }
 

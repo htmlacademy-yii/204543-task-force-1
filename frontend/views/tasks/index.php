@@ -20,19 +20,19 @@ $this->title = 'Задания';
 
                     <div class="new-task__card">
                         <div class="new-task__title">
-                            <a href="#" class="link-regular"><h2><?= Html::encode($task['title']); ?></h2></a>
-                            <a class="new-task__type link-regular" href="#"><p>Грузоперевозки</p></a>
+                            <a href="#" class="link-regular"><h2><?= Html::encode($task->title); ?></h2></a>
+                            <a class="new-task__type link-regular" href="#"><p><?= Html::encode($task->category->name); ?></p></a>
                         </div>
                         <div class="new-task__icon new-task__icon--cargo"></div>
                         <p class="new-task_description">
-                           <?= Html::encode($task['description']); ?>
+                           <?= Html::encode($task->description); ?>
                         </p>
-                        <b class="new-task__price new-task__price--cargo"><?= Html::encode($task['budget']); ?><b> ₽</b></b>
-                        <p class="new-task__place">Почтовый индекс (пока вместо района) &nbsp<?= Html::encode($task['location_id']); ?></p>
-                        <span class="new-task__time"><?= Html::encode($task['add_dt']); ?></span>
+                        <b class="new-task__price new-task__price--cargo"><?= Html::encode($task->budget); ?><b> ₽</b></b>
+                        <p class="new-task__place">Почтовый индекс (пока вместо района) &nbsp<?= Html::encode($task->location_id); ?></p>
+                        <span class="new-task__time"><?= Html::encode($task->lostTime($task->add_dt)); ?></span>
                     </div>
                     <?php endforeach; ?>
-
+                   
                 </div>
                 <div class="new-task__pagination">
                     <ul class="new-task__pagination-list">

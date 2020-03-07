@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 25 2020 г., 19:10
+-- Время создания: Мар 07 2020 г., 19:49
 -- Версия сервера: 10.3.13-MariaDB-log
 -- Версия PHP: 7.2.22
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `clear_db_nodata`
+-- База данных: `test_db07march_empty`
 --
 
 -- --------------------------------------------------------
@@ -103,8 +103,8 @@ CREATE TABLE `review` (
   `task_id` int(11) NOT NULL COMMENT 'id задания',
   `executor_id` int(11) NOT NULL,
   `review_content` varchar(450) CHARACTER SET utf8mb4 NOT NULL COMMENT 'содержание отзыва',
-  `rate_stars` int(11) NOT NULL COMMENT 'оценка выполнения задания 1-5 звёзд',
-  `created_at` datetime DEFAULT current_timestamp() COMMENT 'время создания отзыва'
+  `rate_stars` decimal(3,2) NOT NULL COMMENT 'оценка выполнения задания 1-5 звёзд',
+  `create_date` datetime DEFAULT current_timestamp() COMMENT 'время создания отзыва'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -115,7 +115,7 @@ CREATE TABLE `review` (
 
 CREATE TABLE `task` (
   `id` int(11) NOT NULL COMMENT 'id задания',
-  `created_at` datetime NOT NULL COMMENT 'время создания задания',
+  `add_dt` datetime NOT NULL COMMENT 'время создания задания',
   `author_id` int(11) NOT NULL COMMENT 'id заказчика',
   `executor_id` int(11) NOT NULL COMMENT 'id  исполнителя',
   `location_id` int(11) NOT NULL COMMENT 'почтовый индекс города',
@@ -314,7 +314,7 @@ ALTER TABLE `user_category`
 -- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id категории', AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id категории', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `chat`
@@ -338,13 +338,13 @@ ALTER TABLE `respond`
 -- AUTO_INCREMENT для таблицы `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id отзыва', AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id отзыва', AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT для таблицы `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id задания', AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id задания', AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
@@ -356,7 +356,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `userevent`
 --
 ALTER TABLE `userevent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id типа события', AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id типа события', AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `userimage`
@@ -400,46 +400,6 @@ ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `review_ibfk_3` FOREIGN KEY (`executor_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `task`
---
-ALTER TABLE `task`
-  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`executor_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `task_ibfk_4` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`town_id`) REFERENCES `town` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `userevent`
---
-ALTER TABLE `userevent`
-  ADD CONSTRAINT `userevent_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `userimage`
---
-ALTER TABLE `userimage`
-  ADD CONSTRAINT `userimage_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `userstatistic`
---
-ALTER TABLE `userstatistic`
-  ADD CONSTRAINT `userstatistic_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `user_category`
---
-ALTER TABLE `user_category`
-  ADD CONSTRAINT `user_category_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_category_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

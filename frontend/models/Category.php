@@ -30,8 +30,8 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category', 'icon'], 'required'],
-            [['category', 'icon'], 'string', 'max' => 120],
+            [['name', 'icon'], 'required'],
+            [['name', 'icon'], 'string', 'max' => 120],
         ];
     }
 
@@ -42,7 +42,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'id категории'),
-            'category' => Yii::t('app', 'название категории'),
+            'name' => Yii::t('app', 'название категории'),
             'icon' => Yii::t('app', 'Icon'),
         ];
     }
