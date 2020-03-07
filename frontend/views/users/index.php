@@ -56,7 +56,7 @@ $this->title = 'Исполнители';
                         </div>
 
             <!-- diff_date -->
-                        <span class="new-task__time"> <?= Html::encode($user->lostTime($user->userstatistic->last_visit)); ?></span>
+                        <span class="new-task__time"> Был на сайте&nbsp</br><?= Html::encode( $user->lostTime($user->userstatistic->last_visit)); ?></br> назад </span>
                     </div>
 
                     <div class="link-specialization user__search-link--bottom">
@@ -70,11 +70,7 @@ $this->title = 'Исполнители';
                                 
 		         <?php endforeach; ?>
             <!-- END of User information -->
-            <pre>
-                <?= var_dump($users); ?>
-            </pre>
-
-                         
+                                    
             </section>
             <section  class="search-task">
                 <div class="search-task__wrapper">

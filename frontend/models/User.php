@@ -252,8 +252,45 @@ class User extends \yii\db\ActiveRecord
         $datetime2 = new \DateTime('now');
 
         $delta = $datetime1->diff($datetime2);
-        $time_delta = $delta->format('%d дней, %h часов, %i минут');
+  
+        $days_delta = $delta->format('%d');
+        $hours_delta = $delta->format('%h');
+        $minutes_delta = $delta->format('%i');
+
+        if($days_delta == 0 && $hours_delta == 0 && $minutes_delta > 0) {
+           
+            if($minutes_delta == 1) {
+
+                $time_delta = $delta->format('%i минуту');
+            } 
+            else {
+                $time_delta = $delta->format('%i минут');
+            }
+        }
+
+        if($days_delta == 0 && $hours_delta > 0 && $minutes_delta >= 0) {
+
+            $time_delta = $delta->format('%h часов %i минут');
+        }
+
+         if($days_delta > 0 && $hours_delta >= 0 && $minutes_delta >= 0) {
+
+            if($days_delta == 1) {
+
+                $time_delta = $delta->format('%d день');
+            
+            } elseif($days_delta == 2) {
+
+               $time_delta = $delta->format('%d дня'); 
+            }
+
+            else { 
+            
+                $time_delta = $delta->format('%d дней');  
+            }
+        }
 
         return $time_delta;
     }
+
 }
