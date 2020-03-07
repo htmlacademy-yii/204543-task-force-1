@@ -10,11 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-
 $this->title = 'Исполнители';
 ?>
-
-     
 
 <!-- БЛОК Исполнители -->
 <section class="user__search">
@@ -34,36 +31,50 @@ $this->title = 'Исполнители';
                     </ul>
                 </div>
      <!-- блок О пользователе -->
+               
                 <?php foreach($users as $user): ?>
 
                 <div class="content-view__feedback-card user__search-wrapper">
                     <div class="feedback-card__top">
                         <div class="user__search-icon">
                             <a href="#"><img src="./img/man-glasses.jpg" width="65" height="65"></a>
-                            <span>17 заданий</span>
-                            <span>6 отзывов</span>
+
+                            <span> <?= Html::encode($user->tasksCount() . ' заданий'); ?></span>
+                            <span> <?= Html::encode($user->reviewsCount() . ' отзывов'); ?></span>
                         </div>
     
                         <div class="feedback-card__top--name user__search-card">
-                            <p class="link-name"><a href="#" class="link-regular"><?= Html::encode($user['full_name']); ?></a></p>
+                            <p class="link-name"><a href="#" class="link-regular"><?= Html::encode($user->full_name); ?></a></p>
+                <!-- Star symbols  -->
                             <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-                            <b>4.25</b>
+                <!-- user rating ( float number) --> 
+                            <b><?= Html::encode($user->rating()); ?></b>
+                <!-- about user --> 
                             <p class="user__search-content">
-                                <?= Html::encode($user['about_user']); ?>
+                                <?= Html::encode($user->about_user); ?>
                             </p>
                         </div>
-                        <span class="new-task__time">Был на сайте 25 минут назад</span>
+
+            <!-- diff_date -->
+                        <span class="new-task__time"> <?= Html::encode($user->lostTime($user->userstatistic->last_visit)); ?></span>
                     </div>
+
                     <div class="link-specialization user__search-link--bottom">
-                        <a href="#" class="link-regular">Ремонт</a>
-                        <a href="#" class="link-regular">Курьер</a>
-                        <a href="#" class="link-regular">Оператор ПК</a>
+            <!-- UserCategory--> 
+                        <?php foreach ($user->categories as $category): ?>
+
+                            <a href="#" class="link-regular"><?=$category->name;?></a>
+                        <?php endforeach; ?>               
                     </div>
                 </div>
-                
-		        <?php endforeach; ?> 
+                                
+		         <?php endforeach; ?>
+            <!-- END of User information -->
+            <pre>
+                <?= var_dump($users); ?>
+            </pre>
 
-  
+                         
             </section>
             <section  class="search-task">
                 <div class="search-task__wrapper">

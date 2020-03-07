@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "category".
  *
  * @property int $id id категории
- * @property string $name название категории
+ * @property string $category название категории
  * @property string $icon
  *
  * @property Task[] $tasks
@@ -30,8 +30,8 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'icon'], 'required'],
-            [['name', 'icon'], 'string', 'max' => 120],
+            [['category', 'icon'], 'required'],
+            [['category', 'icon'], 'string', 'max' => 120],
         ];
     }
 
@@ -42,7 +42,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'id категории'),
-            'name' => Yii::t('app', 'название категории'),
+            'category' => Yii::t('app', 'название категории'),
             'icon' => Yii::t('app', 'Icon'),
         ];
     }

@@ -17,14 +17,16 @@ return [
             'charset' => 'utf8mb4_general_ci',
            
         ],
-    /*    'urlManager' => [
-            'enablePrettyUrl' => true,
+     /* 'urlManager' => [
+            'enablePrettyUrl' => false,
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
                 '<module:gii>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>', 
             ],
-        ], */
+        ],
+        
+       */ 
     ]
 ];

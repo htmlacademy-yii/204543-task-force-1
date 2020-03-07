@@ -6,6 +6,14 @@
 
 return [
 
-    'name' => $faker->sentence($nbWords = 2/*, $variableNbWords = true*/),   
+    'name' => $faker->unique()->randomElement($array = ['Курьерские услуги',
+									'Уборка',
+									'Переезды',
+									'Компьютерная помощь',
+									'Ремонт квартирный',
+									'Ремонт техники',
+									'Красота',
+									'Фото',
+									]),  
     'icon' => $faker->word, 
 ];

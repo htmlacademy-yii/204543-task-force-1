@@ -21,6 +21,7 @@ use Yii;
  * @property Profile $profile
  * @property Respond[] $responds
  * @property Review[] $reviews
+ * @property Review[] $reviews0
  * @property Task[] $tasks
  * @property Task[] $tasks0
  * @property Town $town
@@ -30,7 +31,7 @@ use Yii;
  * @property Userstatistic $userstatistic
  */
 class User extends \yii\db\ActiveRecord
-{
+{    
     /**
      * {@inheritdoc}
      */
@@ -114,6 +115,16 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Reviews0]].
+     *
+     * @return \yii\db\ActiveQuery|ReviewQuery
+     */
+    public function getReviews0()
+    {
+        return $this->hasMany(Review::className(), ['executor_id' => 'id']);
+    }
+
+    /**
      * Gets query for [[Tasks]].
      *
      * @return \yii\db\ActiveQuery|TaskQuery
@@ -151,6 +162,16 @@ class User extends \yii\db\ActiveRecord
     public function getUserCategories()
     {
         return $this->hasMany(UserCategory::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Categories]].
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategories()
+    {
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])
+            ->viaTable('user_category', ['user_id' => 'id']);
     }
 
     /**
@@ -192,4 +213,47 @@ class User extends \yii\db\ActiveRecord
         return new UserQuery(get_called_class());
     }
 
+     /**
+     * get quantity of user tasks
+     * @return number of users tasks
+     */
+    
+    public function tasksCount()
+    {
+        return count($this->tasks);
+    }
+
+    /**
+     * get quantity of user reviews
+     * @return number of users reviews
+     */
+
+    public function reviewsCount()
+    {
+        return count($this->reviews);
+    }
+
+    /**
+     * @return $rating as arithmetic average of rate_stars in review 
+     */
+    public function rating() 
+    {
+        $rating = 0;
+        if(count($this->reviews) > 0) {
+            $rating = array_sum(array_column($this->reviews, 'rate_stars')) / count($this->reviews);
+        }
+        return number_format ($rating,  $decimals = 2);
+    }
+
+   
+    public static function lostTime($last_visit)
+    {
+        $datetime1 = new \DateTime($last_visit);
+        $datetime2 = new \DateTime('now');
+
+        $delta = $datetime1->diff($datetime2);
+        $time_delta = $delta->format('%d дней, %h часов, %i минут');
+
+        return $time_delta;
+    }
 }

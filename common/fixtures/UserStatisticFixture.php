@@ -3,7 +3,7 @@ namespace common\fixtures;
 
 use yii\test\ActiveFixture;
 
-class UserStatisticFixture extends ActiveFixture
+class UserstatisticFixture extends ActiveFixture
 {
-    public $modelClass = 'frontend\models\UserStatistic';
+    public $modelClass = 'frontend\models\Userstatistic';
 }

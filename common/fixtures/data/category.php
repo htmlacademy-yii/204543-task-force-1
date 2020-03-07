@@ -2,31 +2,35 @@
 
 return [
     'category0' => [
-        'name' => 'Quia in.',
-        'icon' => 'aut',
+        'name' => 'Красота',
+        'icon' => 'quo',
     ],
     'category1' => [
-        'name' => 'Eum et magnam.',
-        'icon' => 'aut',
+        'name' => 'Ремонт квартирный',
+        'icon' => 'libero',
     ],
     'category2' => [
-        'name' => 'Quia odit.',
-        'icon' => 'voluptatem',
+        'name' => 'Уборка',
+        'icon' => 'voluptas',
     ],
     'category3' => [
-        'name' => 'Itaque dicta.',
-        'icon' => 'nulla',
-    ],
-    'category4' => [
-        'name' => 'Quas dolor optio.',
-        'icon' => 'est',
-    ],
-    'category5' => [
-        'name' => 'Debitis molestiae.',
+        'name' => 'Ремонт техники',
         'icon' => 'dolor',
     ],
+    'category4' => [
+        'name' => 'Курьерские услуги',
+        'icon' => 'aliquam',
+    ],
+    'category5' => [
+        'name' => 'Переезды',
+        'icon' => 'et',
+    ],
     'category6' => [
-        'name' => 'At in illum.',
-        'icon' => 'mollitia',
+        'name' => 'Компьютерная помощь',
+        'icon' => 'eaque',
+    ],
+    'category7' => [
+        'name' => 'Фото',
+        'icon' => 'quod',
     ],
 ];

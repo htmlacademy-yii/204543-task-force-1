@@ -3,7 +3,7 @@ namespace common\fixtures;
 
 use yii\test\ActiveFixture;
 
-class UserEventFixture extends ActiveFixture
+class UsereventFixture extends ActiveFixture
 {
-    public $modelClass = 'frontend\models\UserEvent';
+    public $modelClass = 'frontend\models\Userevent';
 }

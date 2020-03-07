@@ -18,7 +18,7 @@ $this->title = 'Исполнитель';
 <h1> User Page is expected </h1>
 
 <pre>
-<h2> <?= $user->userName; ?></h2>	
+<h2> <?= $user->full_name; ?></h2>	
 </pre>
 
 <pre>

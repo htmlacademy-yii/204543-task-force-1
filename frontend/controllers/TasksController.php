@@ -31,7 +31,7 @@ class TasksController extends \yii\web\Controller
 
         $query->from('task')
             ->where(['task_status' => 'new'])
-            ->orderBy(['created_at' => SORT_ASC])
+            ->orderBy(['add_dt' => SORT_ASC])
             ->limit(3);
         
         $tasks = $query->all();

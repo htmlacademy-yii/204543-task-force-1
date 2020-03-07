@@ -3,7 +3,7 @@ namespace common\fixtures;
 
 use yii\test\ActiveFixture;
 
-class UserImageFixture extends ActiveFixture
+class UserimageFixture extends ActiveFixture
 {
-    public $modelClass = 'frontend\models\UserImage';
+    public $modelClass = 'frontend\models\Userimage';
 }

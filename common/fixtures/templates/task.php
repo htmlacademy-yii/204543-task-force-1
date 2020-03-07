@@ -4,7 +4,7 @@
  * @var $index integer
  */
 return [
-	'created_at' => $faker->dateTimeBetween('2019-01-01', 'now')->format('Y-m-d H:i:s'),
+	'add_dt' => $faker->dateTimeBetween('2019-01-01', 'now')->format('Y-m-d H:i:s'),
     'author_id' => $faker->numberBetween(1,10),
     'executor_id' => $faker->numberBetween(1,10),
     'location_id' => $faker->randomElement($array = [107192,
