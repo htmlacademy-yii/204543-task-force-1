@@ -17,8 +17,8 @@ return [
             'charset' => 'utf8mb4_general_ci',
            
         ],
-     /* 'urlManager' => [
-            'enablePrettyUrl' => false,
+    /* 'urlManager' => [
+            'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
@@ -26,7 +26,7 @@ return [
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>', 
             ],
         ],
-        
-       */ 
+     */
+      
     ]
 ];

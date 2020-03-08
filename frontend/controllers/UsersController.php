@@ -48,9 +48,16 @@ class UsersController extends \yii\web\Controller
     //actionView($id) - запрос к таблицe User для страницы user/view/id
     public function actionView($id)
     {
-        $query = new Query($id);
+        
+        $user = User::find($id)
+            ->joinWith('profile')
+            ->joinWith('userstatistic')
+            ->innerJoinWith('categories')
+            ->joinWith('tasks')
+            ->joinWith('reviews')
+            ->where(['user.id' => $id])
+            ->one();
 
-        $query->User::find()->joinWith('profile')->innerJoinWith('categories')->joinWith('tasks')->where(['user.id' => $id])->one();
             
         if (!$user) {
             throw new NotFoundHttpException("Пользователь с ID=$id не найден");

@@ -39,8 +39,8 @@ $this->title = 'Исполнители';
                         <div class="user__search-icon">
                             <a href="#"><img src="./img/man-glasses.jpg" width="65" height="65"></a>
 
-                            <span> <?= Html::encode($user->tasksCount() . ' заданий'); ?></span>
-                            <span> <?= Html::encode($user->reviewsCount() . ' отзывов'); ?></span>
+                            <span> <?= Html::encode('заданий: ' . $user->tasksCount()); ?></span>
+                            <span> <?= Html::encode('отзывов: ' . $user->reviewsCount()); ?></span>
                         </div>
     
                         <div class="feedback-card__top--name user__search-card">
@@ -56,7 +56,7 @@ $this->title = 'Исполнители';
                         </div>
 
             <!-- diff_date -->
-                        <span class="new-task__time"> Был на сайте&nbsp</br><?= Html::encode( $user->lostTime($user->userstatistic->last_visit)); ?></br> назад </span>
+                        <span class="new-task__time"> Был на сайте&nbsp</br><?= Html::encode( $user->deltaTime($user->userstatistic->last_visit)); ?></br> назад </span>
                     </div>
 
                     <div class="link-specialization user__search-link--bottom">

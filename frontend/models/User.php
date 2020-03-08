@@ -246,7 +246,7 @@ class User extends \yii\db\ActiveRecord
     }
 
    
-    public static function lostTime($last_visit)
+    public static function deltaTime($last_visit)
     {
         $datetime1 = new \DateTime($last_visit);
         $datetime2 = new \DateTime('now');
@@ -259,18 +259,51 @@ class User extends \yii\db\ActiveRecord
 
         if($days_delta == 0 && $hours_delta == 0 && $minutes_delta > 0) {
            
-            if($minutes_delta == 1) {
+            if($days_delta == 1) {
 
                 $time_delta = $delta->format('%i минуту');
-            } 
-            else {
-                $time_delta = $delta->format('%i минут');
+            
+            } elseif ($days_delta >= 2 && $days_delta <= 4) {
+
+               $time_delta = $delta->format('%i минуты'); 
             }
+
+            else { 
+            
+                $time_delta = $delta->format('%i минут'); 
+            }
+            
         }
 
         if($days_delta == 0 && $hours_delta > 0 && $minutes_delta >= 0) {
+            
+            if($days_delta == 1) {
+if($days_delta == 1) {
 
-            $time_delta = $delta->format('%h часов %i минут');
+                $time_delta = $delta->format('%h час');
+            
+            } elseif ($days_delta >= 2 && $days_delta <= 4) {
+
+               $time_delta = $delta->format('%h часа'); 
+            }
+
+            else { 
+            
+                $time_delta = $delta->format('%h часов'); 
+            }
+            
+                $time_delta = $delta->format('%h час');
+            
+            } elseif ($days_delta >= 2 && $days_delta <= 4) {
+
+               $time_delta = $delta->format('%h часа'); 
+            }
+
+            else { 
+            
+                $time_delta = $delta->format('%h часов'); 
+            }
+            
         }
 
          if($days_delta > 0 && $hours_delta >= 0 && $minutes_delta >= 0) {
@@ -279,7 +312,7 @@ class User extends \yii\db\ActiveRecord
 
                 $time_delta = $delta->format('%d день');
             
-            } elseif($days_delta == 2) {
+            } elseif ($days_delta >= 2 && $days_delta <= 4) {
 
                $time_delta = $delta->format('%d дня'); 
             }
@@ -291,6 +324,19 @@ class User extends \yii\db\ActiveRecord
         }
 
         return $time_delta;
+    }
+
+    public static function getYears($birthdate) 
+    {
+        $datetime1 = new \DateTime($last_visit);
+        $datetime2 = new \DateTime('now');
+
+        $delta = $datetime1->diff($datetime2);
+
+        $age = $delta->format('%y');
+
+        return $age;
+  
     }
 
 }

@@ -14,6 +14,7 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'baseUrl' => '',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -38,18 +39,19 @@ return [
         ],
     
         'urlManager' => [
+
             'enablePrettyUrl' => false,
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                '/' => 'index',
+                
                 'users' => 'users/index',
-                'users/view/<id>' => 'users/view',
+                'users/user/<id>' => 'users/view',
                 'tasks' => 'tasks/index',
-                '<module:gii>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>', 
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                /*'<module:gii>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>', 
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',*/
             ], 
-        ],  
+        ], 
       
     ],
     'params' => $params,
