@@ -244,6 +244,25 @@ class User extends \yii\db\ActiveRecord
         }
         return number_format ($rating,  $decimals = 2);
     }
+
+    public function starsNumber()
+    {
+        $stars = '';
+        for($i = 1; $i <= 5; $i++) {
+            if($this->rating() >= $i) {
+                $stars .= '<span></span>';
+            } else {
+                $stars .= '<span class="star-disabled"></span>';
+            }
+        }
+        return $stars;
+    } 
+
+
+
+
+
+
     /**
      * @return number of days, hours and minutes since last visit of user 
      */
@@ -327,5 +346,18 @@ class User extends \yii\db\ActiveRecord
         return $age;
   
     }
+
+    public function stars()
+    {
+        $stars = '';
+        for($star = 1; $star <= 5; $star++) {
+            if($this->rating() >= $star) {
+                $stars .= '<span></span>';
+            } else {
+                $stars .= '<span class="star-disabled"></span>';
+            }
+        }
+        return $stars;
+    } 
 
 }

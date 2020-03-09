@@ -46,7 +46,7 @@ $this->title = 'Исполнители';
                         <div class="feedback-card__top--name user__search-card">
                             <p class="link-name"><a href="#" class="link-regular"><?= Html::encode($user->full_name); ?></a></p>
                 <!-- Star symbols  -->
-                            <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
+                           <?= $user->starsNumber(); ?>
                 <!-- user rating ( float number) --> 
                             <b><?= Html::encode($user->rating()); ?></b>
                 <!-- about user --> 
