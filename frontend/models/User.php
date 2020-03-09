@@ -244,7 +244,9 @@ class User extends \yii\db\ActiveRecord
         }
         return number_format ($rating,  $decimals = 2);
     }
-
+    /**
+     * @return number of days, hours and minutes since last visit of user 
+     */
    
     public static function deltaTime($last_visit)
     {
@@ -259,11 +261,11 @@ class User extends \yii\db\ActiveRecord
 
         if($days_delta == 0 && $hours_delta == 0 && $minutes_delta > 0) {
            
-            if($days_delta == 1) {
+            if($minutes_delta == 1) {
 
                 $time_delta = $delta->format('%i минуту');
             
-            } elseif ($days_delta >= 2 && $days_delta <= 4) {
+            } elseif ($minutes_delta >= 2 && $minutes_delta <= 4) {
 
                $time_delta = $delta->format('%i минуты'); 
             }
@@ -275,14 +277,13 @@ class User extends \yii\db\ActiveRecord
             
         }
 
-        if($days_delta == 0 && $hours_delta > 0 && $minutes_delta >= 0) {
+        if($days_delta == 0 && $hours_delta > 0 ) {
             
-            if($days_delta == 1) {
-if($days_delta == 1) {
+            if($hours_delta == 1) {
 
                 $time_delta = $delta->format('%h час');
             
-            } elseif ($days_delta >= 2 && $days_delta <= 4) {
+            } elseif ($hours_delta >= 2 && $hours_delta <= 4) {
 
                $time_delta = $delta->format('%h часа'); 
             }
@@ -291,22 +292,10 @@ if($days_delta == 1) {
             
                 $time_delta = $delta->format('%h часов'); 
             }
-            
-                $time_delta = $delta->format('%h час');
-            
-            } elseif ($days_delta >= 2 && $days_delta <= 4) {
-
-               $time_delta = $delta->format('%h часа'); 
-            }
-
-            else { 
-            
-                $time_delta = $delta->format('%h часов'); 
-            }
-            
         }
+               
 
-         if($days_delta > 0 && $hours_delta >= 0 && $minutes_delta >= 0) {
+         if($days_delta > 0 ) {
 
             if($days_delta == 1) {
 

@@ -3,7 +3,7 @@ namespace common\fixtures;
 
 use yii\test\ActiveFixture;
 
-class TownFixture extends ActiveFixture
+class UserFixture extends ActiveFixture
 {
     public $modelClass = 'frontend\models\Town';
 }
