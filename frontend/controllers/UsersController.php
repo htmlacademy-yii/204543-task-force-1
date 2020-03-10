@@ -31,12 +31,8 @@ class UsersController extends \yii\web\Controller
     {
         $query = User::find()
             ->where(['user.role' => '0'])
-            ->joinWith('userstatistic')
-            ->innerJoinWith('categories')
-            ->joinWith('tasks')
-            ->joinWith('reviews')
-            ->orderBy(['user.created_at' => SORT_DESC]);
-            //->limit(3) -  запрос при выборке с limit(3) выгружает только первый элемент - первого по сортировке user'a 
+            ->orderBy(['user.created_at' => SORT_DESC])
+            ->limit(3); 
   
         $users = $query->all();
 
@@ -49,16 +45,8 @@ class UsersController extends \yii\web\Controller
     public function actionView($id)
     {
         
-        $user = User::find($id)
-            ->joinWith('profile')
-            ->joinWith('userstatistic')
-            ->innerJoinWith('categories')
-            ->joinWith('tasks')
-            ->joinWith('reviews')
-            ->where(['user.id' => $id])
-            ->one();
-
-            
+        $user = User::find($id)->one();
+     
         if (!$user) {
             throw new NotFoundHttpException("Пользователь с ID=$id не найден");
         }
