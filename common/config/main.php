@@ -10,20 +10,23 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
         'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=yiitask_db',
+           'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=yiitaskforce_db',
             'username' => 'root',
             'password' => '',
-            'charset' => 'utf8'
+            'charset' => 'utf8mb4_general_ci',
+           
         ],
-        'urlManager' => [
+    /* 'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                // ...
+                '<module:gii>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>', 
             ],
         ],
+     */
       
-    ],
+    ]
 ];
